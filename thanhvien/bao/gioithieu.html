@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trang giới thiệu cá nhân của Lê Hoàng Bảo, thành viên dự án IT-EduShare.">
+  <title>Giới thiệu cá nhân | Lê Hoàng Bảo</title>
+</head>
+<body>
+  <!-- Bắt buộc phải có header chung giống trang chủ -->
+  <header>
+    <h2>ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</h2>
+  </header>
+
+  <!-- Bắt buộc phải có menu điều hướng, trong đó có link tương đối quay về trang chủ -->
+  <nav>
+    <ul>
+      <li><a href="../../index.html">Quay về Trang chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.html">Quay về Trang Giới thiệu Nhóm</a></li>
+    </ul>
+  </nav>
+
+  <!-- Bắt buộc dùng main cho nội dung chính -->
+  <main>
+    <h1>Hồ sơ thành viên: Lê Hoàng Bảo</h1>
+
+    <!-- 1. Section: Giới thiệu bản thân và ảnh chân dung (bắt buộc có alt) -->
+    <section>
+      <h2>Giới thiệu bản thân</h2>
+      <!-- Bạn thay ten-file-anh.jpg bằng tên ảnh chân dung của bạn (viết không dấu) -->
+      <!-- Nếu ảnh để trong thư mục images ngoài gốc, đường dẫn sẽ là ../../images/ten-file-anh.jpg -->
+      <img src="avatar-bao.jpg" alt="Ảnh chân dung của Lê Hoàng Bảo" width="200">
+      <p>Xin chào, tôi là Lê Hoàng Bảo, sinh viên Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng. Tôi là người đảm nhận nhiệm vụ trưởng nhóm cho dự án website này.</p>
+      
+      <h3>Danh sách kỹ năng nổi bật</h3>
+      <!-- 2. Danh sách kỹ năng dùng ul, li (bắt buộc) -->
+      <ul>
+        <li>Lập trình Python (Pygame, Tkinter, OpenCV)</li>
+        <li>Thiết kế cơ sở dữ liệu (PostgreSQL, SQL Server)</li>
+        <li>Xây dựng website tĩnh với HTML5 & CSS3</li>
+        <li>Quản lý phiên bản mã nguồn với Git/GitHub</li>
+      </ul>
+    </section>
+
+    <!-- 3. Article: Giới thiệu về dự án / sở thích cá nhân (bắt buộc dùng article) -->
+    <article>
+      <h2>Vai trò trong dự án ITeduShare & Sở thích</h2>
+      <p>Hiện tại tôi đang đảm nhận vai trò trưởng nhóm trong dự án IT-EduShare. Ngoài ra, tôi cũng có nhiều sở thích như đọc sách, chơi game, và tham gia các hoạt động thể thao.</p>
+    </article>
+
+    <!-- 4. Table: Bảng thời khóa biểu tuần (bắt buộc có caption, thead, th scope) -->
+    <section>
+      <h2>Thời khóa biểu cá nhân</h2>
+      <table>
+        <caption>Kế hoạch học tập và làm việc trong tuần</caption>
+        <thead>
+          <tr>
+            <th scope="col">Thứ</th>
+            <th scope="col">Sáng</th>
+            <th scope="col">Chiều</th>
+            <th scope="col">Tối</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Thứ Hai</th>
+            <td>Học trên trường</td>
+            <td>Tự học HTML5</td>
+            <td>Dạy kèm tin học</td>
+          </tr>
+          <tr>
+            <th scope="row">Thứ Ba</th>
+            <td>Nghỉ</td>
+            <td>Học trên trường</td>
+            <td>Làm bài tập nhóm</td>
+          </tr>
+          <tr>
+            <th scope="row">Thứ Tư</th>
+            <td>Học trên trường</td>
+            <td>Họp nhóm ITeduShare</td>
+            <td>Coding</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Bắt buộc có footer chung -->
+  <footer>
+    <p>© 2026 Nhóm 02 - Khoa Toán - Tin</p>
+  </footer>
+</body>
+</html>
