@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trang giới thiệu cá nhân của Nguyễn Cảnh Tấn, thành viên dự án IT-EduShare.">
+  <title>Giới thiệu cá nhân | Nguyễn Cảnh Tấn</title>
+</head>
+<body>
+  <!-- Bắt buộc phải có header chung giống trang chủ -->
+  <header>
+    <h2>ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</h2>
+  </header>
+
+  <!-- Bắt buộc phải có menu điều hướng, trong đó có link tương đối quay về trang chủ -->
+  <nav>
+    <ul>
+      <li><a href="../../index.html">Quay về Trang chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.html">Quay về Trang Giới thiệu Nhóm</a></li>
+    </ul>
+  </nav>
+
+  <!-- Bắt buộc dùng main cho nội dung chính -->
+  <main>
+    <h1>Hồ sơ thành viên: Nguyễn Cảnh Tấn</h1>
+
+    <!-- 1. Section: Giới thiệu bản thân và ảnh chân dung (bắt buộc có alt) -->
+    <section>
+      <h2>Giới thiệu bản thân</h2>
+      <!-- Bạn thay ten-file-anh.jpg bằng tên ảnh chân dung của bạn (viết không dấu) -->
+      <!-- Nếu ảnh để trong thư mục images ngoài gốc, đường dẫn sẽ là ../../images/ten-file-anh.jpg -->
+      <img src="avatar-tan.jpg" alt="Ảnh chân dung của Nguyễn Cảnh Tấn" width="200">
+      <p>Xin chào, tôi là Nguyễn Cảnh Tấn, sinh viên ngành Sư phạm Tin học, Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng. Tôi là thành viên phụ trách trang Về chúng tôi trong dự án website này.</p>
+      
+      <h3>Danh sách kỹ năng nổi bật</h3>
+      <!-- 2. Danh sách kỹ năng dùng ul, li (bắt buộc) -->
+      <ul>
+        <li>Lập trình Python (Pygame, Tkinter, OpenCV)</li>
+        <li>Thiết kế và quản trị cơ sở dữ liệu (SQL Server, PostgreSQL)</li>
+        <li>Phát triển giao diện Web chuẩn ngữ nghĩa và quản lý mã nguồn Git/GitHub</li>
+      </ul>
+    </section>
+
+    <!-- 3. Article: Giới thiệu về dự án / sở thích cá nhân (bắt buộc dùng article) -->
+    <article>
+      <h2>Vai trò trong dự án ITeduShare & Sở thích</h2>
+      <p>Trong dự án ITeduShare, tôi đảm nhận nhiệm vụ xây dựng cấu trúc trang Về chúng tôi, thiết lập hệ thống thẻ ngữ nghĩa HTML5 và thực hiện kiểm chuẩn chất lượng mã nguồn bằng W3C Validator cùng Lighthouse. Về đời sống cá nhân, tôi có niềm đam mê lớn với bộ môn Billiards và đánh cầu lông. Luyện tập Billiards giúp tôi trau dồi khả năng tư duy góc độ chiến thuật, rèn tính kiên nhẫn và sự tập trung cao độ; trong khi đánh cầu lông giúp tôi rèn luyện thể lực, phản xạ nhanh nhẹn và tái tạo năng lượng tích cực sau những giờ học lập trình chuyên sâu.</p>
+    </article>
+
+    <!-- 4. Table: Bảng thời khóa biểu tuần (bắt buộc có caption, thead, th scope) -->
+    <section>
+      <h2>Thời khóa biểu cá nhân</h2>
+      <table>
+        <caption>Kế hoạch học tập và làm việc trong tuần</caption>
+        <thead>
+          <tr>
+            <th scope="col">Thứ</th>
+            <th scope="col">Sáng</th>
+            <th scope="col">Chiều</th>
+            <th scope="col">Tối</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Thứ Hai</th>
+            <td>An toàn thông tin</td>
+            <td>Hoạt động thể thao</td>
+            <td>Học tiếng Anh</td>
+          </tr>
+          <tr>
+            <th scope="row">Thứ Ba</th>
+            <td>Phân tích và thiết kế hệ thống thông tin</td>
+            <td>Hoạt động thể thao</td>
+            <td>Tự học và làm bài tập</td>
+          </tr>
+          <tr>
+            <th scope="row">Thứ Tư</th>
+            <td>Phương pháp dạy học bộ môn Tin học</td>
+            <td>Hệ quản trị cơ sở dữ liệu</td>
+            <td>Học tiếng Anh</td>
+          </tr>
+          <tr>
+            <th scope="row">Thứ Năm</th>
+            <td>Lịch sử Đảng Cộng sản Việt Nam</td>
+            <td>Hoạt động thể thao</td>
+            <td>Họp nhóm ITeduShare</td>
+          </tr>
+          <tr>
+            <th scope="row">Thứ Sáu</th>
+            <td>Tự học chuyên ngành</td>
+            <td>Hoạt động thể thao</td>
+            <td>Học tiếng Anh</td>
+          </tr>
+          <tr>
+            <th scope="row">Thứ Bảy</th>
+            <td>Thiết kế và lập trình Web</td>
+            <td>Chơi Billiards và Cầu lông</td>
+            <td>Tự học và giải trí</td>
+          </tr>
+          <tr>
+            <th scope="row">Chủ Nhật</th>
+            <td>Nghỉ ngơi cá nhân</td>
+            <td>Hoạt động thể thao</td>
+            <td>Chuẩn bị bài cho tuần mới</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Bắt buộc có footer chung -->
+  <footer>
+    <p>© 2026 Nhóm 02 - Khoa Toán - Tin</p>
+  </footer>
+</body>
+</html>
