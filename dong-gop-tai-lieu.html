@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gửi biểu mẫu đóng góp tài liệu hoặc liên hệ hợp tác với ban quản trị website.">
+    <title>Liên hệ & Đóng góp | ITeduShare</title>
+</head>
+<body>
+    <header>
+        <p>ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="kho-hoc-lieu.html">Kho học liệu</a></li>
+            <li><a href="chi-tiet-giao-an.html">Chi tiết giáo án</a></li>
+            <li><a href="ve-chung-toi.html">Về chúng tôi</a></li>
+            <li><a href="dong-gop-tai-lieu.html">Đóng góp tài liệu</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Biểu mẫu đóng góp học liệu</h1>
+        
+        <form action="#" method="POST">
+            <fieldset>
+                <legend>Thông tin người gửi tài liệu</legend>
+                
+                <p>
+                    <label for="hoten">Họ và tên (bắt buộc):</label>
+                    <input type="text" id="hoten" name="hoten" required minlength="5">
+                </p>
+                
+                <p>
+                    <label for="email">Địa chỉ Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </p>
+                
+                <p>
+                    <label for="sdt">Số điện thoại liên hệ:</label>
+                    <input type="tel" id="sdt" name="sdt" pattern="(84|0[3|5|7|8|9])+([0-9]{8})" required title="Vui lòng nhập số điện thoại Việt Nam hợp lệ">
+                </p>
+                
+                <p>
+                    <label for="tailieu">Tải lên tệp giáo án (.pdf, .docx):</label>
+                    <input type="file" id="tailieu" name="tailieu" accept=".pdf,.doc,.docx" required>
+                </p>
+
+        
+                <p>
+                    <button type="submit">Gửi thông tin đóng góp</button>
+                </p>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2026 Nhóm 02 — Khoa Toán – Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng</p>
+    </footer>
+</body>
+</html>
