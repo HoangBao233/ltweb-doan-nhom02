@@ -5,31 +5,59 @@
   display: grid;
   gap: var(--khoang-cach-lon);
   grid-template-areas:
-    "header"
-    "nav"
-    "main"
-    "footer";
+    "dau"
+    "dieu-huong"
+    "chinh"
+    "chan";
+  grid-template-columns: 1fr;
   min-height: 100vh;
 }
 
-header { grid-area: header; }
-nav    { grid-area: nav; }
-main   { grid-area: main; }
-footer { grid-area: footer; }
+.trang__dau { grid-area: dau; }
+.trang__dieu-huong { grid-area: dieu-huong; }
+.trang__chinh { grid-area: chinh; }
+.trang__chan { grid-area: chan; }
 
 /* Giới hạn padding để chống tràn gây thanh cuộn ngang */
-header, nav, main, footer {
-  padding: 0 var(--khoang-cach);
-  max-width: 100%; /* Đảm bảo không vượt quá kích thước màn hình */
+.trang__dau, .trang__dieu-huong, .trang__chinh, .trang__chan {
+  padding: var(--khoang-cach);
+  max-width: 100%;
+}
+
+/* --- Bố cục Flexbox cho Khu vực liên hệ --- */
+.phan-lien-he {
+  display: flex;
+  flex-direction: column; /* Mobile-first: xếp dọc */
+  gap: 1.5rem;
+}
+
+.phan-lien-he__tieu-de {
+  margin: 0;
+  width: 100%;
 }
 
 /* Điểm ngắt từ màn hình lớn (Máy tính bảng / Desktop) */
 @media (min-width: 768px) {
+  /* Grid 2 cột cho trang chung */
   .trang {
-    /* Trang giới thiệu thường không có sidebar nên vẫn giữ 1 cột dọc, 
-       nhưng giới hạn chiều rộng max-width và canh giữa để giao diện đẹp hơn */
-    max-width: 900px;
+    grid-template-areas:
+      "dau dau"
+      "dieu-huong chinh"
+      "chan chan";
+    grid-template-columns: 250px 1fr;
+    max-width: 1200px;
     margin: 0 auto;
   }
-}
 
+  /* Flexbox 2 cột cho form và khối thông tin liên hệ */
+  .phan-lien-he {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+  
+  .bieu-mau, .thong-tin {
+    flex: 1;
+    min-width: 320px;
+  }
+}

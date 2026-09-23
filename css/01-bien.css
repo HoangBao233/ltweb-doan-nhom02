@@ -11,6 +11,11 @@
   --nen-phu: #f8f9fa;
   --vien: #dee2e6;
 
+  /* Bổ sung màu cho trạng thái A11y */
+  --mau-focus: #0056b3; 
+  --mau-hover: #002752;
+  --mau-active: #001a36;
+
   /* 2. Kích thước & Typography */
   --font-chinh: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --co-chu-thuong: 16px;
