@@ -102,24 +102,325 @@
   color: var(--nen);
 }
 
+/* Active menu item */
+.menu-chinh__lien-ket--kich-hoat {
+  background-color: var(--mau-chinh);
+  color: var(--nen) !important;
+  font-weight: bold;
+}
+
 /* -----------------------------------------
-   4. Tương tác thẻ A chung (A11y)
+   4. Banner so sánh phiên bản (Bootstrap vs CSS Tùy biến)
+   ----------------------------------------- */
+.banner-so-sanh {
+  background-color: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  border-radius: var(--bo-goc);
+  padding: 0.75rem 1rem;
+  margin-bottom: var(--khoang-cach-vua);
+}
+
+.banner-so-sanh__mo-ta {
+  margin: 0;
+  color: #1b5e20;
+  font-size: 0.95rem;
+}
+
+.banner-so-sanh__lien-ket {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* -----------------------------------------
+   5. Khối lọc học liệu (Filter Section)
+   ----------------------------------------- */
+.bo-loc-hoc-lieu {
+  background-color: var(--nen-the);
+  border: 1px solid var(--vien);
+  border-radius: var(--bo-goc);
+  padding: var(--khoang-cach-vua);
+  margin-bottom: var(--khoang-cach-lon);
+  display: flex;
+  flex-direction: column;
+  gap: var(--khoang-cach-nho);
+}
+
+.bo-loc-hoc-lieu__tieu-de {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--mau-chinh);
+}
+
+.bo-loc-hoc-lieu__nhom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bo-loc-hoc-lieu__nhan {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-right: 0.25rem;
+}
+
+.nut-loc {
+  background-color: var(--nen);
+  color: var(--chu);
+  border: 1px solid var(--vien);
+  border-radius: 20px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--thoi-gian-chuyen);
+}
+
+.nut-loc:hover,
+.nut-loc:active {
+  background-color: var(--mau-chinh);
+  color: var(--nen);
+  border-color: var(--mau-chinh);
+}
+
+.nut-loc--kich-hoat {
+  background-color: var(--mau-chinh);
+  color: var(--nen);
+  border-color: var(--mau-chinh);
+  font-weight: bold;
+}
+
+/* -----------------------------------------
+   6. Thẻ học liệu (Resource Card Grid)
+   ----------------------------------------- */
+.danh-sach-the__luoi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--khoang-cach-lon);
+  margin-bottom: var(--khoang-cach-lon);
+}
+
+@media (min-width: 768px) {
+  .danh-sach-the__luoi {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.the-hoc-lieu {
+  background-color: var(--nen);
+  border: 1px solid var(--vien);
+  border-radius: var(--bo-goc);
+  box-shadow: var(--bong-do);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--thoi-gian-chuyen), box-shadow var(--thoi-gian-chuyen);
+}
+
+.the-hoc-lieu:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.the-hoc-lieu__anh {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.the-hoc-lieu__noi-dung {
+  padding: var(--khoang-cach-vua);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.the-hoc-lieu__tieu-de {
+  font-size: 1.15rem;
+  margin: 0.25rem 0;
+  color: var(--mau-chinh);
+}
+
+.the-hoc-lieu__mo-ta {
+  font-size: 0.9rem;
+  color: #424242;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.5;
+}
+
+/* -----------------------------------------
+   7. Bảng dữ liệu học liệu (Tables)
+   ----------------------------------------- */
+.khoi-bang {
+  margin-bottom: var(--khoang-cach-lon);
+}
+
+.khung-cuon-bang {
+  width: 100%;
+  overflow-x: auto; /* Giữ 0 cuộn ngang cho trang web, chỉ cuộn bảng khi quá chật */
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--bo-goc);
+  border: 1px solid var(--vien);
+}
+
+.bang-hoc-lieu {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background-color: var(--nen);
+}
+
+.bang-hoc-lieu__chu-thich {
+  caption-side: top;
+  font-weight: bold;
+  padding: 0.5rem;
+  color: #616161;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.bang-hoc-lieu__dau-cot {
+  background-color: var(--mau-chinh);
+  color: var(--nen);
+  padding: 0.75rem;
+  font-weight: 600;
+  border-bottom: 2px solid var(--vien);
+  white-space: nowrap;
+}
+
+.bang-hoc-lieu__o-tieu-de {
+  padding: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid var(--vien);
+}
+
+.bang-hoc-lieu__o {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--vien);
+  vertical-align: middle;
+}
+
+.bang-hoc-lieu__hang:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+.bang-hoc-lieu__hang:hover {
+  background-color: #e0f2f1;
+}
+
+/* -----------------------------------------
+   8. Nút thao tác & Nhãn (Badges & Buttons)
+   ----------------------------------------- */
+.nut-thao-tac {
+  display: inline-block;
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none !important;
+  transition: background-color var(--thoi-gian-chuyen);
+}
+
+.nut-thao-tac--xem {
+  background-color: var(--mau-chinh);
+  color: var(--nen) !important;
+}
+
+.nut-thao-tac--xem:hover,
+.nut-thao-tac--xem:active {
+  background-color: #00332c;
+  color: var(--nen) !important;
+}
+
+.nhan-nho {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.nhan-nho--xanh {
+  background-color: #e0f2f1;
+  color: #004d40;
+}
+
+.nhan-nho--cam {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.nhan-nho--tim {
+  background-color: #f3e5f5;
+  color: #4a148c;
+}
+
+/* -----------------------------------------
+   9. Phân trang (Pagination)
+   ----------------------------------------- */
+.phan-trang {
+  display: flex;
+  justify-content: center;
+  margin: var(--khoang-cach-lon) 0;
+}
+
+.phan-trang__danh-sach {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.35rem;
+}
+
+.phan-trang__lien-ket {
+  display: block;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--vien);
+  border-radius: 6px;
+  background-color: var(--nen);
+  color: var(--mau-chinh);
+  font-weight: 500;
+  transition: all var(--thoi-gian-chuyen);
+}
+
+.phan-trang__lien-ket:hover,
+.phan-trang__lien-ket:active {
+  background-color: var(--mau-chinh);
+  color: var(--nen) !important;
+}
+
+.phan-trang__lien-ket--hien-tai {
+  background-color: var(--mau-chinh);
+  color: var(--nen) !important;
+  font-weight: bold;
+  border-color: var(--mau-chinh);
+}
+
+/* -----------------------------------------
+   10. Tương tác thẻ A & Nút bấm chung (A11y)
    ----------------------------------------- */
 a {
   color: var(--mau-chinh);
-  text-decoration: none; /* Bỏ gạch chân mặc định */
+  text-decoration: none;
   transition: color var(--thoi-gian-chuyen), background-color var(--thoi-gian-chuyen);
 }
 
 a:hover, 
 a:active {
   color: var(--mau-nhan);
-  text-decoration: underline; /* Hiện gạch chân khi tương tác */
+  text-decoration: underline;
 }
 
 /* Trạng thái Focus: Giữ viền rõ ràng, tuyệt đối không dùng outline: none */
-a:focus-visible {
+a:focus-visible,
+button:focus-visible {
   outline: 2px solid var(--mau-nhan);
   outline-offset: 4px;
   border-radius: 4px;
 }
+
