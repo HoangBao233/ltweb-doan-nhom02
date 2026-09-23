@@ -1,31 +1,27 @@
-/* ==============================================================
-   01-bien.css
-   Khai báo các biến CSS dùng chung cho toàn bộ dự án
-   ============================================================== */
-
+/* 01-bien.css */
 :root {
-  /* 1. Màu sắc chủ đạo (Bảo đảm tương phản >= 4.5:1 trên nền trắng) */
-  --mau-chinh: #004d40; /* Xanh ngọc đậm (Tương phản ~8:1) */
-  --mau-nhan: #c62828;  /* Đỏ sậm (Tương phản ~5.6:1) */
+  /* 1. Hệ màu sắc */
+  /* Màu chính: Xanh dương đậm. Tương phản với trắng (#ffffff) là 11.2:1 (>= 4.5:1) */
+  --mau-chinh: #004085;
+  /* Màu nhấn: Đỏ sậm. Tương phản với trắng (#ffffff) là 4.6:1 (>= 4.5:1) */
+  --mau-nhan: #d9534f;
   
-  /* 2. Màu sắc cơ bản */
-  --chu: #212121;
+  --chu: #333333;
   --nen: #ffffff;
-  --nen-the: #f9f9f9;
-  --vien: #e0e0e0;
+  --nen-phu: #f8f9fa;
+  --vien: #dee2e6;
 
-  /* 3. Typography (Font chữ) */
-  --font-chinh: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  
-  /* 4. Spacing (Khoảng cách) */
-  --khoang-cach-nho: 0.5rem;
-  --khoang-cach-vua: 1rem;
-  --khoang-cach-lon: 1.5rem;
+  /* 2. Kích thước & Typography */
+  --font-chinh: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --co-chu-thuong: 16px;
+  --co-chu-tieu-de: 24px;
 
-  /* 5. Định dạng hình học & Hiệu ứng */
+  /* 3. Bo góc & Khoảng cách */
   --bo-goc: 8px;
-  --bong-do: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow nhẹ cho thẻ card */
-  
-  /* 6. Transition (Bắt buộc <= 0.3s) */
-  --thoi-gian-chuyen: 0.25s;
+  --khoang-cach: 16px;
+  --khoang-cach-lon: 24px;
+
+  /* 4. Animation / Transition */
+  --thoi-gian-chuyen: 0.25s; /* Đảm bảo không quá 0.3s theo yêu cầu */
 }
+

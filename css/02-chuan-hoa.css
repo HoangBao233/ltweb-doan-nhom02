@@ -1,28 +1,27 @@
-/* ==============================================================
-   02-chuan-hoa.css
-   Reset CSS và chuẩn hóa các thành phần cơ bản
-   ============================================================== */
+/* 02-chuan-hoa.css */
 
-/* 1. Reset toàn cục */
+/* Reset box-sizing cho mọi thẻ */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-/* 2. Reset thẻ body */
+/* Xóa margin mặc định, thiết lập font chữ và cấu hình body */
 body {
   margin: 0;
-  padding: 0;
   font-family: var(--font-chinh);
+  font-size: var(--co-chu-thuong);
   color: var(--chu);
   background-color: var(--nen);
+  line-height: 1.6;
   
-  /* Bắt buộc: KHÔNG có thanh cuộn ngang ở bề rộng 360px */
-  overflow-x: hidden; 
+  /* Xử lý an toàn để tuyệt đối không có cuộn ngang trên thiết bị nhỏ (360px) */
+  overflow-x: hidden;
 }
 
-/* 3. Chuẩn hóa ảnh */
+/* Quy tắc ảnh chuẩn responsive */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
+
