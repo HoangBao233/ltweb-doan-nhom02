@@ -1,0 +1,125 @@
+/* ==============================================================
+   04-thanh-phan.css
+   Lõi giao diện: Định dạng thẻ, menu, link tương tác
+   ============================================================== */
+
+/* -----------------------------------------
+   1. Đoạn văn dài
+   ----------------------------------------- */
+.doan-van-dai {
+  max-width: 65ch;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* -----------------------------------------
+   2. Danh sách thành viên (Flexbox Card)
+   ----------------------------------------- */
+.danh-sach-thanh-vien {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center; /* Bắt buộc theo yêu cầu mới */
+  list-style: none;        /* Bỏ dấu chấm đầu dòng */
+  padding: 0;
+  margin: 2rem 0;
+}
+
+/* Thẻ (Card) đại diện cho từng thành viên */
+.danh-sach-thanh-vien li {
+  background-color: var(--nen-the);
+  border: 1px solid var(--vien);
+  box-shadow: var(--bong-do); /* Shadow nhẹ */
+  border-radius: var(--bo-goc);
+  padding: var(--khoang-cach-lon);
+  
+  /* Mobile-first: Xếp dọc 1 cột */
+  flex: 1 1 100%; 
+  text-align: center;
+}
+
+/* Trình bày tên và mô tả trong card */
+.danh-sach-thanh-vien li a {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: var(--khoang-cach-nho);
+}
+
+.danh-sach-thanh-vien li p {
+  margin: 0;
+  color: #555555;
+}
+
+/* Trên PC: Chia thành các cột đều nhau */
+@media (min-width: 768px) {
+  .danh-sach-thanh-vien li {
+    /* Trừ đi gap 1.5rem giữa các thẻ */
+    flex: 1 1 calc(50% - 1.5rem); 
+  }
+}
+
+@media (min-width: 992px) {
+  .danh-sach-thanh-vien li {
+    flex: 1 1 calc(25% - 1.5rem); 
+  }
+}
+
+/* -----------------------------------------
+   3. Thanh điều hướng (.menu-chinh)
+   ----------------------------------------- */
+.menu-chinh {
+  display: flex;
+  flex-direction: column; /* Mobile-first: Xếp dọc trên điện thoại */
+  gap: var(--khoang-cach-nho);
+  list-style: none;       /* Bỏ dấu chấm đầu dòng */
+  padding: var(--khoang-cach-vua);
+  margin: 0;
+  background-color: var(--nen-the);
+  border-radius: var(--bo-goc);
+}
+
+/* PC: Xếp ngang và phân bổ khoảng cách hợp lý */
+@media (min-width: 768px) {
+  .menu-chinh {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--khoang-cach-lon);
+  }
+}
+
+.menu-chinh a {
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: var(--bo-goc);
+  text-align: center;
+}
+
+.menu-chinh a:hover, 
+.menu-chinh a:active {
+  background-color: var(--mau-chinh);
+  color: var(--nen);
+}
+
+/* -----------------------------------------
+   4. Tương tác thẻ A chung (A11y)
+   ----------------------------------------- */
+a {
+  color: var(--mau-chinh);
+  text-decoration: none; /* Bỏ gạch chân mặc định */
+  transition: color var(--thoi-gian-chuyen), background-color var(--thoi-gian-chuyen);
+}
+
+a:hover, 
+a:active {
+  color: var(--mau-nhan);
+  text-decoration: underline; /* Hiện gạch chân khi tương tác */
+}
+
+/* Trạng thái Focus: Giữ viền rõ ràng, tuyệt đối không dùng outline: none */
+a:focus-visible {
+  outline: 2px solid var(--mau-nhan);
+  outline-offset: 4px;
+  border-radius: 4px;
+}

@@ -1,0 +1,31 @@
+/* ==============================================================
+   01-bien.css
+   Khai báo các biến CSS dùng chung cho toàn bộ dự án
+   ============================================================== */
+
+:root {
+  /* 1. Màu sắc chủ đạo (Bảo đảm tương phản >= 4.5:1 trên nền trắng) */
+  --mau-chinh: #004d40; /* Xanh ngọc đậm (Tương phản ~8:1) */
+  --mau-nhan: #c62828;  /* Đỏ sậm (Tương phản ~5.6:1) */
+  
+  /* 2. Màu sắc cơ bản */
+  --chu: #212121;
+  --nen: #ffffff;
+  --nen-the: #f9f9f9;
+  --vien: #e0e0e0;
+
+  /* 3. Typography (Font chữ) */
+  --font-chinh: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* 4. Spacing (Khoảng cách) */
+  --khoang-cach-nho: 0.5rem;
+  --khoang-cach-vua: 1rem;
+  --khoang-cach-lon: 1.5rem;
+
+  /* 5. Định dạng hình học & Hiệu ứng */
+  --bo-goc: 8px;
+  --bong-do: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow nhẹ cho thẻ card */
+  
+  /* 6. Transition (Bắt buộc <= 0.3s) */
+  --thoi-gian-chuyen: 0.25s;
+}

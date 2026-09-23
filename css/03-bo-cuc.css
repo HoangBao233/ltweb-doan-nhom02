@@ -1,0 +1,35 @@
+/* 03-bo-cuc.css */
+
+/* Mặc định: Mobile-first xếp 1 cột */
+.trang {
+  display: grid;
+  gap: var(--khoang-cach-lon);
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+  min-height: 100vh;
+}
+
+header { grid-area: header; }
+nav    { grid-area: nav; }
+main   { grid-area: main; }
+footer { grid-area: footer; }
+
+/* Giới hạn padding để chống tràn gây thanh cuộn ngang */
+header, nav, main, footer {
+  padding: 0 var(--khoang-cach);
+  max-width: 100%; /* Đảm bảo không vượt quá kích thước màn hình */
+}
+
+/* Điểm ngắt từ màn hình lớn (Máy tính bảng / Desktop) */
+@media (min-width: 768px) {
+  .trang {
+    /* Trang giới thiệu thường không có sidebar nên vẫn giữ 1 cột dọc, 
+       nhưng giới hạn chiều rộng max-width và canh giữa để giao diện đẹp hơn */
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
