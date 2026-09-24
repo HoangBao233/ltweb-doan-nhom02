@@ -1,0 +1,69 @@
+/* canhan-bao.css */
+
+/* Bố cục Grid cho phần giới thiệu bản thân (Mobile first: 1 cột) */
+.gioi-thieu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--khoang-cach-lon, 24px);
+    align-items: center;
+}
+
+/* Điểm ngắt Responsive: Từ máy tính bảng trở lên chia thành 2 cột */
+@media (min-width: 768px) {
+    .gioi-thieu-grid {
+        grid-template-columns: 200px 1fr;
+    }
+}
+
+/* Ảnh chân dung: Co giãn theo khung để không sinh thanh cuộn */
+.anh-chan-dung {
+    width: 100%; 
+    max-width: 250px;
+    height: auto;
+    border-radius: 50%; /* Bo tròn ảnh chân dung cho đẹp */
+    border: 4px solid var(--mau-chinh, #004085);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    display: block;
+    margin: 0 auto;
+}
+
+/* Danh sách kỹ năng: Flexbox để dàn trải dạng tag trên điện thoại */
+.danh-sach-ky-nang {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-left: 0;
+    list-style: none;
+}
+
+.danh-sach-ky-nang li {
+    background-color: var(--mau-chinh, #004085);
+    color: var(--nen, #fff);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: background-color var(--thoi-gian-chuyen, 0.25s);
+}
+
+/* Hover cho danh sách kỹ năng */
+.danh-sach-ky-nang li:hover {
+    background-color: var(--mau-nhan, #d9534f);
+}
+
+/* Nút liên hệ và các trạng thái hover / focus-visible */
+.nut-lien-he-ca-nhan {
+    margin-top: 1rem;
+    display: inline-block;
+    transition: transform var(--thoi-gian-chuyen, 0.25s), background-color var(--thoi-gian-chuyen, 0.25s);
+}
+
+.nut-lien-he-ca-nhan:hover {
+    transform: translateY(-2px);
+    background-color: var(--mau-nhan, #d9534f); /* Đổi màu khi hover */
+}
+
+/* Đảm bảo trạng thái focus-visible rõ ràng theo chuẩn A11y */
+.nut-lien-he-ca-nhan:focus-visible {
+    outline: 3px dashed var(--mau-nhan, #d9534f);
+    outline-offset: 4px;
+}
