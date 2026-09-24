@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Danh sách các giáo án và tài liệu tham khảo môn Tin học dựng bằng Bootstrap 5 - ITeduShare.">
+    <title>Kho Học Liệu (Bootstrap 5) | ITeduShare</title>
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Tùy biến CSS riêng nạp sau Bootstrap theo yêu cầu đề bài -->
+    <link rel="stylesheet" href="css/custom-bootstrap.css">
+</head>
+
+<body class="bg-light">
+    <!-- Header -->
+    <header class="bg-primary text-white text-center py-2">
+        <div class="container">
+            <p class="mb-0 fs-6">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+        </div>
+    </header>
+
+    <!-- Navbar Component -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top mb-4" aria-label="Menu chính">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">ITeduShare</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Bật/tắt thanh điều hướng">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold" aria-current="page"
+                            href="kho-hoc-lieu-bootstrap.html">Kho học liệu (Bootstrap)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="chi-tiet-giao-an.html">Chi tiết giáo án</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ve-chung-toi.html">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dong-gop-tai-lieu.html">Đóng góp tài liệu</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mb-5">
+        <!-- Alert Component -->
+        <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
+            <strong>Phiên bản Bootstrap 5!</strong> Đây là trang đối chứng được dựng bằng framework Bootstrap 5. Bạn
+            cũng có thể xem <a href="kho-hoc-lieu.html" class="alert-link">Phiên bản CSS tùy biến (BEM &amp;
+                Grid/Flexbox) tại đây</a>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng thông báo"></button>
+        </div>
+
+        <h1 class="text-center text-primary fw-bold mb-4">Kho giáo án bộ môn Tin học</h1>
+
+        <!-- Filter Controls (Form/Button Group) -->
+        <section class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="h5 card-title text-primary mb-3">Bộ lọc tài liệu theo cấp học &amp; bộ sách</h2>
+                <div class="row g-3 align-items-center">
+                    <div class="col-12 col-md-6">
+                        <span class="fw-bold me-2">Cấp học:</span>
+                        <div class="btn-group" role="group" aria-label="Lọc cấp học">
+                            <button type="button" class="btn btn-primary btn-sm">Tất cả</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm">THCS</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm">THPT</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <span class="fw-bold me-2">Bộ sách:</span>
+                        <span class="badge bg-success">Kết nối tri thức</span>
+                        <span class="badge bg-warning text-dark">Cánh diều</span>
+                        <span class="badge bg-info text-dark">Chân trời sáng tạo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Card Grid Component -->
+        <section class="mb-5">
+            <h2 class="text-center mb-4">Học liệu nổi bật xem nhiều nhất</h2>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <article class="card h-100 shadow-sm">
+                        <img src="images/so-do-cay-thu-muc.png" class="card-img-top"
+                            alt="Sơ đồ minh họa cấu trúc cây thư mục hệ điều hành" width="300" height="180"
+                            loading="lazy" style="object-fit: cover; height: 200px;">
+                        <div class="card-body d-flex flex-column">
+                            <div>
+                                <span class="badge bg-success mb-2">Tin học 7</span>
+                                <h3 class="h5 card-title text-primary">Quản lý dữ liệu trong máy tính</h3>
+                                <p class="card-text text-muted">Hướng dẫn chi tiết thao tác quản lý tệp và thư mục theo
+                                    chương trình GDPT 2018.</p>
+                            </div>
+                            <div class="mt-auto">
+                                <a href="chi-tiet-giao-an.html" class="btn btn-primary btn-sm w-100">Xem chi tiết bài
+                                    học</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Pagination Component -->
+        <nav aria-label="Phân trang kho học liệu">
+            <ul class="pagination justify-content-center">
+                <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+            </ul>
+        </nav>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p class="mb-0 fs-6">&copy; 2026 Nhóm 02 &mdash; Khoa Toán &ndash; Tin, Trường Đại học Sư phạm - Đại học Đà
+                Nẵng</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+/* ==============================================================
+   custom-bootstrap.css
+   Tùy biến biến CSS của Bootstrap 5 theo màu chủ đạo của dự án
+   ============================================================== */
+
+:root {
+    /* Tùy biến màu chính --bs-primary theo thương hiệu ITeduShare */
+    --bs-primary: #004d40;
+    --bs-primary-rgb: 0, 77, 64;
+    --bs-link-color: #004d40;
+    --bs-link-hover-color: #00251a;
+}
+
+/* Đảm bảo viền focus rõ ràng cho Accessibility */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.page-link:focus-visible {
+    outline: 2px solid #c62828 !important;
+    outline-offset: 2px;
+    box-shadow: none !important;
+}
+
+.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+.btn-primary {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: #00332c !important;
+    border-color: #00332c !important;
+}
+
+.text-primary {
+    color: var(--bs-primary) !important;
+}
