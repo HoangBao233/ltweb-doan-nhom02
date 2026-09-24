@@ -14,36 +14,14 @@
     <link rel="stylesheet" href="css/03-bo-cuc.css">
     <link rel="stylesheet" href="css/04-thanh-phan.css">
     <link rel="stylesheet" href="css/05-tien-ich.css">
-
-    <!-- CSS Tùy chỉnh riêng cho kho-hoc-lieu.html để chống tràn cuộn ngang trên mobile, không đụng vào CSS chung -->
-    <style>
-        html,
-        body {
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        .trang-dau,
-        .thanh-dieu-huong,
-        .noi-dung-chinh,
-        .trang-cuoi {
-            padding: var(--khoang-cach, 16px);
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        .danh-sach-the__luoi {
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-        }
-    </style>
 </head>
 
 <body class="trang">
-    <header class="trang-dau can-giua-chu">
+    <header class="trang__dau can-giua-chu">
         <p class="trang-dau__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
     </header>
 
-    <nav class="thanh-dieu-huong" aria-label="Menu chính">
+    <nav class="trang__dieu-huong" aria-label="Menu chính">
         <ul class="menu-chinh">
             <li><a href="index.html" class="menu-chinh__lien-ket">Trang chủ</a></li>
             <li><a href="kho-hoc-lieu.html" class="menu-chinh__lien-ket menu-chinh__lien-ket--kich-hoat"
@@ -54,7 +32,7 @@
         </ul>
     </nav>
 
-    <main class="noi-dung-chinh">
+    <main class="trang__chinh">
         <h1 class="tieu-de-chinh can-giua-chu">Kho giáo án bộ môn Tin học</h1>
 
         <!-- Khối tìm kiếm & lọc học liệu -->
@@ -90,23 +68,130 @@
                     </div>
                 </article>
 
-
+                <article class="the-hoc-lieu">
+                    <img src="images/banner-trang-chu.jpg"
+                        alt="Học sinh thực hành lập trình Python cơ bản trên máy tính" class="the-hoc-lieu__anh"
+                        width="300" height="180" loading="lazy">
+                    <div class="the-hoc-lieu__noi-dung">
+                        <span class="nhan-nho nhan-nho--cam">Tin học 10</span>
+                        <h3 class="the-hoc-lieu__tieu-de">Lập trình Python cơ bản</h3>
+                        <p class="the-hoc-lieu__mo-ta">Giáo án điện tử dạy cú pháp Python, biến, kiểu dữ liệu và cấu
+                            trúc rẽ nhánh.</p>
+                        <a href="chi-tiet-giao-an.html" class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết bài học</a>
+                    </div>
+                </article>
             </div>
         </section>
 
+        <!-- Bảng danh sách giáo án THCS -->
+        <section class="khoi-bang">
+            <h2>Giáo án khối Trung học Cơ sở</h2>
+            <div class="khung-cuon-bang">
+                <table class="bang-hoc-lieu">
+                    <caption class="bang-hoc-lieu__chu-thich">Danh sách giáo án Tin học lớp 7 (Chương trình GDPT 2018)
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">STT</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Tên bài học</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Bộ sách</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Định dạng</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">1</th>
+                            <td class="bang-hoc-lieu__o">Bài 2: Quản lý dữ liệu trong máy tính</td>
+                            <td class="bang-hoc-lieu__o"><span class="nhan-nho nhan-nho--xanh">Kết nối tri thức</span>
+                            </td>
+                            <td class="bang-hoc-lieu__o">PDF / DOCX</td>
+                            <td class="bang-hoc-lieu__o"><a href="chi-tiet-giao-an.html"
+                                    class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết</a></td>
+                        </tr>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">2</th>
+                            <td class="bang-hoc-lieu__o">Bài 3: Thực hành thao tác với tệp và thư mục</td>
+                            <td class="bang-hoc-lieu__o"><span class="nhan-nho nhan-nho--xanh">Kết nối tri thức</span>
+                            </td>
+                            <td class="bang-hoc-lieu__o">PPTX / PDF</td>
+                            <td class="bang-hoc-lieu__o"><a href="chi-tiet-giao-an.html"
+                                    class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết</a></td>
+                        </tr>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">3</th>
+                            <td class="bang-hoc-lieu__o">Bài 4: Mạng máy tính và Internet</td>
+                            <td class="bang-hoc-lieu__o"><span class="nhan-nho nhan-nho--cam">Cánh diều</span></td>
+                            <td class="bang-hoc-lieu__o">PDF / DOCX</td>
+                            <td class="bang-hoc-lieu__o"><a href="chi-tiet-giao-an.html"
+                                    class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết</a></td>
+                        </tr>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">4</th>
+                            <td class="bang-hoc-lieu__o">Bài 5: Tìm kiếm thông tin trên Internet</td>
+                            <td class="bang-hoc-lieu__o"><span class="nhan-nho nhan-nho--tim">Chân trời sáng tạo</span>
+                            </td>
+                            <td class="bang-hoc-lieu__o">PDF</td>
+                            <td class="bang-hoc-lieu__o"><a href="chi-tiet-giao-an.html"
+                                    class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
+        <!-- Bảng danh sách giáo án THPT -->
+        <section class="khoi-bang">
+            <h2>Giáo án khối Trung học Phổ thông</h2>
+            <div class="khung-cuon-bang">
+                <table class="bang-hoc-lieu">
+                    <caption class="bang-hoc-lieu__chu-thich">Danh sách giáo án Tin học lớp 10 &amp; 11 (Chương trình
+                        GDPT 2018)</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">STT</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Tên bài học</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Bộ sách</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Định dạng</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">1</th>
+                            <td class="bang-hoc-lieu__o">Bài 1: Khái niệm hệ điều hành &amp; phần mềm ứng dụng</td>
+                            <td class="bang-hoc-lieu__o"><span class="nhan-nho nhan-nho--xanh">Kết nối tri thức</span>
+                            </td>
+                            <td class="bang-hoc-lieu__o">PDF / PPTX</td>
+                            <td class="bang-hoc-lieu__o"><a href="chi-tiet-giao-an.html"
+                                    class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết</a></td>
+                        </tr>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">2</th>
+                            <td class="bang-hoc-lieu__o">Bài 6: Câu lệnh rẽ nhánh trong Python</td>
+                            <td class="bang-hoc-lieu__o"><span class="nhan-nho nhan-nho--cam">Cánh diều</span></td>
+                            <td class="bang-hoc-lieu__o">DOCX / PDF</td>
+                            <td class="bang-hoc-lieu__o"><a href="chi-tiet-giao-an.html"
+                                    class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
         <!-- Phân trang -->
         <nav aria-label="Phân trang kho học liệu" class="phan-trang">
             <ul class="phan-trang__danh-sach">
                 <li class="phan-trang__muc"><a href="#" class="phan-trang__lien-ket phan-trang__lien-ket--hien-tai"
                         aria-current="page">1</a></li>
-
+                <li class="phan-trang__muc"><a href="#" class="phan-trang__lien-ket">2</a></li>
+                <li class="phan-trang__muc"><a href="#" class="phan-trang__lien-ket">3</a></li>
+                <li class="phan-trang__muc"><a href="#" class="phan-trang__lien-ket">Tiếp theo &raquo;</a></li>
             </ul>
         </nav>
     </main>
 
-    <footer class="trang-cuoi can-giua-chu">
+    <footer class="trang__chan can-giua-chu">
         <p class="trang-cuoi__ban-quyen">&copy; 2026 Nhóm 02 &mdash; Khoa Toán &ndash; Tin, Trường Đại học Sư phạm - Đại
             học Đà Nẵng</p>
     </footer>
