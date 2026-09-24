@@ -193,17 +193,11 @@
    6. Thẻ học liệu (Resource Card Grid)
    ----------------------------------------- */
 .danh-sach-the__luoi {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: var(--khoang-cach-lon);
   margin-bottom: var(--khoang-cach-lon);
-}
-
-@media (min-width: 768px) {
-  .danh-sach-the__luoi {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
+  /* Sửa thành dòng này: */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
 }
 
 .the-hoc-lieu {
