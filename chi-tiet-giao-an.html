@@ -5,62 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Chi tiết giáo án môn Tin học lớp 7 - Bài 2: Quản lý dữ liệu trong máy tính.">
     <title>Chi tiết giáo án | ITeduShare</title>
+    
+    <!-- Nạp 5 file CSS theo đúng thứ tự -->
+    <link rel="stylesheet" href="css/01-bien.css">
+    <link rel="stylesheet" href="css/02-chuan-hoa.css">
+    <link rel="stylesheet" href="css/03-bo-cuc.css">
+    <link rel="stylesheet" href="css/04-thanh-phan.css">
+    <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
-<body>
-    <header>
-        <p>ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+<body class="trang">
+    
+    <!-- Header giống y đúc index.html -->
+    <header class="trang-dau can-giua-chu">
+        <p class="trang-dau__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
     </header>
     
-    <nav>
-        <ul>
-            <li><a href="index.html">Trang chủ</a></li>
-            <li><a href="kho-hoc-lieu.html">Kho học liệu</a></li>
-            <li><a href="chi-tiet-giao-an.html">Chi tiết giáo án</a></li>
-            <li><a href="ve-chung-toi.html">Về chúng tôi</a></li>
-            <li><a href="dong-gop-tai-lieu.html">Đóng góp tài liệu</a></li>
+    <!-- Nav giống y đúc index.html (đã đổi trạng thái active sang trang hiện tại) -->
+    <nav class="thanh-dieu-huong" aria-label="Menu chính">
+        <ul class="menu-chinh">
+            <li><a href="index.html" class="menu-chinh__lien-ket">Trang chủ</a></li>
+            <li><a href="kho-hoc-lieu.html" class="menu-chinh__lien-ket">Kho học liệu</a></li>
+            <li><a href="chi-tiet-giao-an.html" class="menu-chinh__lien-ket menu-chinh__lien-ket--kich-hoat" aria-current="page">Chi tiết giáo án</a></li>
+            <li><a href="ve-chung-toi.html" class="menu-chinh__lien-ket">Về chúng tôi</a></li>
+            <li><a href="dong-gop-tai-lieu.html" class="menu-chinh__lien-ket">Đóng góp tài liệu</a></li>
         </ul>
     </nav>
 
-    <main>
-        <h1>Chi tiết giáo án: Quản lý dữ liệu trong máy tính</h1>
+    <!-- Sử dụng class phan-lien-he để tạo Grid/Flex 2 cột cho main & aside -->
+    <main class="trang__chinh phan-lien-he">
+        <h1 class="phan-lien-he__tieu-de">Chi tiết giáo án: Quản lý dữ liệu trong máy tính</h1>
         
-        <article>
+        <!-- Nội dung chính -->
+        <article class="bieu-mau">
             <h2>Mục tiêu bài học</h2>
             <p>Bài học giúp học sinh nắm vững cách tạo, đổi tên, di chuyển và xóa các tệp, thư mục trên hệ điều hành Windows.</p>
             
             <figure>
-                <img src="images/so-do-cay-thu-muc.png" alt="Sơ đồ minh họa cấu trúc cây thư mục hệ điều hành">
+                <img src="images/so-do-cay-thu-muc.png" alt="Sơ đồ minh họa cấu trúc cây thư mục hệ điều hành" loading="lazy" width="600" height="400">
                 <figcaption>Hình 1: Cấu trúc cây thư mục đa cấp</figcaption>
             </figure>
 
-            <h2>Bảng thông số tài liệu</h2>
-            <table>
-                <caption>Thông số kỹ thuật của giáo án</caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Thuộc tính</th>
-                        <th scope="col">Thông tin chi tiết</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">Đối tượng</th>
-                        <td>Học sinh Lớp 7</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Dung lượng</th>
-                        <td>2.5 MB (Định dạng PDF)</td>
-                    </tr>
-                </tbody>
-            </table>
-
             <h2>Video hướng dẫn thực hành</h2>
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video bài giảng cách tạo cây thư mục trên Windows" width="560" height="315"></iframe>
+            <!-- Dùng iframe để nhúng video YouTube phát trực tiếp trên web -->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/IRWYkSjMclM?si=y7NF15ZuDCdHlTxn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading = "lazy"></iframe>
         </article>
+        
+        <!-- Cột phụ (Thông tin thêm) -->
+        <aside class="thong-tin">
+            <h2>Bảng thông số tài liệu</h2>
+            <div class="khung-cuon-bang">
+                <table class="bang-hoc-lieu">
+                    <caption class="bang-hoc-lieu__chu-thich">Thông số kỹ thuật của giáo án</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Thuộc tính</th>
+                            <th scope="col" class="bang-hoc-lieu__dau-cot">Thông tin chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">Đối tượng</th>
+                            <td class="bang-hoc-lieu__o">Học sinh Lớp 7</td>
+                        </tr>
+                        <tr class="bang-hoc-lieu__hang">
+                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">Dung lượng</th>
+                            <td class="bang-hoc-lieu__o">2.5 MB (Định dạng PDF)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </aside>
     </main>
 
-    <footer>
-        <p>© 2026 Nhóm 02 — Khoa Toán – Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng</p>
+    <!-- Footer giống y đúc index.html -->
+    <footer class="trang__chan">
+        <p class="trang__ban-quyen">© 2026 Nhóm 02 — Khoa Toán – Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng</p>
     </footer>
 </body>
 </html>
