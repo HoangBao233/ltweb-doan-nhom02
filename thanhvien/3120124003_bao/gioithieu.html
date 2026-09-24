@@ -5,89 +5,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Trang giới thiệu cá nhân của Lê Hoàng Bảo, thành viên dự án IT-EduShare.">
   <title>Giới thiệu cá nhân | Lê Hoàng Bảo</title>
+  
+  <!-- Nạp 5 file CSS chung của nhóm -->
+  <link rel="stylesheet" href="../../css/01-bien.css">
+  <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="../../css/03-bo-cuc.css">
+  <link rel="stylesheet" href="../../css/04-thanh-phan.css">
+  <link rel="stylesheet" href="../../css/05-tien-ich.css">
+  
+  <!-- Nạp file CSS cá nhân (yêu cầu số 1) -->
+  <link rel="stylesheet" href="canhan-bao.css">
 </head>
-<body>
-  <!-- Bắt buộc phải có header chung giống trang chủ -->
-  <header>
-    <h2>ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</h2>
+<body class="trang">
+  
+  <!-- Header dùng class chung -->
+  <header class="trang-dau can-giua-chu">
+    <p class="trang-dau__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
   </header>
 
-  <!-- Bắt buộc phải có menu điều hướng, trong đó có link tương đối quay về trang chủ -->
-  <nav>
-    <ul>
-      <li><a href="../../index.html">Quay về Trang chủ Nhóm</a></li>
-      <li><a href="../../ve-chung-toi.html">Quay về Trang Giới thiệu Nhóm</a></li>
+  <!-- Menu điều hướng -->
+  <nav class="thanh-dieu-huong" aria-label="Menu chính">
+    <ul class="menu-chinh">
+      <li><a href="../../index.html" class="menu-chinh__lien-ket">Quay về Trang chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket">Quay về Trang Giới thiệu Nhóm</a></li>
     </ul>
   </nav>
 
-  <!-- Bắt buộc dùng main cho nội dung chính -->
-  <main>
-    <h1>Hồ sơ thành viên: Lê Hoàng Bảo</h1>
+  <!-- Bố cục dùng class phan-lien-he để tạo cấu trúc cột an toàn trên điện thoại -->
+  <main class="trang__chinh phan-lien-he">
+    <h1 class="phan-lien-he__tieu-de can-giua-chu">Hồ sơ thành viên: Lê Hoàng Bảo</h1>
 
-    <!-- 1. Section: Giới thiệu bản thân và ảnh chân dung (bắt buộc có alt) -->
-    <section>
+    <!-- 1. Section: Giới thiệu bản thân và ảnh chân dung (Dùng Grid) -->
+    <section class="bieu-mau">
       <h2>Giới thiệu bản thân</h2>
-      <!-- Bạn thay ten-file-anh.jpg bằng tên ảnh chân dung của bạn (viết không dấu) -->
-      <!-- Nếu ảnh để trong thư mục images ngoài gốc, đường dẫn sẽ là ../../images/ten-file-anh.jpg -->
-      <img src="avatar-bao.jpg" alt="Ảnh chân dung của Lê Hoàng Bảo" width="200">
-      <p>Xin chào, tôi là Lê Hoàng Bảo, sinh viên Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng. Tôi là người đảm nhận nhiệm vụ trưởng nhóm cho dự án website này.</p>
-      
-      <h3>Danh sách kỹ năng nổi bật</h3>
-      <!-- 2. Danh sách kỹ năng dùng ul, li (bắt buộc) -->
-      <ul>
-        <li>Lập trình Python (Pygame, Tkinter, OpenCV)</li>
-        <li>Thiết kế cơ sở dữ liệu (PostgreSQL, SQL Server)</li>
-        <li>Xây dựng website tĩnh với HTML5 & CSS3</li>
-        <li>Quản lý phiên bản mã nguồn với Git/GitHub</li>
-      </ul>
+      <!-- Class gioi-thieu-grid định nghĩa 1 cột ở mobile và 2 cột ở màn hình rộng (yêu cầu số 2) -->
+      <div class="gioi-thieu-grid">
+          <div class="anh-dai-dien">
+             <!-- Ảnh chân dung tự động co giãn theo khung nhờ class anh-chan-dung -->
+             <img src="avatar-bao.jpg" alt="Ảnh chân dung của Lê Hoàng Bảo" class="anh-chan-dung">
+          </div>
+          <div class="noi-dung-gioi-thieu">
+             <p>Xin chào, tôi là Lê Hoàng Bảo, sinh viên Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng. Tôi là người đảm nhận nhiệm vụ trưởng nhóm cho dự án website này.</p>
+             
+             <h3>Danh sách kỹ năng nổi bật</h3>
+             <!-- Danh sách kỹ năng dùng Flexbox để tự xuống dòng (tránh cuộn ngang ở 360px) -->
+             <ul class="danh-sach-ky-nang">
+               <li>Lập trình Python (Pygame, Tkinter, OpenCV)</li>
+               <li>Thiết kế CSDL (PostgreSQL, SQL Server)</li>
+               <li>HTML5 & CSS3</li>
+               <li>Quản lý mã nguồn với Git/GitHub</li>
+             </ul>
+          </div>
+      </div>
     </section>
 
-    <!-- 3. Article: Giới thiệu về dự án / sở thích cá nhân (bắt buộc dùng article) -->
-    <article>
+    <!-- 3. Article: Giới thiệu về dự án / sở thích cá nhân -->
+    <article class="bieu-mau">
       <h2>Vai trò trong dự án ITeduShare & Sở thích</h2>
-      <p>Hiện tại tôi đang đảm nhận vai trò trưởng nhóm trong dự án IT-EduShare. Ngoài ra, tôi cũng có nhiều sở thích như đọc sách, chơi game và và tham gia các hoạt động thể thao.</p>
+      <p>Hiện tại tôi đang đảm nhận vai trò trưởng nhóm trong dự án IT-EduShare. Ngoài ra, tôi cũng có nhiều sở thích như đọc sách, chơi game và tham gia các hoạt động thể thao.</p>
+      
+      <!-- Nút bấm với trạng thái :hover và :focus-visible rõ ràng -->
+      <button type="button" class="nut-thao-tac nut-thao-tac--xem nut-lien-he-ca-nhan">Kết nối với tôi</button>
     </article>
 
-    <!-- 4. Table: Bảng thời khóa biểu tuần (bắt buộc có caption, thead, th scope) -->
-    <section>
+    <!-- 4. Table: Bảng thời khóa biểu tuần -->
+    <section class="thong-tin">
       <h2>Thời khóa biểu cá nhân</h2>
-      <table>
-        <caption>Kế hoạch học tập và làm việc trong tuần</caption>
-        <thead>
-          <tr>
-            <th scope="col">Thứ</th>
-            <th scope="col">Sáng</th>
-            <th scope="col">Chiều</th>
-            <th scope="col">Tối</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Thứ Hai</th>
-            <td>Học trên trường</td>
-            <td>Tự học HTML5</td>
-            <td>Dạy kèm tin học</td>
-          </tr>
-          <tr>
-            <th scope="row">Thứ Ba</th>
-            <td>Nghỉ</td>
-            <td>Học trên trường</td>
-            <td>Làm bài tập nhóm</td>
-          </tr>
-          <tr>
-            <th scope="row">Thứ Tư</th>
-            <td>Học trên trường</td>
-            <td>Họp nhóm ITeduShare</td>
-            <td>Coding</td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- Bảng được bọc trong khung-cuon-bang (có overflow-x: auto) để KHÔNG gây thanh cuộn ngang trang web ở 360px -->
+      <div class="khung-cuon-bang">
+        <table class="bang-hoc-lieu">
+          <caption class="bang-hoc-lieu__chu-thich">Kế hoạch học tập và làm việc trong tuần</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="bang-hoc-lieu__dau-cot">Thứ</th>
+              <th scope="col" class="bang-hoc-lieu__dau-cot">Sáng</th>
+              <th scope="col" class="bang-hoc-lieu__dau-cot">Chiều</th>
+              <th scope="col" class="bang-hoc-lieu__dau-cot">Tối</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bang-hoc-lieu__hang">
+              <th scope="row" class="bang-hoc-lieu__o-tieu-de">Thứ Hai</th>
+              <td class="bang-hoc-lieu__o">Học trên trường</td>
+              <td class="bang-hoc-lieu__o">Tự học HTML5</td>
+              <td class="bang-hoc-lieu__o">Dạy kèm tin học</td>
+            </tr>
+            <tr class="bang-hoc-lieu__hang">
+              <th scope="row" class="bang-hoc-lieu__o-tieu-de">Thứ Ba</th>
+              <td class="bang-hoc-lieu__o">Nghỉ</td>
+              <td class="bang-hoc-lieu__o">Học trên trường</td>
+              <td class="bang-hoc-lieu__o">Làm bài tập nhóm</td>
+            </tr>
+            <tr class="bang-hoc-lieu__hang">
+              <th scope="row" class="bang-hoc-lieu__o-tieu-de">Thứ Tư</th>
+              <td class="bang-hoc-lieu__o">Học trên trường</td>
+              <td class="bang-hoc-lieu__o">Họp nhóm</td>
+              <td class="bang-hoc-lieu__o">Coding</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
 
-  <!-- Bắt buộc có footer chung -->
-  <footer>
-    <p>© 2026 Nhóm 02 - Khoa Toán - Tin</p>
+  <!-- Footer -->
+  <footer class="trang__chan can-giua-chu">
+    <p class="trang__ban-quyen">© 2026 Nhóm 02 - Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng</p>
   </footer>
 </body>
 </html>
