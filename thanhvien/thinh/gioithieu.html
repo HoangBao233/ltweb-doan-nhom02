@@ -1,76 +1,109 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trang Giới Thiệu Cá Nhân - Nguyễn Tiến Thịnh</title>
+  <meta name="description" content="Trang giới thiệu cá nhân của Nguyễn Tiến Thịnh, thành viên Nhóm 02 - ITeduShare.">
+  <title>Giới thiệu cá nhân | Nguyễn Tiến Thịnh</title>
+
+  <!-- Nạp 5 file CSS dùng chung của nhóm -->
+  <link rel="stylesheet" href="../../css/01-bien.css">
+  <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="../../css/03-bo-cuc.css">
+  <link rel="stylesheet" href="../../css/04-thanh-phan.css">
+  <link rel="stylesheet" href="../../css/05-tien-ich.css">
+
+  <!-- Nạp file CSS riêng của trang cá nhân -->
+  <link rel="stylesheet" href="gioithieu.css">
 </head>
-<body>
-  <header>
-    <h1>Trang Cá Nhân - Nguyễn Tiến Thịnh</h1>
-    <nav>
-      <!-- Dùng <ul> và <li> để đúng chuẩn cấu trúc danh sách liên kết điều hướng -->
-      <ul>
-        <li><a href="../../index.html">Quay về Trang Chủ Nhóm</a></li>
-        <li><a href="../../ve-chung-toi.html">Quay về Trang Giới Thiệu</a></li>
-      </ul>
-    </nav>
+
+<body class="trang">
+  <header class="trang__dau can-giua-chu">
+    <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
   </header>
 
-  <main>
-    <section>
-      <h2>Giới thiệu bản thân</h2>
-      <img src="avatar.jpg" alt="Ảnh chân dung Nguyễn Tiến Thịnh" width="150">
-      <p>Xin chào! Tôi là Nguyễn Tiến Thịnh, thành viên Nhóm 02 môn Lập trình Web.</p>
-      
-      <h3>Kỹ năng cá nhân</h3>
-      <ul>
-        <li>HTML5 / CSS3 / JavaScript</li>
-        <li>Ngôn ngữ lập trình PHP</li>
-        <li>Quản lý mã nguồn với Git & GitHub</li>
-      </ul>
+  <nav class="thanh-dieu-huong-ca-nhan" aria-label="Menu điều hướng trang cá nhân">
+    <ul>
+      <li><a href="../../index.html">&laquo; Quay về Trang Chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.html">&laquo; Quay về Trang Giới Thiệu Nhóm</a></li>
+    </ul>
+  </nav>
+
+  <main class="trang__chinh">
+    <h1 class="can-giua-chu">Hồ sơ thành viên: Nguyễn Tiến Thịnh</h1>
+
+    <!-- 1. Bố cục cá nhân Flexbox / Grid -->
+    <section class="ho-so-ca-nhan">
+      <img src="avatar.jpg" alt="Ảnh chân dung Nguyễn Tiến Thịnh" class="anh-chan-dung" width="200" height="200"
+        loading="lazy">
+
+      <div class="thong-tin-ca-nhan">
+        <h2>Giới thiệu bản thân</h2>
+        <p>Xin chào! Tôi là <strong>Nguyễn Tiến Thịnh</strong> (MSSV: 3120222126), sinh viên ngành Công nghệ thông
+          tin/Sư phạm Tin học. Tôi là thành viên chịu trách nhiệm xây dựng trang <strong>Kho học liệu</strong> cho dự án
+          website ITeduShare.</p>
+
+        <h3>Danh sách kỹ năng nổi bật</h3>
+        <ul class="danh-sach-ky-nang">
+          <li>HTML5 &amp; CSS3 Responsive</li>
+          <li>Lập trình JavaScript / PHP</li>
+          <li>Quản lý mã nguồn với Git / GitHub</li>
+          <li>Tối ưu Accessibility &amp; SEO</li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Đổi <article> thành <section> vì đây là một phần nội dung thông tin cá nhân, không phải bài báo độc lập -->
-    <section>
-      <h2>Dự án & Sở thích</h2>
-      <p>Hiện tại tôi đang tham gia làm bài tập nhóm môn Lập trình Web. Sở thích của tôi là lập trình và chơi game giải trí cùng bạn bè.</p>
+    <!-- 2. Sở thích & Vai trò -->
+    <section class="khoi-thoi-khoa-bieu">
+      <h2>Vai trò trong dự án ITeduShare &amp; Sở thích</h2>
+      <p class="doan-van-dai">Trong dự án ITeduShare, tôi đảm nhận nhiệm vụ thiết kế trang Kho học liệu, chuẩn hóa cấu
+        trúc BEM, viết CSS responsive cho bảng giáo án và thẻ bài học. Khi rảnh rỗi, tôi thích tìm hiểu các công nghệ
+        lập trình mới và chơi game giải trí cùng bạn bè.</p>
     </section>
 
-    <section>
-      <h2>Thời khóa biểu tuần</h2>
-      <table>
-        <caption>Thời khóa biểu các buổi học trong tuần</caption>
-        <thead>
-          <tr>
-            <th scope="col">Thứ</th>
-            <th scope="col">Buổi Sáng</th>
-            <th scope="col">Buổi Chiều</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Thứ 2</th>
-            <td>Lập trình Web</td>
-            <td>Tự học Git</td>
-          </tr>
-          <tr>
-            <th scope="row">Thứ 4</th>
-            <td>Cơ sở dữ liệu</td>
-            <td>Làm bài tập nhóm</td>
-          </tr>
-          <tr>
-            <th scope="row">Thứ 6</th>
-            <td>Mạng máy tính</td>
-            <td>Sinh hoạt CLB</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- 3. Thời khóa biểu cá nhân -->
+    <section class="khoi-thoi-khoa-bieu">
+      <h2>Thời khóa biểu cá nhân</h2>
+      <div class="khung-cuon-bang-ca-nhan">
+        <table class="bang-thoi-khoa-bieu">
+          <caption>Kế hoạch học tập và làm việc trong tuần</caption>
+          <thead>
+            <tr>
+              <th scope="col">Thứ</th>
+              <th scope="col">Buổi Sáng</th>
+              <th scope="col">Buổi Chiều</th>
+              <th scope="col">Buổi Tối</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Thứ Hai</th>
+              <td>Lập trình Web</td>
+              <td>Tự học Git / CSS BEM</td>
+              <td>Làm bài tập nhóm</td>
+            </tr>
+            <tr>
+              <th scope="row">Thứ Tư</th>
+              <td>Cơ sở dữ liệu</td>
+              <td>Làm bài tập nhóm ITeduShare</td>
+              <td>Tự học nâng cao</td>
+            </tr>
+            <tr>
+              <th scope="row">Thứ Sáu</th>
+              <td>Mạng máy tính</td>
+              <td>Sinh hoạt CLB Tin học</td>
+              <td>Giải trí cá nhân</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Nguyễn Tiến Thịnh - Nhóm 02</p>
+  <footer class="trang__chan can-giua-chu">
+    <p>&copy; 2026 Nguyễn Tiến Thịnh (3120222126) &mdash; Nhóm 02, Khoa Toán &ndash; Tin</p>
   </footer>
 </body>
+
 </html>

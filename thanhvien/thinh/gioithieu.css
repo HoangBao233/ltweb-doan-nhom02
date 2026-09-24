@@ -1,0 +1,149 @@
+/* ==============================================================
+   gioithieu.css
+   File CSS riêng cho trang cá nhân của Nguyễn Tiến Thịnh
+   ============================================================== */
+
+/* 1. Khung bố cục cá nhân (Responsive Flexbox / Grid) */
+.ho-so-ca-nhan {
+    display: flex;
+    flex-direction: column;
+    gap: var(--khoang-cach-lon);
+    background-color: var(--nen);
+    padding: var(--khoang-cach-vua);
+    border-radius: var(--bo-goc);
+}
+
+@media (min-width: 768px) {
+    .ho-so-ca-nhan {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        align-items: start;
+        gap: var(--khoang-cach-lon);
+    }
+}
+
+/* 2. Ảnh chân dung cá nhân (Co giãn theo khung) */
+.anh-chan-dung {
+    width: 100%;
+    max-width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--mau-chinh);
+    box-shadow: var(--bong-do);
+    margin: 0 auto;
+}
+
+/* 3. Khối nội dung thông tin */
+.thong-tin-ca-nhan {
+    display: flex;
+    flex-direction: column;
+    gap: var(--khoang-cach-nho);
+}
+
+/* 4. Danh sách kỹ năng */
+.danh-sach-ky-nang {
+    list-style: none;
+    padding: 0;
+    margin: var(--khoang-cach-nho) 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.danh-sach-ky-nang li {
+    background-color: #e0f2f1;
+    color: #004d40;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 16px;
+    border: 1px solid #b2dfdb;
+}
+
+/* 5. Bảng thời khóa biểu (Responsive Table) */
+.khoi-thoi-khoa-bieu {
+    margin-top: var(--khoang-cach-vua);
+}
+
+.khung-cuon-bang-ca-nhan {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--vien);
+    border-radius: var(--bo-goc);
+}
+
+.bang-thoi-khoa-bieu {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    background-color: var(--nen);
+}
+
+.bang-thoi-khoa-bieu caption {
+    caption-side: top;
+    font-weight: bold;
+    padding: 0.5rem;
+    color: #616161;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.bang-thoi-khoa-bieu th,
+.bang-thoi-khoa-bieu td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--vien);
+}
+
+.bang-thoi-khoa-bieu thead th {
+    background-color: var(--mau-chinh);
+    color: var(--nen);
+    font-weight: 600;
+}
+
+.bang-thoi-khoa-bieu tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.bang-thoi-khoa-bieu tbody tr:hover {
+    background-color: #e0f2f1;
+}
+
+/* 6. Tương tác A11y & Links */
+.thanh-dieu-huong-ca-nhan {
+    margin-bottom: var(--khoang-cach-vua);
+}
+
+.thanh-dieu-huong-ca-nhan ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--khoang-cach-nho);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.thanh-dieu-huong-ca-nhan a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--nen-the);
+    border: 1px solid var(--vien);
+    border-radius: var(--bo-goc);
+    color: var(--mau-chinh);
+    font-weight: 600;
+    transition: all var(--thoi-gian-chuyen);
+}
+
+.thanh-dieu-huong-ca-nhan a:hover,
+.thanh-dieu-huong-ca-nhan a:active {
+    background-color: var(--mau-chinh);
+    color: var(--nen);
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--mau-nhan) !important;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
