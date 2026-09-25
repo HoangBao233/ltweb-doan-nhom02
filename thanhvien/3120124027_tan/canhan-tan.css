@@ -25,16 +25,7 @@
 /* =========================================
    2. CỘT THÔNG TIN CƠ BẢN & AVATAR
    ========================================= */
-.cot-trai {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--nen-the, #f9f9f9);
-  padding: var(--khoang-cach-lon, 1.5rem);
-  border: 1px solid var(--vien, #e0e0e0);
-  border-radius: var(--bo-goc, 8px);
-  text-align: center;
-}
+.cot-trai { display: flex; flex-direction: column; align-items: center; background-color: var(--nen-the, #f9f9f9); padding: var(--khoang-cach-lon, 1.5rem); border: 1px solid var(--vien, #e0e0e0); border-radius: var(--bo-goc, 8px); text-align: center; min-width: 0; }
 
 /* Đã chỉnh sửa: Ép kích thước tối đa 200px và cắt tỷ lệ 1:1 */
 .anh-dai-dien {
@@ -50,11 +41,7 @@
 /* =========================================
    3. CỘT NỘI DUNG (THỜI KHÓA BIỂU & KỸ NĂNG)
    ========================================= */
-.cot-phai {
-  display: flex;
-  flex-direction: column;
-  gap: var(--khoang-cach-lon, 1.5rem);
-}
+.cot-phai { display: flex; flex-direction: column; gap: var(--khoang-cach-lon, 1.5rem); min-width: 0; }
 
 .danh-sach-ky-nang {
   display: flex;

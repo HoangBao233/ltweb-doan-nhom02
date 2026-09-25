@@ -6,25 +6,34 @@
   <meta name="description" content="Trang thông tin cá nhân của Lê Thị Xuân Châu">
   <title>Giới thiệu | Lê Thị Xuân Châu</title>
 
-  <!-- 3 Liên kết CSS đã được thêm chuẩn xác -->
+  <!-- Nạp 5 file CSS chung của nhóm để lấy header/footer -->
   <link rel="stylesheet" href="../../css/01-bien.css">
   <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="../../css/03-bo-cuc.css">
+  <link rel="stylesheet" href="../../css/04-thanh-phan.css">
+  <link rel="stylesheet" href="../../css/05-tien-ich.css">
+  
+  <!-- CSS nội dung bên trong của Châu -->
   <link rel="stylesheet" href="xchau.css">
 </head>
 <body class="trang">
-  <header>
-    <h2>ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</h2>
+  
+  <!-- Header giống nhóm -->
+  <header class="trang__dau can-giua-chu">
+    <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
   </header>
 
-  <nav>
-    <ul>
-      <li><a href="../../index.html">Quay về Trang chủ Nhóm</a></li>
-      <li><a href="../../ve-chung-toi.html">Quay về Trang Giới thiệu Nhóm</a></li>
+  <!-- Nav giống nhóm -->
+  <nav class="trang__dieu-huong" aria-label="Menu chính">
+    <ul class="menu-chinh">
+      <li><a href="../../index.html" class="menu-chinh__lien-ket">Quay về Trang chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket">Quay về Trang Giới thiệu Nhóm</a></li>
     </ul>
   </nav>
 
-  <main>
-    <h1>Hồ sơ thành viên: Lê Thị Xuân Châu</h1>
+  <!-- Main chứa nội dung riêng -->
+  <main class="trang__chinh">
+    <h1 class="can-giua-chu">Hồ sơ thành viên: Lê Thị Xuân Châu</h1>
 
     <section>
       <h2>Giới thiệu bản thân</h2>
@@ -46,8 +55,7 @@
 
     <section>
       <h2>Thời khóa biểu cá nhân</h2>
-      <!-- Đã bọc bảng trong thẻ div cuộn ngang để chống tràn màn hình Mobile -->
-      <div class="khung-cuon-bang" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+      <div class="khung-cuon-bang">
         <table>
           <caption>Kế hoạch trong tuần</caption>
           <thead>
@@ -89,8 +97,9 @@
     </section>
   </main>
 
-  <footer>
-    <p>© 2026 Nhóm 02 - Khoa Toán - Tin</p>
+  <!-- Footer giống nhóm -->
+  <footer class="trang__chan can-giua-chu">
+    <p class="trang__ban-quyen">© 2026 Nhóm 02 - Khoa Toán - Tin</p>
   </footer>
 </body>
 </html>
