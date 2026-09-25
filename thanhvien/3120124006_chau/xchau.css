@@ -1,88 +1,27 @@
-/* CSS cho trang giới thiệu Lê Thị Xuân Châu */
-
-/* === Bố cục chung Mobile-first (1 cột) === */
-.trang {
-  display: flex;
-  flex-direction: column;
-  gap: var(--khoang-cach);
-  padding: var(--khoang-cach);
-}
-
-header {
-  background-color: var(--mau-chinh, #004085);
-  color: #ffffff;
-  padding: var(--khoang-cach);
-  border-radius: var(--bo-goc, 8px);
-}
-
-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-nav a {
-  display: block;
-  padding: 0.75rem 1rem;
-  background-color: var(--nen-phu, #f8f9fa);
-  color: var(--mau-chinh, #004085);
-  text-decoration: none;
-  border-radius: var(--bo-goc, 8px);
-  border: 1px solid var(--vien, #dee2e6);
-  font-weight: bold;
-  transition: background-color var(--thoi-gian-chuyen, 0.25s), color var(--thoi-gian-chuyen, 0.25s);
-}
-
-/* A11y cho liên kết (Không dùng !important, có focus-visible) */
-nav a:hover {
-  background-color: var(--mau-chinh, #004085);
-  color: #ffffff;
-}
-
-nav a:focus-visible, a:focus-visible, button:focus-visible {
-  outline: 2px solid var(--mau-nhan, #d9534f);
-  outline-offset: 3px;
-}
-
-a {
-  color: var(--mau-chinh, #004085);
-  transition: color var(--thoi-gian-chuyen, 0.25s);
-}
-
-a:hover {
-  color: var(--mau-nhan, #d9534f);
-}
-
-main {
-  background-color: var(--nen, #ffffff);
-  padding: var(--khoang-cach);
-  border: 1px solid var(--vien, #dee2e6);
-  border-radius: var(--bo-goc, 8px);
-}
-
-footer {
-  text-align: center;
-  padding: var(--khoang-cach);
-  background-color: var(--mau-chinh, #004085);
-  color: #ffffff;
-  border-radius: var(--bo-goc, 8px);
-}
+/* CSS cho trang giới thiệu Lê Thị Xuân Châu (Chỉ định dạng nội dung bên trong main) */
 
 /* === Bố cục nội dung trong Main === */
 section, article {
-  margin-bottom: calc(var(--khoang-cach) * 2);
+  margin-bottom: calc(var(--khoang-cach, 16px) * 2);
 }
 
 h1, h2, h3 {
   color: var(--mau-chinh, #004085);
+}
+
+/* A11y cho liên kết (Không dùng !important, có focus-visible) */
+main a {
+  color: var(--mau-chinh, #004085);
+  transition: color var(--thoi-gian-chuyen, 0.25s);
+}
+
+main a:hover {
+  color: var(--mau-nhan, #d9534f);
+}
+
+main a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--mau-nhan, #d9534f);
+  outline-offset: 3px;
 }
 
 /* Hình ảnh chân dung */
@@ -93,7 +32,7 @@ main img {
   border-radius: var(--bo-goc, 8px);
   border: 2px solid var(--vien, #dee2e6);
   display: block;
-  margin-bottom: var(--khoang-cach);
+  margin-bottom: var(--khoang-cach, 16px);
 }
 
 /* Bảng thời khóa biểu */
@@ -124,38 +63,23 @@ caption {
   font-size: 1.1rem;
 }
 
-/* Đảm bảo khung cuộn bảng hoạt động đúng (Tuyệt đối không tràn màn hình web) */
+/* Đảm bảo khung cuộn bảng hoạt động đúng */
 .khung-cuon-bang {
   width: 100%;
   border: 1px solid var(--vien, #dee2e6);
   border-radius: var(--bo-goc, 8px);
-  margin-bottom: var(--khoang-cach);
+  margin-bottom: var(--khoang-cach, 16px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* === Điểm ngắt cho màn hình lớn (Tablet, PC) === */
 @media (min-width: 768px) {
-  /* Bố cục trang 2 cột (Sidebar bên trái) */
-  .trang {
-    display: grid;
-    grid-template-areas:
-      "header header"
-      "nav main"
-      "footer footer";
-    grid-template-columns: 250px 1fr;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  header { grid-area: header; }
-  nav { grid-area: nav; }
-  main { grid-area: main; }
-  footer { grid-area: footer; }
-
-  /* Bố cục Giới thiệu bản thân thành 2 cột (Ảnh 1 bên, thông tin 1 bên) */
+  /* Bố cục Giới thiệu bản thân thành 2 cột (ảnh 1 bên, thông tin 1 bên) */
   main > section:first-of-type {
     display: grid;
     grid-template-columns: 250px 1fr;
-    gap: var(--khoang-cach);
+    gap: var(--khoang-cach, 16px);
     align-items: start;
   }
   
@@ -169,7 +93,7 @@ caption {
     margin-bottom: 0;
   }
   
-  /* Gom đoạn văn, tiêu đề kỹ năng và danh sách kỹ năng vào cột 2 bằng cách thiết lập từng phần tử */
+  /* Gom đoạn văn, tiêu đề kỹ năng và danh sách kỹ năng vào cột 2 */
   main > section:first-of-type p,
   main > section:first-of-type h3,
   main > section:first-of-type ul {
@@ -181,3 +105,8 @@ caption {
   }
 }
 
+.trang__chinh {
+  background-color: var(--nen, #ffffff);
+  border: 1px solid var(--vien, #dee2e6);
+  border-radius: var(--bo-goc, 8px);
+}

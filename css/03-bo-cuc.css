@@ -22,6 +22,7 @@
 .trang__dau, .trang__dieu-huong, .trang__chinh, .trang__chan {
   padding: var(--khoang-cach);
   max-width: 100%;
+  min-width: 0;
 }
 
 /* --- Bố cục Flexbox cho Khu vực liên hệ --- */
@@ -42,7 +43,8 @@
   .trang {
     grid-template-areas:
       "dau dau"
-      "dieu-huong chinh"
+      "dieu-huong dieu-huong"
+      "chinh chinh"
       "chan chan";
     grid-template-columns: 250px 1fr;
     max-width: 1200px;

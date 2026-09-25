@@ -4,37 +4,33 @@
    ============================================================== */
 
 :root {
-    /* Tùy biến màu chính --bs-primary theo thương hiệu ITeduShare */
+    /* Tùy biến màu chính theo thương hiệu ITeduShare */
+    /* Khi định nghĩa lại ở đây, Bootstrap sẽ tự động cập nhật .bg-primary, .btn-primary, .text-primary... */
     --bs-primary: #004d40;
     --bs-primary-rgb: 0, 77, 64;
+    
+    /* Ghi đè màu nền và viền cho các component dùng primary */
+    --bs-btn-bg: #004d40;
+    --bs-btn-border-color: #004d40;
+    --bs-btn-hover-bg: #00332c;
+    --bs-btn-hover-border-color: #00332c;
+    --bs-btn-active-bg: #00332c;
+    --bs-btn-active-border-color: #00332c;
+
     --bs-link-color: #004d40;
     --bs-link-hover-color: #00251a;
 }
 
-/* Đảm bảo viền focus rõ ràng cho Accessibility */
-.btn:focus-visible,
-.nav-link:focus-visible,
-.page-link:focus-visible {
-    outline: 2px solid #c62828 !important;
+/* Đảm bảo viền focus rõ ràng cho Accessibility (tăng specificity thay vì dùng !important) */
+html body .btn:focus-visible,
+html body .nav-link:focus-visible,
+html body .page-link:focus-visible {
+    outline: 2px solid #c62828;
     outline-offset: 2px;
-    box-shadow: none !important;
+    box-shadow: none;
 }
-
-.bg-primary {
-    background-color: var(--bs-primary) !important;
-}
-
-.btn-primary {
-    background-color: var(--bs-primary) !important;
-    border-color: var(--bs-primary) !important;
-}
-
-.btn-primary:hover,
-.btn-primary:active {
-    background-color: #00332c !important;
-    border-color: #00332c !important;
-}
-
-.text-primary {
-    color: var(--bs-primary) !important;
+/* T�y ch?nh ?nh trong card */
+.anh-the-bootstrap {
+    object-fit: cover;
+    height: 200px;
 }

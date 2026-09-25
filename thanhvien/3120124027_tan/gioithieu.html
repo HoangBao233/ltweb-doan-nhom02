@@ -6,24 +6,29 @@
     <meta name="description" content="Trang cá nhân của sinh viên Nguyễn Cảnh Tấn.">
     <title>Nguyễn Cảnh Tấn | ITeduShare</title>
     
-    <!-- Nạp CSS chung của nhóm (lùi 2 cấp thư mục) -->
+    <!-- Nạp 5 file CSS chung của nhóm (lùi 2 cấp thư mục) -->
     <link rel="stylesheet" href="../../css/01-bien.css">
     <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
+    <link rel="stylesheet" href="../../css/03-bo-cuc.css">
+    <link rel="stylesheet" href="../../css/04-thanh-phan.css">
+    <link rel="stylesheet" href="../../css/05-tien-ich.css">
     
     <!-- Nạp CSS cá nhân của Tấn (nằm cùng thư mục) -->
     <link rel="stylesheet" href="canhan-tan.css">
 </head>
 <body class="trang">
-    <header class="can-giua-chu">
-        <p>ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+    <header class="trang__dau can-giua-chu">
+        <p class="trang__slogan">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
     </header>
     
-    <nav class="menu-chinh">
-        <a href="../../index.html">Trang chủ</a><br>
-        <a href="../../ve-chung-toi.html">Về chúng tôi (Nhóm 02)</a>
+    <nav class="trang__dieu-huong" aria-label="Menu chính">
+        <ul class="menu-chinh">
+            <li><a href="../../index.html" class="menu-chinh__lien-ket">Trang chủ</a></li>
+            <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket">Về chúng tôi (Nhóm 02)</a></li>
+        </ul>
     </nav>
 
-    <main class="trang-ca-nhan">
+    <main class="trang__chinh trang-ca-nhan">
         <!-- CỘT TRÁI: Avatar & Thông tin cơ bản -->
         <div class="cot-trai">
             <img src="avatar-tan.jpg" alt="Nguyễn Cảnh Tấn" class="anh-dai-dien">
@@ -136,8 +141,8 @@
         </div>
     </main>
 
-    <footer class="can-giua-chu">
-        <p>© 2026 Nguyễn Cảnh Tấn — Khoa Toán – Tin</p>
+    <footer class="trang__chan can-giua-chu">
+        <p class="trang__ban-quyen">© 2026 Nguyễn Cảnh Tấn — Khoa Toán – Tin</p>
     </footer>
 </body>
 </html>
