@@ -8,8 +8,9 @@
     /* Khi định nghĩa lại ở đây, Bootstrap sẽ tự động cập nhật .bg-primary, .btn-primary, .text-primary... */
     --bs-primary: #004d40;
     --bs-primary-rgb: 0, 77, 64;
-    
-    /* Ghi đè màu nền và viền cho các component dùng primary */
+}
+
+.btn-primary {
     --bs-btn-bg: #004d40;
     --bs-btn-border-color: #004d40;
     --bs-btn-hover-bg: #00332c;

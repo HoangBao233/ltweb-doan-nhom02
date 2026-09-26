@@ -197,7 +197,7 @@
   gap: var(--khoang-cach-lon);
   margin-bottom: var(--khoang-cach-lon);
   /* Sửa thành dòng này: */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); 
 }
 
 .the-hoc-lieu {
@@ -219,7 +219,8 @@
 .the-hoc-lieu__anh {
   width: 100%;
   height: 180px;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: #f8f9fa;
 }
 
 .the-hoc-lieu__noi-dung {
@@ -425,6 +426,21 @@ button:focus-visible {
   padding: var(--khoang-cach-lon);
   border-radius: var(--bo-goc);
   border: 1px solid var(--vien);
+}
+
+.chi-tiet-giao-an__noi-dung,
+.chi-tiet-giao-an__thong-tin {
+  background-color: var(--nen-phu);
+  padding: var(--khoang-cach-lon);
+  border-radius: var(--bo-goc);
+  border: 1px solid var(--vien);
+  min-width: 0;
+}
+
+.chi-tiet-giao-an__khung-xem {
+  width: 100%;
+  border: 1px solid var(--vien);
+  border-radius: var(--bo-goc);
 }
 
 .bieu-mau__nhom {

@@ -15,27 +15,6 @@
     <link rel="stylesheet" href="css/04-thanh-phan.css">
     <link rel="stylesheet" href="css/05-tien-ich.css">
 
-    <!-- CSS Tùy chỉnh riêng cho kho-hoc-lieu.html để chống tràn cuộn ngang trên mobile, không đụng vào CSS chung -->
-    <style>
-        html,
-        body {
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        .trang__dau,
-        .trang__dieu-huong,
-        .trang__chinh,
-        .trang__chan {
-            padding: var(--khoang-cach, 16px);
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        .danh-sach-the__luoi {
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-        }
-    </style>
 </head>
 
 <body class="trang">
@@ -79,18 +58,59 @@
             <h2 class="can-giua-chu">Học liệu xem nhiều nhất</h2>
             <div class="danh-sach-the__luoi">
                 <article class="the-hoc-lieu">
-                    <img src="images/so-do-cay-thu-muc.png" alt="Sơ đồ minh họa cấu trúc cây thư mục hệ điều hành"
-                        class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
+                    <img src="images/so-do-cay-thu-muc.png" alt="Sơ đồ tư duy" class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
                     <div class="the-hoc-lieu__noi-dung">
-                        <span class="nhan-nho nhan-nho--xanh">Tin học 7</span>
-                        <h3 class="the-hoc-lieu__tieu-de">Quản lý dữ liệu trong máy tính</h3>
-                        <p class="the-hoc-lieu__mo-ta">Hướng dẫn chi tiết thao tác quản lý tệp và thư mục theo chương
-                            trình GDPT 2018.</p>
+                        <span class="nhan-nho nhan-nho--xanh">Tin học 10</span>
+                        <h3 class="the-hoc-lieu__tieu-de">Sơ đồ tư duy Hệ điều hành</h3>
+                        <p class="the-hoc-lieu__mo-ta">Hệ thống hóa kiến thức về hệ điều hành Windows và Linux dành cho học sinh lớp 10.</p>
                         <a href="chi-tiet-giao-an.html" class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết bài học</a>
                     </div>
                 </article>
-
-
+                <article class="the-hoc-lieu">
+                    <img src="images/banner-trang-chu.jpg" alt="Giáo án Python" class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
+                    <div class="the-hoc-lieu__noi-dung">
+                        <span class="nhan-nho nhan-nho--cam">Tin học 10</span>
+                        <h3 class="the-hoc-lieu__tieu-de">Giáo án lập trình Python</h3>
+                        <p class="the-hoc-lieu__mo-ta">Bài giảng chi tiết về cấu trúc rẽ nhánh và vòng lặp trong ngôn ngữ lập trình Python.</p>
+                        <a href="chi-tiet-giao-an.html" class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết bài học</a>
+                    </div>
+                </article>
+                <article class="the-hoc-lieu">
+                    <img src="images/banner-trang-chu.jpg" alt="Đề kiểm tra" class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
+                    <div class="the-hoc-lieu__noi-dung">
+                        <span class="nhan-nho nhan-nho--tim">Tin học 11</span>
+                        <h3 class="the-hoc-lieu__tieu-de">Đề kiểm tra Học kì 1</h3>
+                        <p class="the-hoc-lieu__mo-ta">Bộ đề thi trắc nghiệm và tự luận môn Tin học 11 bám sát định hướng GDPT 2018.</p>
+                        <a href="chi-tiet-giao-an.html" class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết bài học</a>
+                    </div>
+                </article>
+                <article class="the-hoc-lieu">
+                    <img src="images/so-do-cay-thu-muc.png" alt="Sơ đồ cơ sở dữ liệu" class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
+                    <div class="the-hoc-lieu__noi-dung">
+                        <span class="nhan-nho nhan-nho--xanh">Tin học 11</span>
+                        <h3 class="the-hoc-lieu__tieu-de">Sơ đồ Cơ sở dữ liệu quan hệ</h3>
+                        <p class="the-hoc-lieu__mo-ta">Tóm tắt các khái niệm khóa chính, khóa ngoại và liên kết bảng trong CSDL quan hệ.</p>
+                        <a href="chi-tiet-giao-an.html" class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết bài học</a>
+                    </div>
+                </article>
+                <article class="the-hoc-lieu">
+                    <img src="images/banner-trang-chu.jpg" alt="Thiết kế web" class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
+                    <div class="the-hoc-lieu__noi-dung">
+                        <span class="nhan-nho nhan-nho--cam">Tin học 12</span>
+                        <h3 class="the-hoc-lieu__tieu-de">Giáo án Thiết kế Web</h3>
+                        <p class="the-hoc-lieu__mo-ta">Tài liệu hướng dẫn học sinh tạo trang web cơ bản với HTML5 và CSS3.</p>
+                        <a href="chi-tiet-giao-an.html" class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết bài học</a>
+                    </div>
+                </article>
+                <article class="the-hoc-lieu">
+                    <img src="images/banner-trang-chu.jpg" alt="Đề thi thử THPT" class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
+                    <div class="the-hoc-lieu__noi-dung">
+                        <span class="nhan-nho nhan-nho--tim">Tin học 12</span>
+                        <h3 class="the-hoc-lieu__tieu-de">Đề thi thử THPT Quốc gia</h3>
+                        <p class="the-hoc-lieu__mo-ta">Bộ đề ôn tập môn Tin học định hướng thi Tốt nghiệp THPT với phân tích đáp án.</p>
+                        <a href="chi-tiet-giao-an.html" class="nut-thao-tac nut-thao-tac--xem">Xem chi tiết bài học</a>
+                    </div>
+                </article>
             </div>
         </section>
 

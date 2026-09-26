@@ -37,6 +37,18 @@
   width: 100%;
 }
 
+.chi-tiet-giao-an {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 100%;
+}
+
+.chi-tiet-giao-an__tieu-de {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
 /* Điểm ngắt từ màn hình lớn (Máy tính bảng / Desktop) */
 @media (min-width: 768px) {
   /* Grid 2 cột cho trang chung */
@@ -61,5 +73,10 @@
   .bieu-mau, .thong-tin {
     flex: 1;
     min-width: 320px;
+  }
+
+  .chi-tiet-giao-an {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
   }
 }
