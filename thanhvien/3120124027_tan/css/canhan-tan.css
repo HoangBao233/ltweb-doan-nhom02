@@ -121,3 +121,49 @@ a:focus-visible,
   outline-offset: 4px;
   border-radius: 4px;
 }
+
+/* =========================================
+   6. CÔNG CỤ HỖ TRỢ ĐỌC (TƯƠNG TÁC 1)
+   ========================================= */
+.cong-cu-doc { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed #ccc; width: 100%; text-align: center; }
+.cong-cu-doc h3 { font-size: 1.1rem; margin-bottom: 10px; }
+.nhom-nut { display: flex; gap: 5px; justify-content: center; margin-bottom: 10px; }
+.nut-cong-cu { padding: 6px 12px; cursor: pointer; border: 1px solid #ccc; background: #fff; border-radius: 4px; font-weight: bold; }
+.nut-cong-cu:hover { background: #e0e0e0; }
+.nut-cong-cu:focus-visible { outline: 2px solid var(--mau-chinh, #004d40); }
+
+/* Class chế độ đọc (dự phòng nếu cần dùng lại) */
+body.che-do-doc-sach { background-color: #fdf6e3 !important; color: #333 !important; }
+body.che-do-doc-sach .cot-trai, body.che-do-doc-sach tr:nth-child(even) { background-color: #eee8d5 !important; }
+
+/* =========================================
+   7. ĐỒNG HỒ ĐẾM NGƯỢC (TƯƠNG TÁC 2)
+   ========================================= */
+.khung-dem-nguoc {
+    background-color: var(--nen-the, #f9f9f9);
+    border: 2px solid var(--mau-chinh, #004d40);
+    border-radius: var(--bo-goc, 8px);
+    padding: var(--khoang-cach-lon, 1.5rem);
+    text-align: center;
+    margin-bottom: var(--khoang-cach-vua, 1rem);
+}
+.khung-dem-nguoc h3 {
+    margin-top: 0;
+    color: var(--mau-nhan, #c62828);
+}
+.dong-ho {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--mau-chinh, #004d40);
+}
+.thoi-gian {
+    background: #fff;
+    border: 1px solid var(--vien, #e0e0e0);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    min-width: 80px;
+}
