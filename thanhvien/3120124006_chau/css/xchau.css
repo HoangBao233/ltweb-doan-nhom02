@@ -110,3 +110,102 @@ caption {
   border: 1px solid var(--vien, #dee2e6);
   border-radius: var(--bo-goc, 8px);
 }
+/* === CSS cho Tương tác JavaScript === */
+
+/* Dark Mode Variables & Overrides */
+body.dark-theme {
+  --nen: #121212;
+  --nen-phu: #1e1e1e;
+  --chu: #e0e0e0;
+  --vien: #333333;
+  --mau-chinh: #66b2ff;
+  --mau-nhan: #ff6666;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-theme .trang__chinh,
+body.dark-theme table {
+  background-color: var(--nen);
+  color: var(--chu);
+}
+
+body.dark-theme th {
+  background-color: #003366;
+  color: #ffffff;
+}
+
+body.dark-theme tbody tr:nth-child(even) {
+  background-color: var(--nen-phu);
+}
+
+/* Nút chuyển đổi Dark Mode */
+.btn-dark-mode {
+  display: block;
+  margin: 0 auto var(--khoang-cach, 16px) auto;
+  padding: 0.5rem 1rem;
+  background-color: var(--mau-chinh, #004085);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--bo-goc, 8px);
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color var(--thoi-gian-chuyen, 0.25s);
+}
+
+.btn-dark-mode:hover {
+  background-color: var(--mau-nhan, #d9534f);
+}
+
+/* Khu vực hiển thị và sao chép Email */
+.email-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.email-text {
+  font-weight: bold;
+  color: var(--mau-chinh, #004085);
+  word-break: break-all;
+}
+
+.btn-copy {
+  padding: 0.4rem 0.8rem;
+  background-color: var(--mau-chinh, #004085);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--bo-goc, 8px);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color var(--thoi-gian-chuyen, 0.25s);
+}
+
+.btn-copy:hover {
+  background-color: var(--mau-nhan, #d9534f);
+}
+
+/* Thông báo Toast */
+.toast-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: #333333;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.toast-message.toast-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
