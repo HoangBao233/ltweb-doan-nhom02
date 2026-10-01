@@ -80,3 +80,20 @@
     align-items: start;
   }
 }
+
+/* --- Menu Mobile (Phần B - Gợi ý 3) --- */
+/* Mặc định (khi không có JS hoặc JS bị lỗi): Menu luôn hiện ra, ẩn nút ☰ */
+.nut-menu { display: none; margin-bottom: 1rem; padding: 0.5rem 1rem; cursor: pointer; }
+
+/* Khi CÓ JS (thẻ HTML được cấp class .js) và trên màn hình điện thoại (<= 767px) */
+@media (max-width: 767px) {
+  .js .nut-menu { 
+    display: inline-block; /* Hiện nút ☰ */
+  }
+  .js .menu { 
+    display: none; /* Ẩn menu đi, chờ bấm nút mới mở */
+  }
+  .js .menu.mo { 
+    display: block; /* Mở menu khi có class .mo */
+  }
+}
