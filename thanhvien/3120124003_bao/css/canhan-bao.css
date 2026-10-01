@@ -1,6 +1,6 @@
-/* canhan-bao.css */
+﻿/* canhan-bao.css */
 
-/* Bố cục Grid cho phần giới thiệu bản thân (Mobile first: 1 cột) */
+/* Bá»‘ cá»¥c Grid cho pháº§n giá»›i thiá»‡u báº£n thÃ¢n (Mobile first: 1 cá»™t) */
 .gioi-thieu-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -8,26 +8,26 @@
     align-items: center;
 }
 
-/* Điểm ngắt Responsive: Từ máy tính bảng trở lên chia thành 2 cột */
+/* Äiá»ƒm ngáº¯t Responsive: Tá»« mÃ¡y tÃ­nh báº£ng trá»Ÿ lÃªn chia thÃ nh 2 cá»™t */
 @media (min-width: 768px) {
     .gioi-thieu-grid {
         grid-template-columns: 200px 1fr;
     }
 }
 
-/* Ảnh chân dung: Co giãn theo khung để không sinh thanh cuộn */
+/* áº¢nh chÃ¢n dung: Co giÃ£n theo khung Ä‘á»ƒ khÃ´ng sinh thanh cuá»™n */
 .anh-chan-dung {
     width: 100%; 
     max-width: 250px;
     height: auto;
-    border-radius: 50%; /* Bo tròn ảnh chân dung cho đẹp */
+    border-radius: 50%; /* Bo trÃ²n áº£nh chÃ¢n dung cho Ä‘áº¹p */
     border: 4px solid var(--mau-chinh, #004085);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     display: block;
     margin: 0 auto;
 }
 
-/* Danh sách kỹ năng: Flexbox để dàn trải dạng tag trên điện thoại */
+/* Danh sÃ¡ch ká»¹ nÄƒng: Flexbox Ä‘á»ƒ dÃ n tráº£i dáº¡ng tag trÃªn Ä‘iá»‡n thoáº¡i */
 .danh-sach-ky-nang {
     display: flex;
     flex-wrap: wrap;
@@ -45,12 +45,12 @@
     transition: background-color var(--thoi-gian-chuyen, 0.25s);
 }
 
-/* Hover cho danh sách kỹ năng */
+/* Hover cho danh sÃ¡ch ká»¹ nÄƒng */
 .danh-sach-ky-nang li:hover {
     background-color: var(--mau-nhan, #d9534f);
 }
 
-/* Nút liên hệ và các trạng thái hover / focus-visible */
+/* NÃºt liÃªn há»‡ vÃ  cÃ¡c tráº¡ng thÃ¡i hover / focus-visible */
 .nut-lien-he-ca-nhan {
     margin-top: 1rem;
     display: inline-block;
@@ -59,11 +59,60 @@
 
 .nut-lien-he-ca-nhan:hover {
     transform: translateY(-2px);
-    background-color: var(--mau-nhan, #d9534f); /* Đổi màu khi hover */
+    background-color: var(--mau-nhan, #d9534f); /* Äá»•i mÃ u khi hover */
 }
 
-/* Đảm bảo trạng thái focus-visible rõ ràng theo chuẩn A11y */
+/* Äáº£m báº£o tráº¡ng thÃ¡i focus-visible rÃµ rÃ ng theo chuáº©n A11y */
 .nut-lien-he-ca-nhan:focus-visible {
     outline: 3px dashed var(--mau-nhan, #d9534f);
     outline-offset: 4px;
 }
+
+/* --- CSS cho tuong tác Dark Mode --- */
+body.dark-mode {
+    --nen: #121212;
+    --chu: #e0e0e0;
+    --mau-chinh: #90caf9;
+    --mau-nhan: #ffab40;
+    background-color: var(--nen);
+    color: var(--chu);
+}
+body.dark-mode .bieu-mau, body.dark-mode .thong-tin {
+    background-color: #1e1e1e;
+    border-color: #333;
+    color: #e0e0e0;
+}
+body.dark-mode .bang-hoc-lieu {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+body.dark-mode .bang-hoc-lieu__dau-cot {
+    background-color: #333;
+    border-color: #555;
+    color: #fff;
+}
+body.dark-mode .bang-hoc-lieu__hang:nth-child(even) {
+    background-color: #2a2a2a;
+}
+body.dark-mode .bang-hoc-lieu__hang:hover {
+    background-color: #444;
+}
+
+/* --- CSS cho tuong tác Lightbox --- */
+.anh-chan-dung { cursor: zoom-in; }
+.lightbox-modal {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+}
+.lightbox-modal img {
+    max-width: 90%; max-height: 90%; border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    animation: zoomIn 0.3s ease;
+}
+.lightbox-close {
+    position: absolute; top: 20px; right: 30px;
+    color: white; font-size: 40px; font-weight: bold; cursor: pointer;
+}
+@keyframes zoomIn { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
