@@ -51,6 +51,33 @@
           <li>Quản lý mã nguồn với Git / GitHub</li>
           <li>Tối ưu Accessibility &amp; SEO</li>
         </ul>
+
+        <!-- Tương tác 1: Nút sao chép Email liên hệ -->
+        <div class="khoi-saochep-email">
+          <button type="button" id="btn-saochep-email" class="nut-thao-tac nut-thao-tac--xem"
+            aria-label="Sao chép địa chỉ Email của Thịnh">
+            📋 Sao chép Email liên hệ
+          </button>
+        </div>
+
+        <!-- Tương tác 2: Đánh giá 5 sao cho hồ sơ -->
+        <div class="khoi-danh-gia-ca-nhan">
+          <h3>Đánh giá hồ sơ cá nhân</h3>
+          <div id="khung-danh-gia-sao" class="danh-sach-sao" role="radiogroup" aria-label="Đánh giá chất lượng hồ sơ">
+            <button type="button" class="nut-danh-gia-sao" data-val="1" aria-label="Đánh giá 1 sao" role="radio"
+              aria-checked="false">★</button>
+            <button type="button" class="nut-danh-gia-sao" data-val="2" aria-label="Đánh giá 2 sao" role="radio"
+              aria-checked="false">★</button>
+            <button type="button" class="nut-danh-gia-sao" data-val="3" aria-label="Đánh giá 3 sao" role="radio"
+              aria-checked="false">★</button>
+            <button type="button" class="nut-danh-gia-sao" data-val="4" aria-label="Đánh giá 4 sao" role="radio"
+              aria-checked="false">★</button>
+            <button type="button" class="nut-danh-gia-sao" data-val="5" aria-label="Đánh giá 5 sao" role="radio"
+              aria-checked="false">★</button>
+          </div>
+          <p id="thong-bao-danh-gia" class="thong-bao-danh-gia" aria-live="polite">Bạn chưa đánh giá. Hãy chọn số sao để
+            gửi đánh giá nhé!</p>
+        </div>
       </div>
     </section>
 
@@ -101,9 +128,15 @@
     </section>
   </main>
 
+  <!-- Khung thông báo Toast tự nổi -->
+  <div id="toast-thong-bao" class="toast-thong-bao" role="status" aria-live="polite" aria-hidden="true"></div>
+
   <footer class="trang__chan can-giua-chu">
     <p>&copy; 2026 Nguyễn Tiến Thịnh (3120222126) &mdash; Nhóm 02, Khoa Toán &ndash; Tin</p>
   </footer>
+
+  <!-- Nạp file JS riêng cho trang cá nhân của Nguyễn Tiến Thịnh -->
+  <script src="js/canhan.js" defer></script>
 </body>
 
 </html>
