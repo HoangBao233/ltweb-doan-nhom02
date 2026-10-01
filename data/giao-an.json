@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "ten": "Quản lý dữ liệu trong máy tính (Dữ liệu động JSON)",
+    "muc_tieu": "Bài học giúp học sinh nắm vững cách tạo, đổi tên, di chuyển và xóa các tệp, thư mục trên hệ điều hành Windows. Đây là dữ liệu được tải từ file JSON.",
+    "hinh_anh": "images/so-do-cay-thu-muc.png",
+    "mo_ta_anh": "Sơ đồ minh họa cấu trúc cây thư mục hệ điều hành",
+    "chu_thich_anh": "Hình 1: Cấu trúc cây thư mục đa cấp (Ảnh động)",
+    "video_url": "https://www.youtube.com/embed/IRWYkSjMclM?si=y7NF15ZuDCdHlTxn",
+    "doi_tuong": "Học sinh Lớp 7 (Cập nhật JSON)",
+    "dung_luong": "2.5 MB (Định dạng PDF)"
+  }
+]

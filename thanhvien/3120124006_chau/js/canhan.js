@@ -24,21 +24,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const skillList = skillHeading.nextElementSibling;
         
         if (skillList && (skillList.tagName === 'UL' || skillList.tagName === 'OL')) {
-            // Thêm style cho tiêu đề để nhận biết có thể click
-            skillHeading.style.cursor = 'pointer';
-            skillHeading.style.display = 'inline-flex';
-            skillHeading.style.alignItems = 'center';
-            skillHeading.style.gap = '8px';
-            skillHeading.style.userSelect = 'none';
-            skillHeading.setAttribute('aria-expanded', 'true');
-            skillHeading.setAttribute('title', 'Nhấn để thu gọn/mở rộng');
+            // Lấy lại text cũ
+            const headingText = skillHeading.textContent;
+            skillHeading.textContent = ''; // Xóa chữ tĩnh cũ
+            
+            // Tạo thẻ button bọc ngoài chữ để chuẩn A11y tuyệt đối
+            const accordionBtn = document.createElement('button');
+            accordionBtn.textContent = headingText;
+            
+            // Chuyển các style sang cho button và thừa kế giao diện của h3
+            accordionBtn.style.cursor = 'pointer';
+            accordionBtn.style.display = 'inline-flex';
+            accordionBtn.style.alignItems = 'center';
+            accordionBtn.style.gap = '8px';
+            accordionBtn.style.userSelect = 'none';
+            accordionBtn.style.background = 'none';
+            accordionBtn.style.border = 'none';
+            accordionBtn.style.padding = '0';
+            accordionBtn.style.font = 'inherit'; // Kế thừa font h3
+            accordionBtn.style.color = 'inherit';
+            
+            accordionBtn.setAttribute('aria-expanded', 'true');
+            accordionBtn.setAttribute('title', 'Nhấn để thu gọn/mở rộng');
             
             // Thêm icon mũi tên
             const arrowIcon = document.createElement('span');
             arrowIcon.textContent = '▼';
             arrowIcon.style.fontSize = '0.7em';
             arrowIcon.style.transition = 'transform 0.3s ease';
-            skillHeading.appendChild(arrowIcon);
+            accordionBtn.appendChild(arrowIcon);
+            
+            // Đưa button vào lại trong thẻ h3
+            skillHeading.appendChild(accordionBtn);
 
             // Set CSS transition cho danh sách
             skillList.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
@@ -46,20 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
             skillList.style.maxHeight = '500px'; 
             skillList.style.opacity = '1';
 
-            // Sự kiện click Accordion
-            skillHeading.addEventListener('click', () => {
-                const isExpanded = skillHeading.getAttribute('aria-expanded') === 'true';
+            // Gắn Sự kiện click Accordion vào thẻ BUTTON thay vì thẻ H3
+            accordionBtn.addEventListener('click', () => {
+                const isExpanded = accordionBtn.getAttribute('aria-expanded') === 'true';
                 
                 if (isExpanded) {
                     skillList.style.maxHeight = '0px';
                     skillList.style.opacity = '0';
                     arrowIcon.style.transform = 'rotate(-90deg)';
-                    skillHeading.setAttribute('aria-expanded', 'false');
+                    accordionBtn.setAttribute('aria-expanded', 'false');
                 } else {
                     skillList.style.maxHeight = '500px';
                     skillList.style.opacity = '1';
                     arrowIcon.style.transform = 'rotate(0deg)';
-                    skillHeading.setAttribute('aria-expanded', 'true');
+                    accordionBtn.setAttribute('aria-expanded', 'true');
                 }
             });
         }
