@@ -6,143 +6,89 @@
     <meta name="description" content="Trang cá nhân của sinh viên Nguyễn Cảnh Tấn.">
     <title>Nguyễn Cảnh Tấn | ITeduShare</title>
     
-    <!-- Nạp 5 file CSS chung của nhóm (lùi 2 cấp thư mục) -->
+    <!-- CSS Nhóm -->
     <link rel="stylesheet" href="../../css/01-bien.css">
     <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
-    <link rel="stylesheet" href="../../css/03-bo-cuc.css">
     <link rel="stylesheet" href="../../css/04-thanh-phan.css">
-    <link rel="stylesheet" href="../../css/05-tien-ich.css">
-    
-    <!-- Nạp CSS cá nhân của Tấn (nằm cùng thư mục) -->
-    <link rel="stylesheet" href="canhan-tan.css">
+    <!-- CSS Cá nhân -->
+    <link rel="stylesheet" href="css/canhan-tan.css">
 </head>
 <body class="trang">
+
+    <!-- Header & Nav -->
     <header class="trang__dau can-giua-chu">
-        <p class="trang__slogan">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+        <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+        <a href="../../kho-hoc-lieu.html" class="lien-ket-yeu-thich">Yêu thích (<span id="so-luong-yeu-thich" aria-live="polite">0</span>)</a>
     </header>
-    
     <nav class="trang__dieu-huong" aria-label="Menu chính">
-        <ul class="menu-chinh">
+        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
+        <ul id="menu-chinh" class="menu-chinh menu">
             <li><a href="../../index.html" class="menu-chinh__lien-ket">Trang chủ</a></li>
-            <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket">Về chúng tôi (Nhóm 02)</a></li>
+            <li><a href="../../kho-hoc-lieu.html" class="menu-chinh__lien-ket">Kho học liệu</a></li>
+            <li><a href="../../chi-tiet-giao-an.html" class="menu-chinh__lien-ket">Chi tiết giáo án</a></li>
+            <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket menu-chinh__lien-ket--kich-hoat" aria-current="page">Về chúng tôi</a></li>
         </ul>
     </nav>
 
-    <main class="trang__chinh trang-ca-nhan">
-        <!-- CỘT TRÁI: Avatar & Thông tin cơ bản -->
+    <main class="trang-ca-nhan">
+        <!-- CỘT TRÁI -->
         <div class="cot-trai">
             <img src="avatar-tan.jpg" alt="Nguyễn Cảnh Tấn" class="anh-dai-dien">
             <h2>Nguyễn Cảnh Tấn</h2>
             <p>MSSV: 3120124027</p>
             <p>Ngành: Sư phạm Tin học</p>
-            <p>Trường Đại học Sư phạm – Đại học Đà Nẵng</p>
+            <p>Trường Đại học Sư phạm – ĐH Đà Nẵng</p>
             <a href="mailto:tan@example.com" class="nut-lien-he">Liên hệ ngay</a>
+
+            <!-- CHỨC NĂNG PHẦN C Ở ĐÂY -->
+            <div class="cong-cu-doc">
+                <h3>Hỗ trợ đọc (A11y)</h3>
+                <div class="nhom-nut">
+                    <button type="button" id="btn-giam-chu" class="nut-cong-cu">A-</button>
+                    <button type="button" id="btn-mac-dinh" class="nut-cong-cu">A</button>
+                    <button type="button" id="btn-tang-chu" class="nut-cong-cu">A+</button>
+                </div>
+                <button type="button" id="btn-che-do-doc" class="nut-cong-cu" style="width: 100%;">Bật/Tắt Chế độ đọc</button>
+            </div>
         </div>
 
-        <!-- CỘT PHẢI: Kỹ năng & Thời khóa biểu -->
+        <!-- CỘT PHẢI -->
         <div class="cot-phai">
             <h3>Kỹ năng & Chuyên môn</h3>
             <ul class="danh-sach-ky-nang">
                 <li>Lập trình Python (Tkinter, Pygame, OpenCV)</li>
-                <li>Quản trị Cơ sở dữ liệu (PostgreSQL, SQL Server)</li>
+                <li>Quản trị CSDL (PostgreSQL, SQL Server)</li>
                 <li>Phát triển Web (PHP, HTML, CSS)</li>
                 <li>Quản trị hệ thống Linux</li>
                 <li>Phương pháp dạy học & Gamification</li>
             </ul>
 
             <h3>Thời khóa biểu (Học kỳ hiện tại)</h3>
-            <!-- BẮT BUỘC THEO RUBRIC: Bọc bảng trong thẻ div class="bang-cuon-ngang" -->
             <div class="bang-cuon-ngang">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Thứ</th>
-                            <th>Thời gian</th>
-                            <th>Môn học</th>
-                            <th>Phòng học</th>
-                            <th>Giảng viên</th>
-                        </tr>
+                        <tr><th>Thứ</th><th>Thời gian</th><th>Môn học</th><th>Phòng học</th><th>Giảng viên</th></tr>
                     </thead>
                     <tbody>
-                        <!-- Thứ 2 -->
-                        <tr>
-                            <td rowspan="2"><strong>Thứ 2</strong></td>
-                            <td>07:00 - 08:40</td>
-                            <td>An Toàn Thông Tin</td>
-                            <td>Phòng B3-206</td>
-                            <td>Đoàn Duy Bình</td>
-                        </tr>
-                        <tr>
-                            <td>18:00</td>
-                            <td><strong>Học Tiếng Anh</strong></td>
-                            <td>Thể thao</td>
-                            <td></td>
-                        </tr>
-
-                        <!-- Thứ 3 -->
-                        <tr>
-                            <td><strong>Thứ 3</strong></td>
-                            <td>07:00 - 09:35</td>
-                            <td>Phân Tích và Thiết Kế HTTT</td>
-                            <td>Phòng B1.106</td>
-                            <td>Lê Thị Thanh Bình</td>
-                        </tr>
-
-                        <!-- Thứ 4 -->
-                        <tr>
-                            <td rowspan="3"><strong>Thứ 4</strong></td>
-                            <td>09:40 - 12:15</td>
-                            <td>Phương Pháp Dạy Học Bộ Môn Tin Học</td>
-                            <td>Phòng A5-406</td>
-                            <td>Lê Viết Chung</td>
-                        </tr>
-                        <tr>
-                            <td>13:00 - 16:30</td>
-                            <td>Hệ Quản Trị Cơ Sở Dữ Liệu</td>
-                            <td>Phòng B3-404</td>
-                            <td>Đoàn Duy Bình</td>
-                        </tr>
-                        <tr>
-                            <td>18:00</td>
-                            <td><strong>Học Tiếng Anh</strong></td>
-                            <td>Thể thao</td>
-                            <td></td>
-                        </tr>
-
-                        <!-- Thứ 5 -->
-                        <tr>
-                            <td><strong>Thứ 5</strong></td>
-                            <td>07:00 - 08:40</td>
-                            <td>Lịch Sử Đảng Cộng Sản Việt Nam</td>
-                            <td>Phòng A6-502</td>
-                            <td>Nguyễn Thế Hà</td>
-                        </tr>
-
-                        <!-- Thứ 6 -->
-                        <tr>
-                            <td><strong>Thứ 6</strong></td>
-                            <td>18:00</td>
-                            <td><strong>Học Tiếng Anh</strong></td>
-                            <td>Thể thao</td>
-                            <td></td>
-                        </tr>
-
-                        <!-- Thứ 7 -->
-                        <tr>
-                            <td><strong>Thứ 7</strong></td>
-                            <td>07:00 - 09:35</td>
-                            <td>Thiết Kế và Lập Trình Web</td>
-                            <td>Phòng B3-303</td>
-                            <td>Nguyễn Hoàng Hải</td>
-                        </tr>
+                        <tr><td rowspan="2"><strong>Thứ 2</strong></td><td>07:00 - 08:40</td><td>An Toàn Thông Tin</td><td>Phòng B3-206</td><td>Đoàn Duy Bình</td></tr>
+                        <tr><td>18:00</td><td><strong>Học Tiếng Anh</strong></td><td>Thể thao</td><td></td></tr>
+                        <tr><td><strong>Thứ 3</strong></td><td>07:00 - 09:35</td><td>Phân Tích và Thiết Kế HTTT</td><td>Phòng B1.106</td><td>Lê Thị Thanh Bình</td></tr>
+                        <tr><td rowspan="3"><strong>Thứ 4</strong></td><td>09:40 - 12:15</td><td>Phương Pháp Dạy Học Bộ Môn Tin Học</td><td>Phòng A5-406</td><td>Lê Viết Chung</td></tr>
+                        <tr><td>13:00 - 16:30</td><td>Hệ Quản Trị Cơ Sở Dữ Liệu</td><td>Phòng B3-404</td><td>Đoàn Duy Bình</td></tr>
+                        <tr><td>18:00</td><td><strong>Học Tiếng Anh</strong></td><td>Thể thao</td><td></td></tr>
+                        <tr><td><strong>Thứ 5</strong></td><td>07:00 - 08:40</td><td>Lịch Sử Đảng Cộng Sản Việt Nam</td><td>Phòng A6-502</td><td>Nguyễn Thế Hà</td></tr>
+                        <tr><td><strong>Thứ 6</strong></td><td>18:00</td><td><strong>Học Tiếng Anh</strong></td><td>Thể thao</td><td></td></tr>
+                        <tr><td><strong>Thứ 7</strong></td><td>07:00 - 09:35</td><td>Thiết Kế và Lập Trình Web</td><td>Phòng B3-303</td><td>Nguyễn Hoàng Hải</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
 
-    <footer class="trang__chan can-giua-chu">
-        <p class="trang__ban-quyen">© 2026 Nguyễn Cảnh Tấn — Khoa Toán – Tin</p>
-    </footer>
+    <footer class="can-giua-chu"><p>© 2026 Nguyễn Cảnh Tấn — Khoa Toán – Tin</p></footer>
+
+    <!-- Gọi JS Nhóm và JS Cá nhân -->
+    <script type="module" src="../../js/main.js"></script>
+    <script type="module" src="js/canhan.js"></script>
 </body>
 </html>
