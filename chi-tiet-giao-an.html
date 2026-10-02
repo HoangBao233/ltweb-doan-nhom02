@@ -42,48 +42,58 @@
 
     <!-- Sử dụng class phan-lien-he để tạo Grid/Flex 2 cột cho main & aside -->
     <main class="trang__chinh chi-tiet-giao-an">
-        <h1 class="chi-tiet-giao-an__tieu-de">Chi tiết giáo án: Quản lý dữ liệu trong máy tính</h1>
-        
-        <!-- Nội dung chính -->
-        <article class="chi-tiet-giao-an__noi-dung">
-            <h2>Mục tiêu bài học</h2>
-            <p>Bài học giúp học sinh nắm vững cách tạo, đổi tên, di chuyển và xóa các tệp, thư mục trên hệ điều hành Windows.</p>
-            
-            <figure>
-                <img src="images/so-do-cay-thu-muc.png" alt="Sơ đồ minh họa cấu trúc cây thư mục hệ điều hành" loading="lazy" width="600" height="400">
-                <figcaption>Hình 1: Cấu trúc cây thư mục đa cấp</figcaption>
-            </figure>
+        <!-- Vùng báo lỗi nếu không tìm thấy -->
+        <div id="thong-bao-loi" style="display: none; text-align: center; padding: 3rem; font-size: 1.2rem; color: red;"></div>
 
-            <h2>Video hướng dẫn thực hành</h2>
-            <!-- Dùng iframe để nhúng video YouTube phát trực tiếp trên web -->
-            <iframe class="chi-tiet-giao-an__khung-xem" height="315" src="https://www.youtube.com/embed/IRWYkSjMclM?si=y7NF15ZuDCdHlTxn" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
-        </article>
-        
-        <!-- Cột phụ (Thông tin thêm) -->
-        <aside class="chi-tiet-giao-an__thong-tin">
-            <h2>Bảng thông số tài liệu</h2>
-            <div class="khung-cuon-bang">
-                <table class="bang-hoc-lieu">
-                    <caption class="bang-hoc-lieu__chu-thich">Thông số kỹ thuật của giáo án</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col" class="bang-hoc-lieu__dau-cot">Thuộc tính</th>
-                            <th scope="col" class="bang-hoc-lieu__dau-cot">Thông tin chi tiết</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bang-hoc-lieu__hang">
-                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">Đối tượng</th>
-                            <td class="bang-hoc-lieu__o">Học sinh Lớp 7</td>
-                        </tr>
-                        <tr class="bang-hoc-lieu__hang">
-                            <th scope="row" class="bang-hoc-lieu__o-tieu-de">Dung lượng</th>
-                            <td class="bang-hoc-lieu__o">2.5 MB (Định dạng PDF)</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Vùng chứa chi tiết -->
+        <div id="vung-chi-tiet" aria-live="polite">
+            <h1 class="chi-tiet-giao-an__tieu-de" id="ct-tieu-de">Đang tải...</h1>
+            
+            <div style="margin-bottom: 2rem;">
+                <button type="button" id="btn-luu-chi-tiet" class="nut-thao-tac" style="display: none;">🔖 Lưu bài học</button>
             </div>
-        </aside>
+
+            <!-- Nội dung chính -->
+            <article class="chi-tiet-giao-an__noi-dung">
+                <h2>Mô tả bài học</h2>
+                <p id="ct-mo-ta">Đang tải...</p>
+                
+                <figure>
+                    <img id="ct-anh" src="" alt="Hình ảnh minh họa" loading="lazy" width="600" height="400" style="display: none; max-width: 100%; height: auto;">
+                </figure>
+                
+                <div id="khung-video" style="display: none; margin-top: 2rem;">
+                    <h2>Video hướng dẫn</h2>
+                    <iframe id="ct-video" class="chi-tiet-giao-an__khung-xem" height="315" style="width: 100%; max-width: 600px;" src="" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </article>
+            
+            <!-- Cột phụ (Thông tin thêm) -->
+            <aside class="chi-tiet-giao-an__thong-tin">
+                <h2>Bảng thông số tài liệu</h2>
+                <div class="khung-cuon-bang">
+                    <table class="bang-hoc-lieu">
+                        <caption class="bang-hoc-lieu__chu-thich">Thông số kỹ thuật của giáo án</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="bang-hoc-lieu__dau-cot">Thuộc tính</th>
+                                <th scope="col" class="bang-hoc-lieu__dau-cot">Thông tin chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bang-hoc-lieu__hang">
+                                <th scope="row" class="bang-hoc-lieu__o-tieu-de">Cấp học</th>
+                                <td class="bang-hoc-lieu__o" id="ct-cap-hoc">...</td>
+                            </tr>
+                            <tr class="bang-hoc-lieu__hang">
+                                <th scope="row" class="bang-hoc-lieu__o-tieu-de">Giá tiền</th>
+                                <td class="bang-hoc-lieu__o" id="ct-gia" style="font-weight: bold; color: var(--mau-nhan);">...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </aside>
+        </div>
     </main>
 
     <!-- Footer giống y đúc index.html -->
@@ -93,7 +103,11 @@
 
     <!-- Gọi module JS cho trang chi tiết -->
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/trang-chi-tiet.js"></script>
 </body>
 </html>
+
+
+
 
 
