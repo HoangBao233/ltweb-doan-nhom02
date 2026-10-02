@@ -1,13 +1,110 @@
-[
-  {
-    "id": 1,
-    "ten": "Quản lý dữ liệu trong máy tính (Dữ liệu động JSON)",
-    "muc_tieu": "Bài học giúp học sinh nắm vững cách tạo, đổi tên, di chuyển và xóa các tệp, thư mục trên hệ điều hành Windows. Đây là dữ liệu được tải từ file JSON.",
-    "hinh_anh": "images/so-do-cay-thu-muc.png",
-    "mo_ta_anh": "Sơ đồ minh họa cấu trúc cây thư mục hệ điều hành",
-    "chu_thich_anh": "Hình 1: Cấu trúc cây thư mục đa cấp (Ảnh động)",
-    "video_url": "https://www.youtube.com/embed/IRWYkSjMclM?si=y7NF15ZuDCdHlTxn",
-    "doi_tuong": "Học sinh Lớp 7 (Cập nhật JSON)",
-    "dung_luong": "2.5 MB (Định dạng PDF)"
-  }
+﻿[
+    {
+        "id":  1,
+        "ten":  "Giáo án Python Cơ bản - Cấu trúc rẽ nhánh",
+        "mo_ta":  "Bài giảng chi tiết về if/else trong ngôn ngữ lập trình Python.",
+        "cap_hoc":  "THPT",
+        "gia":  0,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  2,
+        "ten":  "Sơ đồ tư duy Hệ điều hành Windows",
+        "mo_ta":  "Hệ thống hóa kiến thức về hệ điều hành, tập tin và thư mục.",
+        "cap_hoc":  "THCS",
+        "gia":  10000,
+        "hinh_anh":  "images/so-do-cay-thu-muc.png",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  3,
+        "ten":  "Đề kiểm tra Giữa kì 1 - Tin học 11",
+        "mo_ta":  "Bộ đề thi trắc nghiệm và tự luận môn Tin học 11 bám sát GDPT 2018.",
+        "cap_hoc":  "THPT",
+        "gia":  15000,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  4,
+        "ten":  "Thực hành Excel: Hàm VLOOKUP",
+        "mo_ta":  "Bài tập thực hành bảng tính điện tử cơ bản và nâng cao.",
+        "cap_hoc":  "THCS",
+        "gia":  0,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  5,
+        "ten":  "Giáo án C++: Vòng lặp For và While",
+        "mo_ta":  "Tài liệu bồi dưỡng học sinh giỏi môn Tin học phần vòng lặp.",
+        "cap_hoc":  "THPT",
+        "gia":  20000,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  6,
+        "ten":  "Bảo mật thông tin trên mạng Internet",
+        "mo_ta":  "Bài giảng lý thuyết về an toàn và bảo mật thông tin trực tuyến.",
+        "cap_hoc":  "THCS",
+        "gia":  0,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  7,
+        "ten":  "Thiết kế đồ họa cơ bản với Photoshop",
+        "mo_ta":  "Khóa học ngắn hạn làm quen với các công cụ xử lý ảnh.",
+        "cap_hoc":  "THPT",
+        "gia":  50000,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  8,
+        "ten":  "Giáo án Scratch: Lập trình game Flappy Bird",
+        "mo_ta":  "Hướng dẫn từng bước kéo thả khối lệnh để làm game tương tác.",
+        "cap_hoc":  "THCS",
+        "gia":  10000,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  9,
+        "ten":  "Cơ sở dữ liệu Quan hệ và SQL",
+        "mo_ta":  "Lý thuyết thiết kế bảng và viết truy vấn SQL cơ bản.",
+        "cap_hoc":  "THPT",
+        "gia":  25000,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  10,
+        "ten":  "Sử dụng an toàn mạng xã hội",
+        "mo_ta":  "Giáo án kỹ năng mềm và giáo dục công dân số cho học sinh.",
+        "cap_hoc":  "THCS",
+        "gia":  0,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  11,
+        "ten":  "Lập trình Web tĩnh HTML \u0026 CSS",
+        "mo_ta":  "Bài thực hành thiết kế giao diện trang web giới thiệu bản thân.",
+        "cap_hoc":  "THPT",
+        "gia":  30000,
+        "hinh_anh":  "images/banner-trang-chu.jpg",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    },
+    {
+        "id":  12,
+        "ten":  "Sơ đồ tư duy Mạng máy tính",
+        "mo_ta":  "Mô hình Client-Server và các giao thức mạng phổ biến.",
+        "cap_hoc":  "THCS",
+        "gia":  5000,
+        "hinh_anh":  "images/so-do-cay-thu-muc.png",
+        "video_url":  "https://www.youtube.com/embed/IRWYkSjMclM"
+    }
 ]
