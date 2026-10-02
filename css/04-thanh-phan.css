@@ -506,3 +506,71 @@ button:focus-visible {
   outline: 3px solid var(--mau-nhan);
   outline-offset: 2px;
 }
+
+/* --- NÚT MENU HAMBURGER (Phần B) --- */
+/* Mặc định: Ẩn nút menu (khi không có JS hoặc trên màn hình PC) */
+.nut-menu {
+  display: none;
+  background-color: transparent;
+  color: var(--chu);
+  border: 1px solid var(--vien);
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: var(--bo-goc);
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+.nut-menu:hover {
+  background-color: var(--nen-phu);
+}
+.nut-menu:focus-visible {
+  outline: 3px solid var(--mau-nhan);
+  outline-offset: 2px;
+}
+
+/* Kịch bản khi có JS và ở màn hình Mobile (dưới 768px) */
+@media (max-width: 767px) {
+  /* Hiện nút bấm */
+  .js .nut-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Ẩn danh sách menu mặc định đi, chuẩn bị cho hiệu ứng xổ */
+  .js .menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    animation: fadeInDown 0.3s ease; /* Hiệu ứng chuyên nghiệp */
+    background-color: var(--nen-phu);
+    border-radius: var(--bo-goc);
+    overflow: hidden;
+  }
+  
+  /* Khi menu được gắn class .mo bằng JS */
+  .js .menu.mo {
+    display: flex;
+  }
+  
+  /* Định dạng lại thẻ a trong menu mobile cho chuyên nghiệp */
+  .js .menu .menu-chinh__lien-ket {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--vien);
+    margin: 0;
+    text-align: center;
+  }
+  .js .menu li:last-child .menu-chinh__lien-ket {
+    border-bottom: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
