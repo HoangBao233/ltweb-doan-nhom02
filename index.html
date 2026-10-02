@@ -22,7 +22,10 @@
     
     <!-- Phần nav copy GIỐNG Y HỆT kho-hoc-lieu.html -->
     <nav class="trang__dieu-huong" aria-label="Menu chính">
-        <ul class="menu-chinh">
+        <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn) -->
+        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
+        
+        <ul id="menu-chinh" class="menu-chinh menu">
             <li><a href="index.html" class="menu-chinh__lien-ket menu-chinh__lien-ket--kich-hoat" aria-current="page">Trang chủ</a></li>
             <li><a href="kho-hoc-lieu.html" class="menu-chinh__lien-ket">Kho học liệu</a></li>
             <li><a href="chi-tiet-giao-an.html" class="menu-chinh__lien-ket">Chi tiết giáo án</a></li>
@@ -74,5 +77,8 @@
     <footer class="trang__chan">
         <p class="trang__ban-quyen">© 2026 Nhóm 02 — Khoa Toán – Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng</p>
     </footer>
+
+    <!-- JS chung cho mọi trang -->
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

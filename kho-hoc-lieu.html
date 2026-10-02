@@ -23,7 +23,10 @@
     </header>
 
     <nav class="trang__dieu-huong" aria-label="Menu chính">
-        <ul class="menu-chinh">
+        <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn) -->
+        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
+        
+        <ul id="menu-chinh" class="menu-chinh menu">
             <li><a href="index.html" class="menu-chinh__lien-ket">Trang chủ</a></li>
             <li><a href="kho-hoc-lieu.html" class="menu-chinh__lien-ket menu-chinh__lien-ket--kich-hoat"
                     aria-current="page">Kho học liệu</a></li>
@@ -130,6 +133,9 @@
         <p class="trang-cuoi__ban-quyen">&copy; 2026 Nhóm 02 &mdash; Khoa Toán &ndash; Tin, Trường Đại học Sư phạm - Đại
             học Đà Nẵng</p>
     </footer>
+    
+    <!-- JS chung cho mọi trang -->
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>
