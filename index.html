@@ -44,6 +44,15 @@
             <img src="images/banner-trang-chu.jpg" alt="Học sinh trung học cơ sở đang thực hành tin học trên máy tính" width="800" height="400">
         </section>
 
+        <!-- WIDGET THỜI TIẾT (Hiển thị API) -->
+        <div class="bieu-mau" style="margin: 1rem auto; text-align: center; max-width: 350px; padding: 1rem; border-radius: 12px; background: var(--nen-phu, #f4f6f8);">
+            <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--mau-chinh, #004085);">⛅ Thời tiết Đà Nẵng hôm nay</h2>
+            <div id="khung-thoi-tiet" aria-live="polite" style="min-height: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <p id="loi-thoi-tiet" style="font-size: 0.95rem; font-weight: bold; color: var(--chu, #333);">Đang đồng bộ dữ liệu...</p>
+                <button type="button" id="nut-tai-lai-thoi-tiet" class="nut-thao-tac nut-thao-tac--xem" style="margin-top: 0.5rem; display: none; padding: 0.3rem 0.8rem; font-size: 0.85rem;">Thử lại</button>
+            </div>
+        </div>
+
         <!-- Hàng ba thẻ giới thiệu -->
         <section class="gioi-thieu-tinh-nang">
             <h2>Điểm nổi bật của nền tảng</h2>
@@ -80,5 +89,7 @@
 
     <!-- JS chung cho mọi trang -->
     <script type="module" src="js/main.js"></script>
+    <!-- JS riêng cho trang chủ (Widget truyền cảm hứng) -->
+    <script type="module" src="js/trang-chu.js"></script>
 </body>
 </html>
