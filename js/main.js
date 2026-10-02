@@ -19,9 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dangMo) {
                 menuChinh.classList.remove('mo');
                 nutMenu.setAttribute('aria-expanded', 'false');
+                nutMenu.textContent = '☰ Menu';
             } else {
                 menuChinh.classList.add('mo');
                 nutMenu.setAttribute('aria-expanded', 'true');
+                nutMenu.textContent = '✕ Đóng';
             }
         });
 
@@ -30,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Escape' && menuChinh.classList.contains('mo')) {
                 menuChinh.classList.remove('mo');
                 nutMenu.setAttribute('aria-expanded', 'false');
+                nutMenu.textContent = '☰ Menu';
                 nutMenu.focus(); // Trả lại focus cho nút menu
             }
         });
