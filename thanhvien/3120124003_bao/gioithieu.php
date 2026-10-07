@@ -13,12 +13,12 @@
   <link rel="stylesheet" href="../../css/04-thanh-phan.css">
   <link rel="stylesheet" href="../../css/05-tien-ich.css">
   
-  <!-- Nạp file CSS cá nhân (yêu cầu số 1) -->
+  <!-- Nạp file CSS cá nhân -->
   <link rel="stylesheet" href="css/canhan-bao.css">
 </head>
 <body class="trang">
   
-  <!-- Header dùng class chung -->
+  <!-- Header -->
   <header class="trang-dau can-giua-chu">
     <p class="trang-dau__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
   </header>
@@ -26,52 +26,42 @@
   <!-- Menu điều hướng -->
   <nav class="thanh-dieu-huong" aria-label="Menu chính">
     <ul class="menu-chinh">
-      <li><a href="../../index.html" class="menu-chinh__lien-ket">Quay về Trang chủ Nhóm</a></li>
-      <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket">Quay về Trang Giới thiệu Nhóm</a></li>
+      <li><a href="../../index.php" class="menu-chinh__lien-ket">Quay về Trang chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.php" class="menu-chinh__lien-ket">Quay về Trang Giới thiệu Nhóm</a></li>
     </ul>
   </nav>
 
-  <!-- Bố cục dùng class phan-lien-he để tạo cấu trúc cột an toàn trên điện thoại -->
   <main class="trang__chinh phan-lien-he">
     <h1 class="phan-lien-he__tieu-de can-giua-chu">Hồ sơ thành viên: Lê Hoàng Bảo</h1>
 
-    <!-- 1. Section: Giới thiệu bản thân và ảnh chân dung (Dùng Grid) -->
     <section class="bieu-mau">
       <h2>Giới thiệu bản thân</h2>
-      <!-- Class gioi-thieu-grid định nghĩa 1 cột ở mobile và 2 cột ở màn hình rộng (yêu cầu số 2) -->
       <div class="gioi-thieu-grid">
           <div class="anh-dai-dien">
-             <!-- Ảnh chân dung tự động co giãn theo khung nhờ class anh-chan-dung -->
              <img src="avatar-bao.jpg" alt="Ảnh chân dung của Lê Hoàng Bảo" class="anh-chan-dung">
           </div>
           <div class="noi-dung-gioi-thieu">
              <p>Xin chào, tôi là Lê Hoàng Bảo, sinh viên Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng. Tôi là người đảm nhận nhiệm vụ trưởng nhóm cho dự án website này.</p>
              
              <h3>Danh sách kỹ năng nổi bật</h3>
-             <!-- Danh sách kỹ năng dùng Flexbox để tự xuống dòng (tránh cuộn ngang ở 360px) -->
              <ul class="danh-sach-ky-nang">
                <li>Lập trình Python (Pygame, Tkinter, OpenCV)</li>
                <li>Thiết kế CSDL (PostgreSQL, SQL Server)</li>
-               <li>HTML5 & CSS3</li>
+               <li>HTML5 &amp; CSS3</li>
                <li>Quản lý mã nguồn với Git/GitHub</li>
              </ul>
           </div>
       </div>
     </section>
 
-    <!-- 3. Article: Giới thiệu về dự án / sở thích cá nhân -->
     <article class="bieu-mau">
-      <h2>Vai trò trong dự án ITeduShare & Sở thích</h2>
+      <h2>Vai trò trong dự án ITeduShare &amp; Sở thích</h2>
       <p>Hiện tại tôi đang đảm nhận vai trò trưởng nhóm trong dự án IT-EduShare. Ngoài ra, tôi cũng có nhiều sở thích như đọc sách, chơi game và tham gia các hoạt động thể thao.</p>
-      
-      <!-- Nút bấm với trạng thái :hover và :focus-visible rõ ràng -->
       <button type="button" class="nut-thao-tac nut-thao-tac--xem nut-lien-he-ca-nhan">Kết nối với tôi</button>
     </article>
 
-    <!-- 4. Table: Bảng thời khóa biểu tuần -->
     <section class="thong-tin">
       <h2>Thời khóa biểu cá nhân</h2>
-      <!-- Bảng được bọc trong khung-cuon-bang (có overflow-x: auto) để KHÔNG gây thanh cuộn ngang trang web ở 360px -->
       <div class="khung-cuon-bang">
         <table class="bang-hoc-lieu">
           <caption class="bang-hoc-lieu__chu-thich">Kế hoạch học tập và làm việc trong tuần</caption>
@@ -108,12 +98,10 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="trang__chan can-giua-chu">
     <p class="trang__ban-quyen">© 2026 Nhóm 02 - Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng</p>
   </footer>
   
-  <!-- Nạp file JavaScript cá nhân -->
   <script type="module" src="js/canhan.js"></script>
 </body>
 </html>

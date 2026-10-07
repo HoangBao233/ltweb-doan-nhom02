@@ -1,0 +1,24 @@
+# .gitignore
+
+# Vendor Composer
+/vendor/
+
+# Logs - tự sinh khi chạy
+/logs/*.log
+
+# Storage - dữ liệu người dùng
+/storage/*.jsonl
+
+# Uploads - file do người dùng tải lên
+/uploads/*
+!/uploads/.gitkeep
+
+# Composer lock (tuỳ nhóm, có thể commit hoặc không)
+# composer.lock
+
+# Editor & OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

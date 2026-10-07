@@ -7,14 +7,11 @@
   <meta name="description" content="Trang giới thiệu cá nhân của Nguyễn Tiến Thịnh, thành viên Nhóm 02 - ITeduShare.">
   <title>Giới thiệu cá nhân | Nguyễn Tiến Thịnh</title>
 
-  <!-- Nạp 5 file CSS dùng chung của nhóm -->
   <link rel="stylesheet" href="../../css/01-bien.css">
   <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
   <link rel="stylesheet" href="../../css/03-bo-cuc.css">
   <link rel="stylesheet" href="../../css/04-thanh-phan.css">
   <link rel="stylesheet" href="../../css/05-tien-ich.css">
-
-  <!-- Nạp file CSS riêng của trang cá nhân -->
   <link rel="stylesheet" href="css/canhan-thinh.css">
 </head>
 
@@ -25,24 +22,21 @@
 
   <nav class="trang__dieu-huong" aria-label="Menu điều hướng trang cá nhân">
     <ul class="menu-chinh">
-      <li><a href="../../index.html" class="menu-chinh__lien-ket">&laquo; Quay về Trang Chủ Nhóm</a></li>
-      <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket">&laquo; Quay về Trang Giới Thiệu Nhóm</a></li>
+      <li><a href="../../index.php" class="menu-chinh__lien-ket">&laquo; Quay về Trang Chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.php" class="menu-chinh__lien-ket">&laquo; Quay về Trang Giới Thiệu Nhóm</a></li>
     </ul>
   </nav>
 
   <main class="trang__chinh">
     <h1 class="can-giua-chu">Hồ sơ thành viên: Nguyễn Tiến Thịnh</h1>
 
-    <!-- 1. Bố cục cá nhân Flexbox / Grid -->
     <section class="ho-so-ca-nhan">
       <img src="avatar.jpg" alt="Ảnh chân dung Nguyễn Tiến Thịnh" class="anh-chan-dung" width="200" height="200"
         loading="lazy">
 
       <div class="thong-tin-ca-nhan">
         <h2>Giới thiệu bản thân</h2>
-        <p>Xin chào! Tôi là <strong>Nguyễn Tiến Thịnh</strong> (MSSV: 3120222126), sinh viên ngành Công nghệ thông
-          tin/Sư phạm Tin học. Tôi là thành viên chịu trách nhiệm xây dựng trang <strong>Kho học liệu</strong> cho dự án
-          website ITeduShare.</p>
+        <p>Xin chào! Tôi là <strong>Nguyễn Tiến Thịnh</strong> (MSSV: 3120222126), sinh viên ngành Công nghệ thông tin/Sư phạm Tin học. Tôi là thành viên chịu trách nhiệm xây dựng trang <strong>Kho học liệu</strong> cho dự án website ITeduShare.</p>
 
         <h3>Danh sách kỹ năng nổi bật</h3>
         <ul class="danh-sach-ky-nang">
@@ -52,7 +46,6 @@
           <li>Tối ưu Accessibility &amp; SEO</li>
         </ul>
 
-        <!-- Tương tác 1: Nút sao chép Email liên hệ -->
         <div class="khoi-saochep-email">
           <button type="button" id="btn-saochep-email" class="nut-thao-tac nut-thao-tac--xem"
             aria-label="Sao chép địa chỉ Email của Thịnh">
@@ -60,7 +53,6 @@
           </button>
         </div>
 
-        <!-- Tương tác 2: Đánh giá 5 sao cho hồ sơ -->
         <div class="khoi-danh-gia-ca-nhan">
           <h3>Đánh giá hồ sơ cá nhân</h3>
           <div id="khung-danh-gia-sao" class="danh-sach-sao" role="radiogroup" aria-label="Đánh giá chất lượng hồ sơ">
@@ -75,21 +67,16 @@
             <button type="button" class="nut-danh-gia-sao" data-val="5" aria-label="Đánh giá 5 sao" role="radio"
               aria-checked="false">★</button>
           </div>
-          <p id="thong-bao-danh-gia" class="thong-bao-danh-gia" aria-live="polite">Bạn chưa đánh giá. Hãy chọn số sao để
-            gửi đánh giá nhé!</p>
+          <p id="thong-bao-danh-gia" class="thong-bao-danh-gia" aria-live="polite">Bạn chưa đánh giá. Hãy chọn số sao để gửi đánh giá nhé!</p>
         </div>
       </div>
     </section>
 
-    <!-- 2. Sở thích & Vai trò -->
     <section class="khoi-thoi-khoa-bieu">
       <h2>Vai trò trong dự án ITeduShare &amp; Sở thích</h2>
-      <p class="doan-van-dai">Trong dự án ITeduShare, tôi đảm nhận nhiệm vụ thiết kế trang Kho học liệu, chuẩn hóa cấu
-        trúc BEM, viết CSS responsive cho bảng giáo án và thẻ bài học. Khi rảnh rỗi, tôi thích tìm hiểu các công nghệ
-        lập trình mới và chơi game giải trí cùng bạn bè.</p>
+      <p class="doan-van-dai">Trong dự án ITeduShare, tôi đảm nhận nhiệm vụ thiết kế trang Kho học liệu, chuẩn hóa cấu trúc BEM, viết CSS responsive cho bảng giáo án và thẻ bài học. Khi rảnh rỗi, tôi thích tìm hiểu các công nghệ lập trình mới và chơi game giải trí cùng bạn bè.</p>
     </section>
 
-    <!-- 3. Thời khóa biểu cá nhân -->
     <section class="khoi-thoi-khoa-bieu">
       <h2>Thời khóa biểu cá nhân</h2>
       <div class="khung-cuon-bang-ca-nhan">
@@ -128,14 +115,12 @@
     </section>
   </main>
 
-  <!-- Khung thông báo Toast tự nổi -->
   <div id="toast-thong-bao" class="toast-thong-bao" role="status" aria-live="polite" aria-hidden="true"></div>
 
   <footer class="trang__chan can-giua-chu">
     <p>&copy; 2026 Nguyễn Tiến Thịnh (3120222126) &mdash; Nhóm 02, Khoa Toán &ndash; Tin</p>
   </footer>
 
-  <!-- Nạp file JS riêng cho trang cá nhân của Nguyễn Tiến Thịnh -->
   <script src="js/canhan.js" defer></script>
 </body>
 
