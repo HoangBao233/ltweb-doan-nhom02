@@ -1,6 +1,7 @@
 <?php
 /**
  * KhoGiaoAn.php — Lớp truy cập dữ liệu giáo án từ giao-an.json
+ * Tương thích PHP 7.4+ và PHP 8.x
  */
 require_once dirname(__DIR__) . '/Models/GiaoAn.php';
 
@@ -26,7 +27,7 @@ class KhoGiaoAn
         $noi_dung = file_get_contents($this->duong_dan_file);
         if ($noi_dung === false) return $this->cache = [];
 
-        $mang    = json_decode($noi_dung, true);
+        $mang = json_decode($noi_dung, true);
         if (!is_array($mang)) return $this->cache = [];
 
         $this->cache = array_map([GiaoAn::class, 'tuMang'], $mang);
@@ -73,14 +74,21 @@ class KhoGiaoAn
             );
         }
 
-        // Sắp xếp
+        // Sắp xếp (dùng switch thay match cho PHP 7.4)
         $ds = array_values($ds);
-        match ($sapXep) {
-            'ten-az'    => usort($ds, fn($a, $b) => strcmp($a->ten, $b->ten)),
-            'gia-tang'  => usort($ds, fn($a, $b) => $a->gia <=> $b->gia),
-            'gia-giam'  => usort($ds, fn($a, $b) => $b->gia <=> $a->gia),
-            default     => null, // giữ thứ tự gốc
-        };
+        switch ($sapXep) {
+            case 'ten-az':
+                usort($ds, fn($a, $b) => strcmp($a->ten, $b->ten));
+                break;
+            case 'gia-tang':
+                usort($ds, fn($a, $b) => $a->gia <=> $b->gia);
+                break;
+            case 'gia-giam':
+                usort($ds, fn($a, $b) => $b->gia <=> $a->gia);
+                break;
+            default:
+                break;
+        }
 
         return $ds;
     }

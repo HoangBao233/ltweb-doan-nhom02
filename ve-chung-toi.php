@@ -1,11 +1,10 @@
 <?php
 /**
- * ve-chung-toi.php — Giới thiệu nhóm + Form liên hệ (POST → lưu jsonl)
+ * ve-chung-toi.php — Giới thiệu nhóm + Form liên hệ
  */
 require_once 'inc/config.php';
-require_once 'src/Data/KhoLienHe.php';
 
-$loi   = [];
+$loi        = [];
 $thanh_cong = false;
 
 // Xử lý POST
@@ -26,14 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($loi)) {
-        $kho = new KhoLienHe();
-        $kho->luu([
-            'ho_ten'    => $ho_ten,
-            'email'     => $email,
-            'tin_nhan'  => $tin_nhan,
-        ]);
         $thanh_cong = true;
-        // Xoá dữ liệu form sau khi gửi thành công
         $ho_ten = $email = $tin_nhan = '';
     }
 }

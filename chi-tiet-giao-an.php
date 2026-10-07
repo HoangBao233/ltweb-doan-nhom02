@@ -4,7 +4,6 @@
  */
 require_once 'inc/config.php';
 require_once 'src/Data/KhoGiaoAn.php';
-require_once 'src/Services/DanhSachLuu.php';
 
 // Lấy id từ URL
 $id  = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -18,8 +17,6 @@ if ($ga === null) {
     exit;
 }
 
-$da_luu = DanhSachLuu::daLuu($ga->id);
-
 $tieu_de_trang  = e($ga->ten);
 $meta_mo_ta     = e($ga->mo_ta);
 $trang_hien_tai = 'chi-tiet-giao-an';
@@ -32,23 +29,8 @@ require_once 'inc/header.php';
         <div id="vung-chi-tiet" aria-live="polite">
             <h1 class="chi-tiet-giao-an__tieu-de"><?= e($ga->ten) ?></h1>
 
-            <!-- Nút Lưu / Đã lưu -->
             <div style="margin-bottom: 2rem;">
-                <?php if ($da_luu): ?>
-                    <form method="POST" action="gio-hang.php" style="display:inline;">
-                        <input type="hidden" name="action" value="xoa">
-                        <input type="hidden" name="id" value="<?= $ga->id ?>">
-                        <input type="hidden" name="quay_lai" value="chi-tiet-giao-an.php?id=<?= $ga->id ?>">
-                        <button type="submit" class="nut-thao-tac" style="background:#e57373; color:#fff;">✅ Đã lưu — Bỏ lưu</button>
-                    </form>
-                <?php else: ?>
-                    <form method="POST" action="gio-hang.php" style="display:inline;">
-                        <input type="hidden" name="action" value="them">
-                        <input type="hidden" name="id" value="<?= $ga->id ?>">
-                        <input type="hidden" name="quay_lai" value="chi-tiet-giao-an.php?id=<?= $ga->id ?>">
-                        <button type="submit" class="nut-thao-tac">🔖 Lưu bài học</button>
-                    </form>
-                <?php endif; ?>
+                <a href="gio-hang.php" class="nut-thao-tac">🔖 Thêm vào danh sách lưu</a>
                 <a href="kho-hoc-lieu.php" style="margin-left: 1rem; font-size: 0.9rem;">← Quay lại kho học liệu</a>
             </div>
 
