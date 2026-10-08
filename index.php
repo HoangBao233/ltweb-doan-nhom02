@@ -1,56 +1,26 @@
-﻿<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trang chủ ITeduShare: Nền tảng chia sẻ học liệu và giáo án môn Tin học chuẩn Chương trình GDPT 2018.">
-    <title>Trang chủ | ITeduShare</title>
-    
-    <!-- Nạp 5 file CSS theo đúng thứ tự -->
-    <link rel="stylesheet" href="css/01-bien.css">
-    <link rel="stylesheet" href="css/02-chuan-hoa.css">
-    <link rel="stylesheet" href="css/03-bo-cuc.css">
-    <link rel="stylesheet" href="css/04-thanh-phan.css">
-    <link rel="stylesheet" href="css/05-tien-ich.css">
-</head>
-<body class="trang">
-    
-    <!-- Phần header copy GIỐNG Y HỆT kho-hoc-lieu.html -->
-    <header class="trang__dau can-giua-chu">
-        <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
-    </header>
-    
-    <!-- Phần nav copy GIỐNG Y HỆT kho-hoc-lieu.html -->
-    <nav class="trang__dieu-huong" aria-label="Menu chính">
-        <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn) -->
-        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
-        
-        <ul id="menu-chinh" class="menu-chinh menu">
-            <li><a href="index.html" class="menu-chinh__lien-ket menu-chinh__lien-ket--kich-hoat" aria-current="page">Trang chủ</a></li>
-            <li><a href="kho-hoc-lieu.html" class="menu-chinh__lien-ket">Kho học liệu</a></li>
-            <li><a href="chi-tiet-giao-an.html" class="menu-chinh__lien-ket">Chi tiết giáo án</a></li>
-            <li><a href="ve-chung-toi.html" class="menu-chinh__lien-ket">Về chúng tôi</a></li>
-            <li><a href="dong-gop-tai-lieu.html" class="menu-chinh__lien-ket">Đóng góp tài liệu</a></li>
-            <!-- Nút hiển thị số đếm yêu thích toàn cục -->
-            <li>
-                <a href="#" class="menu-chinh__lien-ket" title="Giáo án đã lưu" style="font-weight: bold; color: var(--mau-nhan, #ff5722);">
-                    🔖 Đã lưu: <span id="dem-yeu-thich" aria-live="polite">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+<?php
+/**
+ * index.php — Trang chủ ITeduShare
+ */
+require_once 'inc/config.php';
+require_once 'src/Data/KhoGiaoAn.php';
 
-    <!-- Các class ở main và footer vẫn được chỉnh đúng theo BEM -->
+$tieu_de_trang  = 'Trang chủ';
+$meta_mo_ta     = 'Trang chủ ITeduShare: Nền tảng chia sẻ học liệu và giáo án môn Tin học chuẩn Chương trình GDPT 2018.';
+$trang_hien_tai = 'index';
+
+require_once 'inc/header.php';
+?>
+
     <main class="trang__chinh">
         <!-- Khu vực nổi bật (hero) -->
         <section class="khu-vuc-noi-bat">
             <h1>Tổng quan về nền tảng ITeduShare</h1>
             <p>ITeduShare là kho lưu trữ bài giảng số, hỗ trợ giáo viên và sinh viên Sư phạm tải xuống các tài liệu giảng dạy môn Tin học chất lượng cao.</p>
-            
             <img src="images/banner-trang-chu.jpg" alt="Học sinh trung học cơ sở đang thực hành tin học trên máy tính" width="800" height="400">
         </section>
 
-        <!-- WIDGET THỜI TIẾT (Hiển thị API) -->
+        <!-- WIDGET THỜI TIẾT (Hiển thị API qua JS) -->
         <div class="bieu-mau" style="margin: 1rem auto; text-align: center; max-width: 350px; padding: 1rem; border-radius: 12px; background: var(--nen-phu, #f4f6f8);">
             <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--mau-chinh, #004085);">⛅ Thời tiết Đà Nẵng hôm nay</h2>
             <div id="khung-thoi-tiet" aria-live="polite" style="min-height: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
@@ -62,22 +32,19 @@
         <!-- Hàng ba thẻ giới thiệu -->
         <section class="gioi-thieu-tinh-nang">
             <h2>Điểm nổi bật của nền tảng</h2>
-            
             <div class="danh-sach-the__luoi">
                 <article class="the-hoc-lieu">
                     <div class="the-hoc-lieu__noi-dung">
                         <h3 class="the-hoc-lieu__tieu-de">Giáo án chuẩn GDPT 2018</h3>
-                        <p class="the-hoc-lieu__mo-ta">Hàng trăm giáo án được biên soạn kỹ lưỡng, bám sát chương trình mới nhất của Bộ GD&ĐT.</p>
+                        <p class="the-hoc-lieu__mo-ta">Hàng trăm giáo án được biên soạn kỹ lưỡng, bám sát chương trình mới nhất của Bộ GD&amp;ĐT.</p>
                     </div>
                 </article>
-                
                 <article class="the-hoc-lieu">
                     <div class="the-hoc-lieu__noi-dung">
                         <h3 class="the-hoc-lieu__tieu-de">Hoàn toàn miễn phí</h3>
                         <p class="the-hoc-lieu__mo-ta">Tất cả tài liệu giảng dạy, bài tập và slide bài giảng đều có thể xem và tải xuống 0 đồng.</p>
                     </div>
                 </article>
-                
                 <article class="the-hoc-lieu">
                     <div class="the-hoc-lieu__noi-dung">
                         <h3 class="the-hoc-lieu__tieu-de">Cộng đồng đóng góp</h3>
@@ -88,16 +55,11 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="trang__chan">
-        <p class="trang__ban-quyen">© 2026 Nhóm 02 — Khoa Toán – Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng</p>
-    </footer>
+<?php require_once 'inc/footer.php'; ?>
 
     <!-- JS chung cho mọi trang -->
     <script type="module" src="js/main.js"></script>
-    <!-- JS riêng cho trang chủ (Widget truyền cảm hứng) -->
+    <!-- JS riêng cho trang chủ (Widget thời tiết) -->
     <script type="module" src="js/trang-chu.js"></script>
 </body>
 </html>
-
-

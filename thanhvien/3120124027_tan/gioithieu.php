@@ -23,8 +23,8 @@
     <!-- Menu điều hướng -->
     <nav class="thanh-dieu-huong" aria-label="Menu chính">
         <ul class="menu-chinh" style="display: flex; gap: 1rem; list-style: none; padding: 1rem; justify-content: center; background-color: var(--nen-phu, #f4f6f8);">
-            <li><a href="../../index.html" class="menu-chinh__lien-ket" style="padding: 0.5rem 1rem; border: 1px solid var(--vien); border-radius: 4px; background: white; text-decoration: none; color: var(--mau-chinh); font-weight: bold;">⬅ Quay về Trang chủ Nhóm</a></li>
-            <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket" style="padding: 0.5rem 1rem; border: 1px solid var(--vien); border-radius: 4px; background: white; text-decoration: none; color: var(--mau-chinh); font-weight: bold;">⬅ Quay về Trang Giới thiệu Nhóm</a></li>
+            <li><a href="../../index.php" class="menu-chinh__lien-ket" style="padding: 0.5rem 1rem; border: 1px solid var(--vien); border-radius: 4px; background: white; text-decoration: none; color: var(--mau-chinh); font-weight: bold;">⬅ Quay về Trang chủ Nhóm</a></li>
+            <li><a href="../../ve-chung-toi.php" class="menu-chinh__lien-ket" style="padding: 0.5rem 1rem; border: 1px solid var(--vien); border-radius: 4px; background: white; text-decoration: none; color: var(--mau-chinh); font-weight: bold;">⬅ Quay về Trang Giới thiệu Nhóm</a></li>
         </ul>
     </nav>
 
@@ -36,7 +36,6 @@
             <p>MSSV: 3120124027</p>
             <p>Ngành: Sư phạm Tin học</p>
             <p>Trường Đại học Sư phạm – ĐH Đà Nẵng</p>
-            <!-- CHỨC NĂNG PHẦN C Ở ĐÂY -->
             <div class="cong-cu-doc">
                 <h2>Hỗ trợ đọc</h2>
                 <div class="nhom-nut">
@@ -49,7 +48,6 @@
 
         <!-- CỘT PHẢI -->
         <div class="cot-phai">
-            <!-- ĐỒNG HỒ ĐẾM NGƯỢC (TƯƠNG TÁC 2) -->
             <div class="khung-dem-nguoc">
                 <h2>⏳ Đếm ngược đến ngày báo cáo Thiết kế lập trình Web</h2>
                 <div id="dong-ho-thi" class="dong-ho" aria-live="polite" aria-atomic="true">
@@ -57,13 +55,13 @@
                 </div>
             </div>
 
-            <h2>Kỹ năng & Chuyên môn</h2>
+            <h2>Kỹ năng &amp; Chuyên môn</h2>
             <ul class="danh-sach-ky-nang">
                 <li>Lập trình Python (Tkinter, Pygame, OpenCV)</li>
                 <li>Quản trị CSDL (PostgreSQL, SQL Server)</li>
                 <li>Phát triển Web (PHP, HTML, CSS)</li>
                 <li>Quản trị hệ thống Linux</li>
-                <li>Phương pháp dạy học & Gamification</li>
+                <li>Phương pháp dạy học &amp; Gamification</li>
             </ul>
 
             <h2>Thời khóa biểu (Học kỳ hiện tại)</h2>
@@ -90,7 +88,6 @@
 
     <footer class="can-giua-chu"><p>© 2026 Nguyễn Cảnh Tấn — Khoa Toán – Tin</p></footer>
 
-    <!-- Gọi JS Nhóm và JS Cá nhân -->
     <script type="module" src="../../js/main.js"></script>
     <script type="module" src="js/canhan.js"></script>
 </body>
