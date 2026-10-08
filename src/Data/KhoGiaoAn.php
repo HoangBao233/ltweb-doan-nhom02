@@ -23,6 +23,9 @@ class KhoGiaoAn
                 throw new RuntimeException("Không tìm thấy tệp dữ liệu: {$this->tepJson}");
             }
             $json = file_get_contents($this->tepJson);
+            if (str_starts_with($json, "\xEF\xBB\xBF")) {
+                $json = substr($json, 3);
+            }
             $mang = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
             $this->ds = array_map(fn(array $d) => GiaoAn::tuMang($d), $mang);
         }
