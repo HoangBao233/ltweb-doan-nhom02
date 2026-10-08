@@ -3,11 +3,11 @@
  * chi-tiet-giao-an.php — Trang chi tiết một giáo án
  */
 require_once 'inc/config.php';
-require_once 'src/Data/KhoGiaoAn.php';
+use App\Data\KhoGiaoAn;
 
 // Lấy id từ URL
 $id  = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$kho = new KhoGiaoAn();
+$kho = new KhoGiaoAn(__DIR__ . '/data/giao-an.json');
 $ga  = $id > 0 ? $kho->timTheoId($id) : null;
 
 // Không tìm thấy → 404
@@ -16,6 +16,16 @@ if ($ga === null) {
     include '404.php';
     exit;
 }
+
+// Lưu lịch sử xem vào Cookie (Châu phụ trách - Chức năng 3)
+$cu  = array_map('intval', explode(',', $_COOKIE['da_xem'] ?? ''));
+$moi = array_unique([$ga->id, ...array_filter($cu)]);
+setcookie('da_xem', implode(',', array_slice($moi, 0, 4)), [
+    'expires'  => time() + 30 * 24 * 3600,
+    'path'     => '/',
+    'httponly' => true,
+    'samesite' => 'Lax',
+]);
 
 $tieu_de_trang  = e($ga->ten);
 $meta_mo_ta     = e($ga->mo_ta);
