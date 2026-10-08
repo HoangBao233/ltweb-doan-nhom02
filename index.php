@@ -3,7 +3,7 @@
  * index.php — Trang chủ ITeduShare
  */
 require_once 'inc/config.php';
-require_once 'src/Data/KhoGiaoAn.php';
+use App\Data\KhoGiaoAn;
 
 $tieu_de_trang  = 'Trang chủ';
 $meta_mo_ta     = 'Trang chủ ITeduShare: Nền tảng chia sẻ học liệu và giáo án môn Tin học chuẩn Chương trình GDPT 2018.';
@@ -53,6 +53,37 @@ require_once 'inc/header.php';
                 </article>
             </div>
         </section>
+        <?php
+        // Đọc Cookie lịch sử xem
+        $idsDaXem = array_filter(array_map('intval', explode(',', $_COOKIE['da_xem'] ?? '')));
+        if (!empty($idsDaXem)):
+            $kho = new KhoGiaoAn(__DIR__ . '/data/giao-an.json');
+        ?>
+        <section class="gioi-thieu-tinh-nang" style="margin-top: 3rem;">
+            <h2>Đã xem gần đây</h2>
+            <div class="danh-sach-the__luoi">
+                <?php
+                foreach ($idsDaXem as $idDaXem) {
+                    $ga = $kho->timTheoId($idDaXem);
+                    if ($ga):
+                ?>
+                    <article class="the-hoc-lieu">
+                        <img src="<?= e($ga->hinh_anh) ?>" alt="<?= e($ga->ten) ?>" class="the-hoc-lieu__anh" width="300" height="180" loading="lazy">
+                        <div class="the-hoc-lieu__noi-dung">
+                            <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : ($ga->cap_hoc === 'THPT' ? 'nhan-nho--cam' : 'nhan-nho--tim') ?>">
+                                <?= e($ga->cap_hoc) ?>
+                            </span>
+                            <h3 class="the-hoc-lieu__tieu-de"><?= e($ga->ten) ?></h3>
+                            <a href="chi-tiet-giao-an.php?id=<?= $ga->id ?>" class="nut-thao-tac nut-thao-tac--xem">Xem lại</a>
+                        </div>
+                    </article>
+                <?php
+                    endif;
+                }
+                ?>
+            </div>
+        </section>
+        <?php endif; ?>
     </main>
 
 <?php require_once 'inc/footer.php'; ?>

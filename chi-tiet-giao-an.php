@@ -1,65 +1,34 @@
 <?php
 /**
- * Tệp: chi-tiet-giao-an.php — Trang chi tiết giáo án (Chức năng 3 - Châu phụ trách)
- * - Kiểm tra id hợp lệ qua filter_var (số nguyên dương), nếu không tìm thấy trả về 404 thân thiện.
- * - Ghi nhận cookie 'da_xem' (tối đa 4 ID giáo án mới nhất, 30 ngày, HttpOnly, SameSite=Lax) TRƯỚC mọi output.
- * - Nút "Thêm vào danh sách lưu" dưới dạng form POST gửi id giáo án tới gio-hang.php.
+ * Tệp: chi-tiet-giao-an.php — Trang chi tiết giáo án
  */
 require_once 'inc/config.php';
-require_once 'src/Data/KhoGiaoAn.php';
+use App\Data\KhoGiaoAn;
 
-// 1. Kiểm tra id từ URL bằng filter_var (chuẩn Rubric đề bài)
-$id  = filter_var($_GET['id'] ?? '', FILTER_VALIDATE_INT, [
-    'options' => ['min_range' => 1]
-]);
-$kho = new KhoGiaoAn();
-$ga  = $id ? $kho->timTheoId($id) : null;
+// Lấy id từ URL
+$id  = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$kho = new KhoGiaoAn(__DIR__ . '/data/giao-an.json');
+$ga  = $id > 0 ? $kho->timTheoId($id) : null;
 
-// Dự phòng an toàn: tự động xử lý nếu lớp KhoGiaoAn của nhóm bị lỗi UTF-8 BOM hoặc lỗi đường dẫn trên Windows
-if ($ga === null && $id) {
-    if (!class_exists('GiaoAn') && is_file(__DIR__ . '/src/Models/GiaoAn.php')) {
-        require_once __DIR__ . '/src/Models/GiaoAn.php';
-    }
-    $tepJson = __DIR__ . '/data/giao-an.json';
-    if (is_file($tepJson)) {
-        $raw = file_get_contents($tepJson);
-        if ($raw !== false) {
-            // Loại bỏ ký tự UTF-8 BOM ẩn (\xEF\xBB\xBF) của Windows để json_decode phân tích chuẩn xác
-            $raw = preg_replace('/^\xEF\xBB\xBF/', '', $raw);
-            $mang = json_decode($raw, true);
-            if (is_array($mang)) {
-                foreach ($mang as $item) {
-                    if ((int)($item['id'] ?? 0) === $id) {
-                        $ga = GiaoAn::tuMang($item);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-}
-
-// 2. Không tìm thấy giáo án (id thiếu, id sai kiểu, hoặc không tồn tại) → Trả về 404
+// Không tìm thấy giáo án → Trả về 404
 if ($ga === null) {
     http_response_code(404);
     require_once __DIR__ . '/404.php';
     exit;
 }
 
-// 3. Ghi nhận Cookie "Đã xem gần đây": tối đa 4 id, mới nhất đứng đầu
-// setcookie() gửi HTTP Header nên BẮT BUỘC phải gọi TRƯỚC mọi output (trước header.php)
-$da_xem_cu  = array_map('intval', explode(',', $_COOKIE['da_xem'] ?? ''));
-$da_xem_moi = array_unique([$ga->id, ...array_filter($da_xem_cu, fn($x) => $x > 0)]);
-setcookie('da_xem', implode(',', array_slice($da_xem_moi, 0, 4)), [
-    'expires'  => time() + 30 * 24 * 3600, // 30 ngày
+// Lưu lịch sử xem vào Cookie (Châu phụ trách - Chức năng 3)
+$cu  = array_map('intval', explode(',', $_COOKIE['da_xem'] ?? ''));
+$moi = array_unique([$ga->id, ...array_filter($cu)]);
+setcookie('da_xem', implode(',', array_slice($moi, 0, 4)), [
+    'expires'  => time() + 30 * 24 * 3600,
     'path'     => '/',
     'httponly' => true,
     'samesite' => 'Lax',
 ]);
 
-// 4. Thiết lập tiêu đề và meta mô tả cho khung trang dùng chung
-$tieu_de_trang  = $ga->ten;
-$meta_mo_ta     = $ga->mo_ta;
+$tieu_de_trang  = e($ga->ten);
+$meta_mo_ta     = e($ga->mo_ta);
 $trang_hien_tai = 'chi-tiet-giao-an';
 
 require_once 'inc/header.php';
@@ -70,12 +39,17 @@ require_once 'inc/header.php';
         <div id="vung-chi-tiet" aria-live="polite">
             <h1 class="chi-tiet-giao-an__tieu-de"><?= e($ga->ten) ?></h1>
 
-            <div style="margin-bottom: 2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <!-- Form POST Thêm vào danh sách lưu (Tương đương giỏ hàng) -->
-                <form method="POST" action="gio-hang.php" style="display: inline-block; margin: 0;">
-                    <input type="hidden" name="action" value="them">
+            <div style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+                <?php
+                $dsLuu = new \App\Services\DanhSachLuu();
+                $daLuu = $dsLuu->daLuu($ga->id);
+                ?>
+                <form action="gio-hang.php" method="POST" style="margin: 0;">
+                    <input type="hidden" name="action" value="<?= $daLuu ? 'xoa' : 'them' ?>">
                     <input type="hidden" name="id" value="<?= $ga->id ?>">
-                    <button type="submit" class="nut-thao-tac nut-thao-tac--xem" style="cursor: pointer; border: none; font-family: inherit;">🔖 Thêm vào danh sách lưu</button>
+                    <button type="submit" class="nut-thao-tac" style="cursor: pointer; border: none; font-size: 1rem; font-family: inherit; min-width: 120px; text-align: center;">
+                        🔖 <?= $daLuu ? 'Đã lưu' : 'Lưu' ?>
+                    </button>
                 </form>
                 <a href="kho-hoc-lieu.php" style="font-size: 0.9rem;">← Quay lại kho học liệu</a>
             </div>

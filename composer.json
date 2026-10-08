@@ -1,18 +1,9 @@
 {
-    "name": "ltweb-doan-nhom02/itedushare",
-    "description": "Nền tảng chia sẻ giáo án Tin học ITeduShare — Nhóm 02",
-    "type": "project",
-    "require": {
-        "php": ">=8.1"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\Models\\": "src/Models/",
-            "App\\Data\\": "src/Data/",
-            "App\\Services\\": "src/Services/"
-        }
-    },
+    "name": "nhom02/ltweb-doan",
+    "require": { "php": ">=8.1" },
+    "autoload": { "psr-4": { "App\\": "src/" } },
     "config": {
-        "optimize-autoloader": true
+        "disable-tls": true,
+        "secure-http": false
     }
 }
