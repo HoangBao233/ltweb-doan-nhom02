@@ -165,17 +165,11 @@ if (!empty($_SESSION['avatar_chau'])) {
     <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
   </header>
 
-  <!-- Nav giống nhóm -->
+  <!-- Menu điều hướng quay về nhóm -->
   <nav class="trang__dieu-huong" aria-label="Menu chính">
-    <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn) -->
-    <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
-    
-    <ul id="menu-chinh" class="menu-chinh menu">
-      <li><a href="../../index.html" class="menu-chinh__lien-ket">Trang chủ</a></li>
-      <li><a href="../../kho-hoc-lieu.html" class="menu-chinh__lien-ket">Kho học liệu</a></li>
-      <li><a href="../../chi-tiet-giao-an.html" class="menu-chinh__lien-ket">Chi tiết giáo án</a></li>
-      <li><a href="../../ve-chung-toi.html" class="menu-chinh__lien-ket">Về chúng tôi</a></li>
-      <li><a href="../../dong-gop-tai-lieu.html" class="menu-chinh__lien-ket">Đóng góp tài liệu</a></li>
+    <ul id="menu-chinh" class="menu-chinh">
+      <li><a href="../../index.php" class="menu-chinh__lien-ket">Quay về Trang chủ Nhóm</a></li>
+      <li><a href="../../ve-chung-toi.php" class="menu-chinh__lien-ket">Quay về Trang Giới thiệu Nhóm</a></li>
     </ul>
   </nav>
 
