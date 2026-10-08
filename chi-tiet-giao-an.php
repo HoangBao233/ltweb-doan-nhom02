@@ -39,9 +39,19 @@ require_once 'inc/header.php';
         <div id="vung-chi-tiet" aria-live="polite">
             <h1 class="chi-tiet-giao-an__tieu-de"><?= e($ga->ten) ?></h1>
 
-            <div style="margin-bottom: 2rem;">
-                <a href="gio-hang.php" class="nut-thao-tac">🔖 Thêm vào danh sách lưu</a>
-                <a href="kho-hoc-lieu.php" style="margin-left: 1rem; font-size: 0.9rem;">← Quay lại kho học liệu</a>
+            <div style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+                <?php
+                $dsLuu = new \App\Services\DanhSachLuu();
+                $daLuu = $dsLuu->daLuu($ga->id);
+                ?>
+                <form action="gio-hang.php" method="POST" style="margin: 0;">
+                    <input type="hidden" name="action" value="<?= $daLuu ? 'xoa' : 'them' ?>">
+                    <input type="hidden" name="id" value="<?= $ga->id ?>">
+                    <button type="submit" class="nut-thao-tac" style="cursor: pointer; border: none; font-size: 1rem; font-family: inherit; min-width: 120px; text-align: center;">
+                        🔖 <?= $daLuu ? 'Đã lưu' : 'Lưu' ?>
+                    </button>
+                </form>
+                <a href="kho-hoc-lieu.php" style="font-size: 0.9rem;">← Quay lại kho học liệu</a>
             </div>
 
             <!-- Nội dung chính -->
