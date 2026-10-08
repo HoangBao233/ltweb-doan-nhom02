@@ -94,7 +94,7 @@ require __DIR__ . '/inc/header.php';
         <!-- Danh sách kết quả — do PHP sinh ra từ JSON -->
         <section class="danh-sach-the" aria-label="Danh sách giáo án">
             <h2 class="can-giua-chu">
-                Danh sách Giáo án &amp; Tài liệu
+                Danh sách tài liệu
                 <small style="font-size: 0.75em; color: #666;">(<?= count($danhSach) ?> kết quả)</small>
             </h2>
 
@@ -115,18 +115,28 @@ require __DIR__ . '/inc/header.php';
                                  class="the-hoc-lieu__anh"
                                  width="300" height="180" loading="lazy">
                             <div class="the-hoc-lieu__noi-dung">
-                                <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : ($ga->cap_hoc === 'THPT' ? 'nhan-nho--cam' : 'nhan-nho--tim') ?>">
-                                    <?= e($ga->cap_hoc) ?>
-                                </span>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : ($ga->cap_hoc === 'THPT' ? 'nhan-nho--cam' : 'nhan-nho--tim') ?>">
+                                        <?= e($ga->cap_hoc) ?>
+                                    </span>
+                                    <button type="button" class="nut-yeu-thich" title="Yêu thích"
+                                            style="background: none; border: none; cursor: pointer; font-size: 1.4rem; color: #ccc; transition: color 0.2s;"
+                                            onclick="this.classList.toggle('da-thich'); this.style.color = this.classList.contains('da-thich') ? '#e74c3c' : '#ccc';">
+                                        ♥
+                                    </button>
+                                </div>
                                 <h3 class="the-hoc-lieu__tieu-de"><?= e($ga->ten) ?></h3>
                                 <p class="the-hoc-lieu__mo-ta"><?= e($ga->mo_ta) ?></p>
-                                <p style="font-weight: bold; color: var(--mau-chinh, #007bff);">
-                                    <?= $ga->gia === 0 ? 'Miễn phí' : vnd($ga->gia) ?>
-                                </p>
-                                <a href="chi-tiet-giao-an.php?id=<?= $ga->id ?>"
-                                   class="nut-thao-tac nut-thao-tac--xem">
-                                    Xem chi tiết bài học
-                                </a>
+                                <div style="margin-top: auto; text-align: center;">
+                                    <p style="font-weight: bold; color: var(--mau-chinh, #007bff); margin-bottom: 0.75rem;">
+                                        <?= $ga->gia === 0 ? 'Miễn phí' : vnd($ga->gia) ?>
+                                    </p>
+                                    <a href="chi-tiet-giao-an.php?id=<?= $ga->id ?>"
+                                       class="nut-thao-tac nut-thao-tac--xem"
+                                       style="display: block; text-align: center;">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
                             </div>
                         </article>
                     <?php endforeach; ?>
