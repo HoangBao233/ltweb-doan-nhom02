@@ -1,41 +1,36 @@
 <?php
-/**
- * KhoGiaoAn.php — Lớp truy cập dữ liệu giáo án từ giao-an.json
- * Tương thích PHP 7.4+ và PHP 8.x
- */
-require_once dirname(__DIR__) . '/Models/GiaoAn.php';
+// src/Data/KhoGiaoAn.php — Nơi DUY NHẤT đọc tệp data/giao-an.json
+// Phụ trách: Tấn (MSSV 3120124027) — Chương 6 chỉ cần viết lại lớp này bằng PDO
+// Cách thử: $kho = new KhoGiaoAn(__DIR__ . '/../../data/giao-an.json'); var_dump($kho->tatCa());
+namespace App\Data;
+
+use App\Models\GiaoAn;
+use RuntimeException;
 
 class KhoGiaoAn
 {
-    private string $duong_dan_file;
-    /** @var GiaoAn[] */
-    private ?array $cache = null;
+    private ?array $ds = null;  // mỗi request chỉ đọc tệp một lần
 
-    public function __construct(string $duong_dan_file = '')
-    {
-        $this->duong_dan_file = $duong_dan_file ?: DATA_DIR . 'giao-an.json';
-    }
+    public function __construct(private string $tepJson) {}
 
     /**
-     * Đọc toàn bộ giáo án từ JSON, cache lại trong request
-     * @return GiaoAn[]
+     * Trả về toàn bộ mảng GiaoAn từ JSON.
      */
     public function tatCa(): array
     {
-        if ($this->cache !== null) return $this->cache;
-
-        $noi_dung = file_get_contents($this->duong_dan_file);
-        if ($noi_dung === false) return $this->cache = [];
-
-        $mang = json_decode($noi_dung, true);
-        if (!is_array($mang)) return $this->cache = [];
-
-        $this->cache = array_map([GiaoAn::class, 'tuMang'], $mang);
-        return $this->cache;
+        if ($this->ds === null) {
+            if (!is_file($this->tepJson)) {
+                throw new RuntimeException("Không tìm thấy tệp dữ liệu: {$this->tepJson}");
+            }
+            $json = file_get_contents($this->tepJson);
+            $mang = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+            $this->ds = array_map(fn(array $d) => GiaoAn::tuMang($d), $mang);
+        }
+        return $this->ds;
     }
 
     /**
-     * Tìm một giáo án theo id, trả null nếu không có
+     * Tìm một giáo án theo id. Trả về null nếu không tìm thấy.
      */
     public function timTheoId(int $id): ?GiaoAn
     {
@@ -46,61 +41,48 @@ class KhoGiaoAn
     }
 
     /**
-     * Lọc và sắp xếp danh sách giáo án
+     * Tìm kiếm và lọc danh sách giáo án — dùng cho trang kho-hoc-lieu.php.
      *
-     * @param string $capHoc   '' | 'THCS' | 'THPT'
-     * @param string $sapXep   'macdinh' | 'ten-az' | 'gia-tang' | 'gia-giam'
-     * @param string $timKiem  chuỗi tìm kiếm (tên)
+     * @param string $q       Từ khoá tìm kiếm (tên hoặc mô tả)
+     * @param string $capHoc  'Tất cả' | 'THCS' | 'THPT'
+     * @param string $sapXep  'ten-az' | 'gia-tang' | 'gia-giam'
      * @return GiaoAn[]
      */
-    public function locVaSapXep(
-        string $capHoc  = '',
-        string $sapXep  = 'macdinh',
-        string $timKiem = ''
-    ): array {
-        $ds = $this->tatCa();
-
-        // Lọc cấp học
-        if ($capHoc !== '' && $capHoc !== 'Tất cả') {
-            $ds = array_filter($ds, fn($ga) => $ga->cap_hoc === $capHoc);
-        }
-
-        // Tìm kiếm theo tên
-        if ($timKiem !== '') {
-            $kw = mb_strtolower($timKiem, 'UTF-8');
-            $ds = array_filter($ds, fn($ga) =>
-                str_contains(mb_strtolower($ga->ten, 'UTF-8'), $kw) ||
-                str_contains(mb_strtolower($ga->mo_ta, 'UTF-8'), $kw)
-            );
-        }
-
-        // Sắp xếp (dùng switch thay match cho PHP 7.4)
-        $ds = array_values($ds);
-        switch ($sapXep) {
-            case 'ten-az':
-                usort($ds, fn($a, $b) => strcmp($a->ten, $b->ten));
-                break;
-            case 'gia-tang':
-                usort($ds, fn($a, $b) => $a->gia <=> $b->gia);
-                break;
-            case 'gia-giam':
-                usort($ds, fn($a, $b) => $b->gia <=> $a->gia);
-                break;
-            default:
-                break;
-        }
-
-        return $ds;
-    }
-
-    /**
-     * Trả về danh sách giáo án tương ứng với mảng id
-     * @param int[] $ids
-     * @return GiaoAn[]
-     */
-    public function layNhieuTheoId(array $ids): array
+    public function timKiem(string $q, string $capHoc, string $sapXep): array
     {
-        $tat_ca = $this->tatCa();
-        return array_values(array_filter($tat_ca, fn($ga) => in_array($ga->id, $ids, true)));
+        // Danh sách giá trị cho phép — chặn dữ liệu không hợp lệ
+        $capHocHopLe  = ['Tất cả', 'THCS', 'THPT'];
+        $sapXepHopLe  = ['ten-az', 'gia-tang', 'gia-giam'];
+
+        if (!in_array($capHoc, $capHocHopLe, true)) $capHoc = 'Tất cả';
+        if (!in_array($sapXep, $sapXepHopLe, true)) $sapXep = 'ten-az';
+
+        $q = mb_strtolower(trim($q), 'UTF-8');
+
+        // Lọc theo từ khoá và cấp học
+        $ketQua = array_filter($this->tatCa(), function (GiaoAn $ga) use ($q, $capHoc): bool {
+            $khopCapHoc = ($capHoc === 'Tất cả') || ($ga->cap_hoc === $capHoc);
+            if (!$khopCapHoc) return false;
+
+            if ($q === '') return true;
+
+            // Tìm trong tên hoặc mô tả (không phân biệt hoa thường)
+            return mb_stripos($ga->ten, $q, 0, 'UTF-8') !== false
+                || mb_stripos($ga->mo_ta, $q, 0, 'UTF-8') !== false;
+        });
+
+        // Sắp xếp
+        $mang = array_values($ketQua);
+        usort($mang, function (GiaoAn $a, GiaoAn $b) use ($sapXep): int {
+            return match ($sapXep) {
+                'ten-az'    => mb_strtolower($a->ten, 'UTF-8') <=> mb_strtolower($b->ten, 'UTF-8'),
+                'gia-tang'  => $a->gia <=> $b->gia,
+                'gia-giam'  => $b->gia <=> $a->gia,
+                default     => 0,
+            };
+        });
+
+        return $mang;
     }
 }
+

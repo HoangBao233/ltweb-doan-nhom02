@@ -1,42 +1,95 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trang cá nhân của sinh viên Nguyễn Cảnh Tấn.">
-    <title>Nguyễn Cảnh Tấn | ITeduShare</title>
-    
-    <!-- CSS Nhóm -->
-    <link rel="stylesheet" href="../../css/01-bien.css">
-    <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
-    <link rel="stylesheet" href="../../css/04-thanh-phan.css">
-    <!-- CSS Cá nhân -->
-    <link rel="stylesheet" href="css/canhan-tan.css">
-</head>
-<body class="trang">
+<?php
+// thanhvien/3120124027_tan/gioithieu.php — Trang cá nhân Nguyễn Cảnh Tấn
+// Phụ trách: Tấn (MSSV 3120124027) — Phần C Bài tập 5
+// Cách thử: mở http://localhost/ltweb-doan-nhom02/thanhvien/3120124027_tan/gioithieu.php
+//           thử ?nhom=backend, ?nhom=frontend, ?nhom=database để lọc kỹ năng
+//           mỗi lần mở (phiên mới) bộ đếm tăng 1
+require __DIR__ . '/../../inc/config.php';
 
-    <!-- Header & Nav -->
-    <header class="trang__dau can-giua-chu">
-        <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
-    </header>
+$goc    = '../../';
+$tieuDe = 'Nguyễn Cảnh Tấn | ITeduShare';
+$trang  = '';
 
-    <!-- Menu điều hướng -->
-    <nav class="thanh-dieu-huong" aria-label="Menu chính">
-        <ul class="menu-chinh" style="display: flex; gap: 1rem; list-style: none; padding: 1rem; justify-content: center; background-color: var(--nen-phu, #f4f6f8);">
-            <li><a href="../../index.php" class="menu-chinh__lien-ket" style="padding: 0.5rem 1rem; border: 1px solid var(--vien); border-radius: 4px; background: white; text-decoration: none; color: var(--mau-chinh); font-weight: bold;">⬅ Quay về Trang chủ Nhóm</a></li>
-            <li><a href="../../ve-chung-toi.php" class="menu-chinh__lien-ket" style="padding: 0.5rem 1rem; border: 1px solid var(--vien); border-radius: 4px; background: white; text-decoration: none; color: var(--mau-chinh); font-weight: bold;">⬅ Quay về Trang Giới thiệu Nhóm</a></li>
+// =====================================================================
+// CHỨC NĂNG PHP 1 — Bộ đếm lượt xem (mỗi phiên chỉ tính 1 lần)
+// =====================================================================
+$tepDem = __DIR__ . '/../../storage/3120124027_luotxem.txt';
+
+// Kiểm tra xem phiên này đã được tính chưa
+if (empty($_SESSION['da_xem_tan'])) {
+    $_SESSION['da_xem_tan'] = true;
+
+    // Đọc số đếm hiện tại, tăng 1, ghi lại
+    $soHienTai = (int)@file_get_contents($tepDem);
+    $soMoi     = $soHienTai + 1;
+    file_put_contents($tepDem, $soMoi, LOCK_EX);
+}
+
+$luotXem = (int)@file_get_contents($tepDem);
+
+// =====================================================================
+// CHỨC NĂNG PHP 2 — Danh sách kỹ năng lọc theo nhóm bằng tham số GET
+// =====================================================================
+$tatCaKyNang = [
+    ['ten' => 'Python (Tkinter, Pygame, OpenCV)',   'nhom' => 'backend'],
+    ['ten' => 'PHP 8 (OOP, Composer)',               'nhom' => 'backend'],
+    ['ten' => 'PostgreSQL, SQL Server',              'nhom' => 'database'],
+    ['ten' => 'Quản trị Linux',                      'nhom' => 'backend'],
+    ['ten' => 'HTML5, CSS3 (BEM, Responsive)',        'nhom' => 'frontend'],
+    ['ten' => 'JavaScript ES6+',                     'nhom' => 'frontend'],
+    ['ten' => 'Git & GitHub',                        'nhom' => 'devops'],
+    ['ten' => 'Gamification trong dạy học',          'nhom' => 'giaoduc'],
+    ['ten' => 'Phương pháp dạy học Tin học',         'nhom' => 'giaoduc'],
+];
+
+$nhomHopLe  = ['tat-ca', 'frontend', 'backend', 'database', 'devops', 'giaoduc'];
+$nhomChon   = trim($_GET['nhom'] ?? 'tat-ca');
+if (!in_array($nhomChon, $nhomHopLe, true)) $nhomChon = 'tat-ca';
+
+// Lọc theo nhóm
+$kyNangHienThi = $nhomChon === 'tat-ca'
+    ? $tatCaKyNang
+    : array_values(array_filter($tatCaKyNang, fn($k) => $k['nhom'] === $nhomChon));
+
+require __DIR__ . '/../../inc/header.php';
+?>
+    <!-- CSS Cá nhân của Tấn -->
+    <link rel="stylesheet" href="<?= $goc ?>thanhvien/3120124027_tan/css/canhan-tan.css">
+
+    <!-- Nút Quay về -->
+    <nav class="thanh-dieu-huong" aria-label="Điều hướng phụ" style="background: var(--nen-phu, #f4f6f8); padding: 0.75rem 1rem;">
+        <ul style="display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0; flex-wrap: wrap;">
+            <li><a href="<?= $goc ?>index.php" class="menu-chinh__lien-ket">⬅ Quay về Trang chủ</a></li>
+            <li><a href="<?= $goc ?>ve-chung-toi.php" class="menu-chinh__lien-ket">⬅ Quay về Giới thiệu Nhóm</a></li>
         </ul>
     </nav>
 
     <main class="trang-ca-nhan">
         <!-- CỘT TRÁI -->
         <div class="cot-trai">
-            <img src="avatar-tan.jpg" alt="Nguyễn Cảnh Tấn" class="anh-dai-dien">
+            <img src="<?= $goc ?>thanhvien/3120124027_tan/avatar-tan.jpg"
+                 alt="Nguyễn Cảnh Tấn" class="anh-dai-dien">
             <h1>Nguyễn Cảnh Tấn</h1>
             <p>MSSV: 3120124027</p>
             <p>Ngành: Sư phạm Tin học</p>
             <p>Trường Đại học Sư phạm – ĐH Đà Nẵng</p>
-            <div class="cong-cu-doc">
+
+            <!-- ===================================================== -->
+            <!-- CHỨC NĂNG PHP 1 — Bộ đếm lượt xem (phía máy chủ)     -->
+            <!-- ===================================================== -->
+            <div class="cong-cu-doc" style="margin-top: 1.5rem; padding: 1rem;
+                 background: #f0f8ff; border: 1px solid #bee3f8; border-radius: 8px;">
+                <h2 style="font-size: 1rem; margin-bottom: 0.5rem;">📊 Lượt xem trang</h2>
+                <p style="font-size: 2rem; font-weight: bold; color: #2b6cb0; margin: 0;">
+                    <?= number_format($luotXem) ?>
+                </p>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 0.25rem;">
+                    lượt xem (mỗi phiên tính 1 lần)
+                </p>
+            </div>
+
+            <!-- Hỗ trợ đọc (từ bài 4, giữ nguyên) -->
+            <div class="cong-cu-doc" style="margin-top: 1rem;">
                 <h2>Hỗ trợ đọc</h2>
                 <div class="nhom-nut">
                     <button type="button" id="btn-giam-chu" class="nut-cong-cu">A-</button>
@@ -48,6 +101,7 @@
 
         <!-- CỘT PHẢI -->
         <div class="cot-phai">
+            <!-- Đồng hồ đếm ngược (giữ từ bài 4) -->
             <div class="khung-dem-nguoc">
                 <h2>⏳ Đếm ngược đến ngày báo cáo Thiết kế lập trình Web</h2>
                 <div id="dong-ho-thi" class="dong-ho" aria-live="polite" aria-atomic="true">
@@ -55,15 +109,41 @@
                 </div>
             </div>
 
-            <h2>Kỹ năng &amp; Chuyên môn</h2>
-            <ul class="danh-sach-ky-nang">
-                <li>Lập trình Python (Tkinter, Pygame, OpenCV)</li>
-                <li>Quản trị CSDL (PostgreSQL, SQL Server)</li>
-                <li>Phát triển Web (PHP, HTML, CSS)</li>
-                <li>Quản trị hệ thống Linux</li>
-                <li>Phương pháp dạy học &amp; Gamification</li>
-            </ul>
+            <!-- ===================================================== -->
+            <!-- CHỨC NĂNG PHP 2 — Danh sách kỹ năng lọc theo nhóm    -->
+            <!-- ===================================================== -->
+            <section aria-labelledby="tieu-de-ky-nang">
+                <h2 id="tieu-de-ky-nang">Kỹ năng &amp; Chuyên môn</h2>
 
+                <!-- Bộ lọc nhóm — form GET để tắt JS vẫn dùng được -->
+                <form method="GET" action="" style="margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <?php
+                    $nhanNhom = ['tat-ca' => '🌐 Tất cả', 'frontend' => '🎨 Frontend',
+                                 'backend' => '⚙️ Backend', 'database' => '🗄️ Database',
+                                 'devops'  => '🔧 DevOps',  'giaoduc'  => '📚 Giáo dục'];
+                    foreach ($nhanNhom as $val => $nhan):
+                        $active = $val === $nhomChon;
+                    ?>
+                        <button type="submit" name="nhom" value="<?= e($val) ?>"
+                                style="padding: 0.4rem 0.9rem; border-radius: 20px; border: 1px solid #ccc; cursor: pointer;
+                                       <?= $active ? 'background:#2b6cb0; color:#fff; font-weight:bold;' : 'background:#fff;' ?>">
+                            <?= e($nhan) ?>
+                        </button>
+                    <?php endforeach; ?>
+                </form>
+
+                <?php if (empty($kyNangHienThi)): ?>
+                    <p style="color: #666; font-style: italic;">Không có kỹ năng nào trong nhóm này.</p>
+                <?php else: ?>
+                    <ul class="danh-sach-ky-nang" role="list">
+                        <?php foreach ($kyNangHienThi as $ky): ?>
+                            <li><?= e($ky['ten']) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </section>
+
+            <!-- Thời khóa biểu (giữ nguyên từ bài 4) -->
             <h2>Thời khóa biểu (Học kỳ hiện tại)</h2>
             <div class="bang-cuon-ngang">
                 <table>
@@ -86,9 +166,8 @@
         </div>
     </main>
 
-    <footer class="can-giua-chu"><p>© 2026 Nguyễn Cảnh Tấn — Khoa Toán – Tin</p></footer>
+    <!-- JS cá nhân (đồng hồ, hỗ trợ đọc — giữ từ bài 4) -->
+    <script type="module" src="<?= $goc ?>thanhvien/3120124027_tan/js/canhan.js"></script>
 
-    <script type="module" src="../../js/main.js"></script>
-    <script type="module" src="js/canhan.js"></script>
-</body>
-</html>
+<?php require __DIR__ . '/../../inc/footer.php'; ?>
+
