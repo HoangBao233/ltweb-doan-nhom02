@@ -4,10 +4,12 @@
 /vendor/
 
 # Logs - tự sinh khi chạy
-/logs/*.log
+/logs/*
+!/logs/.htaccess
 
 # Storage - dữ liệu người dùng
-/storage/*.jsonl
+/storage/*
+!/storage/.htaccess
 
 # Uploads - file do người dùng tải lên
 /uploads/*
