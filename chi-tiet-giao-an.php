@@ -1,6 +1,6 @@
 <?php
 /**
- * chi-tiet-giao-an.php — Trang chi tiết một giáo án
+ * Tệp: chi-tiet-giao-an.php — Trang chi tiết giáo án
  */
 require_once 'inc/config.php';
 use App\Data\KhoGiaoAn;
@@ -10,10 +10,10 @@ $id  = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $kho = new KhoGiaoAn(__DIR__ . '/data/giao-an.json');
 $ga  = $id > 0 ? $kho->timTheoId($id) : null;
 
-// Không tìm thấy → 404
+// Không tìm thấy giáo án → Trả về 404
 if ($ga === null) {
     http_response_code(404);
-    include '404.php';
+    require_once __DIR__ . '/404.php';
     exit;
 }
 
