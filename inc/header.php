@@ -39,8 +39,7 @@ $trang = $trang_hien_tai ?? '';
     </header>
 
     <nav class="trang__dieu-huong" aria-label="Menu chính">
-        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
-        <ul id="menu-chinh" class="menu-chinh menu">
+        <ul id="menu-chinh" class="menu-chinh menu" style="list-style: none;">
             <li><a href="index.php" class="menu-chinh__lien-ket <?= $trang === 'trang-chu' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Trang chủ</a></li>
             <li><a href="kho-hoc-lieu.php" class="menu-chinh__lien-ket <?= $trang === 'kho-hoc-lieu' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Kho học liệu</a></li>
             <li><a href="gio-hang.php" class="menu-chinh__lien-ket <?= $trang === 'gio-hang' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Giáo án đã lưu</a></li>
