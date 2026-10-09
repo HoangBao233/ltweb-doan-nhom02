@@ -4,8 +4,8 @@
  */
 
 // Escape chống XSS
-function e(string $s): string {
-    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+function e(mixed $str): string {
+    return htmlspecialchars((string)$str, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 // Định dạng tiền VNĐ
