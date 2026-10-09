@@ -13,19 +13,27 @@ $trang  = '';
 // =====================================================================
 // CHỨC NĂNG PHP 1 — Bộ đếm lượt xem (mỗi phiên chỉ tính 1 lần)
 // =====================================================================
-$tepDem = __DIR__ . '/../../storage/3120124027_luotxem.txt';
+$tepDem = __DIR__ . '/../../storage/3120124027_luotxem.json';
+
+// Đọc dữ liệu JSON hiện tại (nếu có)
+$luotXem = 0;
+if (file_exists($tepDem)) {
+    $duLieuJson = json_decode(file_get_contents($tepDem), true);
+    if (is_array($duLieuJson) && isset($duLieuJson['luotXem'])) {
+        $luotXem = (int)$duLieuJson['luotXem'];
+    }
+}
 
 // Kiểm tra xem phiên này đã được tính chưa
 if (empty($_SESSION['da_xem_tan'])) {
     $_SESSION['da_xem_tan'] = true;
-
-    // Đọc số đếm hiện tại, tăng 1, ghi lại
-    $soHienTai = (int)@file_get_contents($tepDem);
-    $soMoi     = $soHienTai + 1;
-    file_put_contents($tepDem, $soMoi, LOCK_EX);
+    
+    // Tăng số đếm
+    $luotXem++;
+    
+    // Ghi lại vào file dưới định dạng chuẩn JSON
+    file_put_contents($tepDem, json_encode(['luotXem' => $luotXem]), LOCK_EX);
 }
-
-$luotXem = (int)@file_get_contents($tepDem);
 
 // =====================================================================
 // CHỨC NĂNG PHP 2 — Danh sách kỹ năng lọc theo nhóm bằng tham số GET
