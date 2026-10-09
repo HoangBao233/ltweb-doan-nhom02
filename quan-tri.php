@@ -52,10 +52,10 @@ require __DIR__ . '/inc/header.php';
                                 <tr style="<?= $i % 2 === 0 ? '' : 'background: #f8f9fa;' ?>">
                                     <td style="padding: 0.75rem; border: 1px solid #ddd;"><?= $i + 1 ?></td>
                                     <td style="padding: 0.75rem; border: 1px solid #ddd; white-space: nowrap;">
-                                        <?= e($lh['thoiGian'] ?? '') ?>
+                                        <?= e($lh['ngay_tao'] ?? '') ?>
                                     </td>
                                     <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                                        <?= e($lh['hoTen'] ?? '') ?>
+                                        <?= e($lh['hoten'] ?? '') ?>
                                     </td>
                                     <td style="padding: 0.75rem; border: 1px solid #ddd;">
                                         <a href="mailto:<?= e($lh['email'] ?? '') ?>">
@@ -63,12 +63,12 @@ require __DIR__ . '/inc/header.php';
                                         </a>
                                     </td>
                                     <td style="padding: 0.75rem; border: 1px solid #ddd; max-width: 300px;">
-                                        <?= e($lh['noiDung'] ?? '') ?>
+                                        <?= e($lh['noidung'] ?? '') ?>
                                     </td>
                                     <td style="padding: 0.75rem; border: 1px solid #ddd;">
                                         <?php if (!empty($lh['anh'])): ?>
                                             <img src="uploads/<?= e($lh['anh']) ?>"
-                                                 alt="Ảnh đính kèm từ <?= e($lh['hoTen'] ?? '') ?>"
+                                                 alt="Ảnh đính kèm từ <?= e($lh['hoten'] ?? '') ?>"
                                                  style="max-width: 120px; max-height: 80px; border-radius: 4px; object-fit: cover;">
                                         <?php else: ?>
                                             <span style="color: #999; font-style: italic;">Không có</span>
