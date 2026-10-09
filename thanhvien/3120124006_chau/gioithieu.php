@@ -8,28 +8,21 @@
  *   - Chọn tệp ảnh tải lên ở phía dưới ảnh đại diện để cập nhật ảnh; thử file giả mạo hoặc file > 2MB để kiểm tra máy chủ báo lỗi.
  */
 
-// Khởi động phiên làm việc (Session) cho Flash message và lưu ảnh
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// Nạp file cấu hình dùng chung của nhóm (chứa session_start, autoload, e(), vnd()...)
+require_once __DIR__ . '/../../inc/config.php';
 
-$goc = '../../';
-$tieuDe = 'Giới thiệu | Lê Thị Xuân Châu';
-$trang = '';
-
-// Nạp file cấu hình / hàm tiện ích dùng chung nếu có
-if (is_file(__DIR__ . '/../../inc/config.php')) {
-    require_once __DIR__ . '/../../inc/config.php';
-} elseif (is_file(__DIR__ . '/../../inc/ham.php')) {
-    require_once __DIR__ . '/../../inc/ham.php';
-}
-
-// Hàm thoát HTML an toàn e() chống XSS theo chuẩn Chương 5
+// Hàm e() dự phòng nếu inc/config.php chưa định nghĩa đúng chuẩn mixed
 if (!function_exists('e')) {
     function e(mixed $str): string {
         return htmlspecialchars((string)$str, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 }
+
+// Biến cho header dùng chung của nhóm
+$goc            = '../../';
+$tieu_de_trang  = 'Giới thiệu | Lê Thị Xuân Châu';
+$meta_mo_ta     = 'Trang thông tin cá nhân của Lê Thị Xuân Châu';
+$trang_hien_tai = '';
 
 // ============================================================================
 // CHỨC NĂNG PHP 1: GIAO DIỆN SÁNG / TỐI LƯU TRẠNG THÁI BẰNG COOKIE MÁY CHỦ
@@ -40,7 +33,7 @@ if ($themeHienTai !== 'dark' && $themeHienTai !== 'light') {
 }
 
 // Xử lý đổi theme qua POST (Post/Redirect/Get) - gọi TRƯỚC mọi output
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'doi-theme') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'doi-theme') {
     $themeMoi = ($themeHienTai === 'dark') ? 'light' : 'dark';
     setcookie('theme', $themeMoi, [
         'expires'  => time() + 30 * 24 * 3600, // 30 ngày
@@ -55,25 +48,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // ============================================================================
 // CHỨC NĂNG PHP 2: TẢI LÊN ẢNH ĐẠI DIỆN AN TOÀN (LƯU VÀO uploads/)
 // ============================================================================
-$loiUpload = '';
+$loiUpload     = '';
 $thuMucUploads = __DIR__ . '/../../uploads/';
 
 // Xử lý submit tải lên ảnh (POST với PRG)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'tai-avatar') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'tai-avatar') {
     if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] === UPLOAD_ERR_NO_FILE) {
         $loiUpload = 'Vui lòng chọn một tệp ảnh để tải lên.';
     } elseif ($_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
         $loiUpload = 'Lỗi trong quá trình tải tệp lên máy chủ.';
     } else {
-        $file = $_FILES['avatar'];
+        $file             = $_FILES['avatar'];
         $gioiHanDungLuong = 2 * 1024 * 1024; // 2 MB
 
-        // Kiểm tra dung lượng file
         if ($file['size'] > $gioiHanDungLuong) {
             $loiUpload = 'Dung lượng ảnh vượt quá giới hạn 2 MB cho phép.';
         } else {
             // Kiểm tra kiểu MIME thật của tệp bằng finfo (không tin phần mở rộng hay client header)
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $finfo    = finfo_open(FILEINFO_MIME_TYPE);
             $mimeThat = finfo_file($finfo, $file['tmp_name']);
             finfo_close($finfo);
 
@@ -86,19 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             if (!isset($mimeHopLe[$mimeThat])) {
                 $loiUpload = 'Định dạng tệp không hợp lệ! Chỉ chấp nhận ảnh JPG, PNG hoặc WebP.';
             } else {
-                // Tạo thư mục uploads/ nếu chưa tồn tại
                 if (!is_dir($thuMucUploads)) {
                     mkdir($thuMucUploads, 0755, true);
                 }
 
                 // Đặt tên ngẫu nhiên tránh trùng và ngăn thực thi mã độc
-                $duoiMoRong = $mimeHopLe[$mimeThat];
-                $tenTepMoi = 'avatar_chau_' . bin2hex(random_bytes(8)) . '.' . $duoiMoRong;
+                $duoiMoRong   = $mimeHopLe[$mimeThat];
+                $tenTepMoi    = 'avatar_chau_' . bin2hex(random_bytes(8)) . '.' . $duoiMoRong;
                 $duongDanDich = $thuMucUploads . $tenTepMoi;
 
                 if (move_uploaded_file($file['tmp_name'], $duongDanDich)) {
                     $_SESSION['avatar_chau'] = $tenTepMoi;
-                    $_SESSION['flash_chau'] = 'Tải lên ảnh đại diện thành công!';
+                    $_SESSION['flash_chau']  = 'Tải lên ảnh đại diện thành công!';
                     header('Location: gioithieu.php');
                     exit;
                 } else {
@@ -110,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 // Xử lý khôi phục ảnh đại diện mặc định
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'khoi-phuc-avatar') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'khoi-phuc-avatar') {
     unset($_SESSION['avatar_chau']);
     $_SESSION['flash_chau'] = 'Đã khôi phục ảnh đại diện mặc định!';
     header('Location: gioithieu.php');
@@ -123,35 +114,27 @@ unset($_SESSION['flash_chau']);
 
 // Xác định đường dẫn ảnh hiển thị
 $duongDanAnhHienThi = 'avatar_chau.jpg';
-$coAnhTuyChinh = false;
+$coAnhTuyChinh      = false;
 if (!empty($_SESSION['avatar_chau'])) {
     $tepTrenDisk = $thuMucUploads . $_SESSION['avatar_chau'];
     if (is_file($tepTrenDisk)) {
         $duongDanAnhHienThi = '../../uploads/' . $_SESSION['avatar_chau'];
-        $coAnhTuyChinh = true;
+        $coAnhTuyChinh      = true;
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Trang thông tin cá nhân của Lê Thị Xuân Châu">
-  <title>Giới thiệu | Lê Thị Xuân Châu</title>
 
-  <!-- Nạp 5 file CSS chung của nhóm để lấy header/footer -->
-  <link rel="stylesheet" href="../../css/01-bien.css">
-  <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
-  <link rel="stylesheet" href="../../css/03-bo-cuc.css">
-  <link rel="stylesheet" href="../../css/04-thanh-phan.css">
-  <link rel="stylesheet" href="../../css/05-tien-ich.css">
-  
-  <!-- CSS nội dung bên trong của Châu -->
+// Nạp header dùng chung của nhóm (xuất ra <!DOCTYPE>, <html>, <head>, <body>, nav...)
+require_once __DIR__ . '/../../inc/header.php';
+?>
+
+  <!-- CSS riêng của trang cá nhân Châu (thêm sau header để không sửa header.php) -->
   <link rel="stylesheet" href="css/xchau.css">
-</head>
-<body class="trang <?= $themeHienTai === 'dark' ? 'dark-theme' : '' ?>">
-  
+
+  <?php if ($themeHienTai === 'dark'): ?>
+  <!-- Áp dụng dark-theme ngay khi tải trang (trước khi canhan.js chạy) -->
+  <script>document.body.classList.add('dark-theme');</script>
+  <?php endif; ?>
+
   <!-- Nút Chức năng PHP 1: Giao diện Sáng / Tối (Cookie máy chủ) - Cố định ở góc phải màn hình -->
   <form method="POST" action="gioithieu.php" style="position: fixed; top: 15px; right: 20px; z-index: 1000; margin: 0;">
     <input type="hidden" name="action" value="doi-theme">
@@ -160,24 +143,10 @@ if (!empty($_SESSION['avatar_chau'])) {
     </button>
   </form>
 
-  <!-- Header giống nhóm -->
-  <header class="trang__dau can-giua-chu">
-    <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
-  </header>
-
-  <!-- Menu điều hướng quay về nhóm -->
-  <nav class="trang__dieu-huong" aria-label="Menu chính">
-    <ul id="menu-chinh" class="menu-chinh">
-      <li><a href="../../index.php" class="menu-chinh__lien-ket">Quay về Trang chủ Nhóm</a></li>
-      <li><a href="../../ve-chung-toi.php" class="menu-chinh__lien-ket">Quay về Trang Giới thiệu Nhóm</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main chứa nội dung riêng -->
   <main class="trang__chinh">
     <h1 class="can-giua-chu">Hồ sơ thành viên: Lê Thị Xuân Châu</h1>
 
-    <!-- SECTION 1 (Giới thiệu bản thân): Cột 1 là ảnh và form upload; Cột 2 là dòng chữ giới thiệu và câu nói hay -->
+    <!-- SECTION 1: Giới thiệu bản thân (ảnh + form upload | chữ giới thiệu) -->
     <section>
       <h2>Giới thiệu bản thân</h2>
 
@@ -185,7 +154,7 @@ if (!empty($_SESSION['avatar_chau'])) {
       <div style="grid-column: 1; max-width: 200px;">
         <img src="<?= e($duongDanAnhHienThi) ?>" alt="Ảnh chân dung của Lê Thị Xuân Châu" width="200" style="margin-bottom: 0.5rem;">
 
-        <!-- Chức năng PHP 2: Tải lên ảnh đại diện an toàn (ở phía dưới ảnh đại diện) -->
+        <!-- Chức năng PHP 2: Tải lên ảnh đại diện an toàn -->
         <div class="khu-vuc-upload-avatar" style="font-size: 0.85rem; margin-bottom: 1rem;">
           <?php if (!empty($thongBaoThanhCong)): ?>
             <div style="color: #28a745; font-size: 0.8rem; font-weight: bold; margin: 0.2rem 0;" role="status" aria-live="polite">✓ <?= e($thongBaoThanhCong) ?></div>
@@ -210,12 +179,12 @@ if (!empty($_SESSION['avatar_chau'])) {
         </div>
       </div>
 
-      <!-- Cột 2 (phải): Dòng chữ giới thiệu bản thân - Căn thẳng hàng với đỉnh ảnh đại diện -->
+      <!-- Cột 2 (phải): Dòng chữ giới thiệu bản thân -->
       <p id="doan-gioi-thieu">Xin chào, tôi là Lê Thị Xuân Châu, sinh viên Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng. Tôi là thành viên cho dự án website này.</p>
-    </section> 
+    </section>
 
     <!-- SECTION 2: Danh sách kỹ năng nổi bật -->
-    <section> 
+    <section>
       <h2>Danh sách kỹ năng nổi bật</h2>
       <ul>
         <li>Lập trình Web (HTML, CSS, PHP với WampServer và VS Code)</li>
@@ -275,15 +244,11 @@ if (!empty($_SESSION['avatar_chau'])) {
     </section>
   </main>
 
-  <!-- Footer giống nhóm -->
-  <footer class="trang__chan can-giua-chu">
-    <p class="trang__ban-quyen">© 2026 Nhóm 02 - Khoa Toán - Tin</p>
-  </footer>
+<?php require_once __DIR__ . '/../../inc/footer.php'; ?>
 
-  <!-- Kịch bản JS tương tác động riêng của trang cá nhân Châu -->
+  <!-- JS riêng trang cá nhân Châu -->
   <script type="module" src="js/canhan.js"></script>
-  
-  <!-- Nạp JS cho tính năng Menu Mobile của nhóm -->
+  <!-- JS menu mobile dùng chung của nhóm -->
   <script type="module" src="../../js/main.js"></script>
 </body>
 </html>
