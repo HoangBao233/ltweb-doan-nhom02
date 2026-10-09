@@ -39,3 +39,4 @@ set_exception_handler(function (Throwable $e) {
     // Nếu đang dev, ném lỗi ra màn hình để dễ sửa
     throw $e;
 });
+

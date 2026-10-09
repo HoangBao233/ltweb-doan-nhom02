@@ -7,14 +7,42 @@ require_once __DIR__ . '/ham.php';
 
 $trang = $trang ?? $trang_hien_tai ?? '';
 $goc   = $goc ?? '';
+$tieuDeTrang = $tieuDe ?? $tieu_de_trang ?? 'Trang chủ';
+$metaMoTa = $meta_mo_ta ?? 'ITeduShare - Nền tảng chia sẻ giáo án Tin học';
+
+// Lấy số lượng giáo án đã lưu từ Session
+$soLuongLuu = 0;
+if (class_exists('App\Services\DanhSachLuu')) {
+    $dsLuuHeader = new \App\Services\DanhSachLuu();
+    $soLuongLuu = $dsLuuHeader->soMon();
+} elseif (isset($_SESSION['danh_sach_luu']) && is_array($_SESSION['danh_sach_luu'])) {
+    $soLuongLuu = count($_SESSION['danh_sach_luu']);
+}
+
+// Danh sách menu điều hướng
+$menu = [
+    'index.php'             => 'Trang chủ',
+    'kho-hoc-lieu.php'      => 'Kho học liệu',
+    'gio-hang.php'          => 'Giáo án đã lưu',
+    've-chung-toi.php'      => 'Về chúng tôi',
+    'dong-gop-tai-lieu.php' => 'Đóng góp tài liệu',
+];
+
+// Chuẩn hóa tên trang hiện tại để đánh dấu menu đang xem
+$trangHienTai = $trang;
+if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
+    $trangHienTai = 'index.php';
+} elseif ($trangHienTai === 'chi-tiet-giao-an') {
+    $trangHienTai = 'kho-hoc-lieu.php';
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?= e($meta_mo_ta ?? 'ITeduShare - Nền tảng chia sẻ giáo án Tin học') ?>">
-    <title><?= e(($tieu_de_trang ?? 'Trang chủ') . ' | ITeduShare') ?></title>
+    <meta name="description" content="<?= e($metaMoTa) ?>">
+    <title><?= e($tieuDeTrang) ?> | ITeduShare</title>
     
     <!-- CSS dùng chung của nhóm -->
     <link rel="stylesheet" href="<?= $goc ?>css/01-bien.css">
@@ -27,6 +55,7 @@ $goc   = $goc ?? '';
 
     <header class="trang__dau can-giua-chu" style="display:flex; align-items:center; justify-content:space-between; padding:0.5rem 1rem;">
         <p class="trang__khieu-giao" style="margin:0;">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+        
         <div class="dang-nhap-goc" style="display:flex; align-items:center; gap:0.4rem; white-space:nowrap;">
             <?php if (isset($_SESSION['user'])): ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -40,11 +69,24 @@ $goc   = $goc ?? '';
     </header>
 
     <nav class="trang__dieu-huong" aria-label="Menu chính">
+        <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn) -->
+        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
+
         <ul id="menu-chinh" class="menu-chinh menu" style="list-style: none;">
-            <li><a href="<?= $goc ?>index.php" class="menu-chinh__lien-ket <?= $trang === 'trang-chu' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Trang chủ</a></li>
-            <li><a href="<?= $goc ?>kho-hoc-lieu.php" class="menu-chinh__lien-ket <?= $trang === 'kho-hoc-lieu' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Kho học liệu</a></li>
-            <li><a href="<?= $goc ?>gio-hang.php" class="menu-chinh__lien-ket <?= $trang === 'gio-hang' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Giáo án đã lưu</a></li>
-            <li><a href="<?= $goc ?>ve-chung-toi.php" class="menu-chinh__lien-ket <?= $trang === 've-chung-toi' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Về chúng tôi</a></li>
-            <li><a href="<?= $goc ?>dong-gop-tai-lieu.php" class="menu-chinh__lien-ket <?= $trang === 'dong-gop-tai-lieu' ? 'menu-chinh__lien-ket--hien-tai' : '' ?>">Đóng góp tài liệu</a></li>
+            <?php foreach ($menu as $tep => $ten): 
+                $tepKhongDuoi = str_replace('.php', '', $tep);
+                $isCurrent = ($trangHienTai === $tep || $trangHienTai === $tepKhongDuoi);
+            ?>
+                <li>
+                    <a href="<?= $goc ?><?= $tep ?>" 
+                       class="menu-chinh__lien-ket <?= $isCurrent ? 'menu-chinh__lien-ket--kich-hoat' : '' ?>"
+                       <?= $isCurrent ? 'aria-current="page"' : '' ?>>
+                        <?= e($ten) ?>
+                        <?php if ($tep === 'gio-hang.php'): ?>
+                            <span class="huy-hieu-so-luong" style="background: var(--mau-nhan, #e74c3c); color: #fff; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.75rem; font-weight: bold; margin-left: 0.35rem; display: inline-block; vertical-align: middle;"><?= $soLuongLuu ?></span>
+                        <?php endif; ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </nav>
