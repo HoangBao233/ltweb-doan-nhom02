@@ -1,4 +1,4 @@
-﻿import { layDanhSachYeuThich } from './yeu-thich.js';
+import { layDanhSachYeuThich } from './yeu-thich.js';
 
 /**
  * Tệp js/main.js
@@ -8,12 +8,13 @@
 
 document.documentElement.classList.add('js');
 
-document.addEventListener('DOMContentLoaded', () => {
+function khoiTaoMain() {
     // === 1. CHỨC NĂNG MENU MOBILE ===
     const nutMenu = document.querySelector('.nut-menu');
     const menuChinh = document.querySelector('.menu');
 
-    if (nutMenu && menuChinh) {
+    if (nutMenu && menuChinh && !nutMenu.dataset.daGan) {
+        nutMenu.dataset.daGan = 'true';
         nutMenu.addEventListener('click', () => {
             const dangMo = menuChinh.classList.contains('mo');
             if (dangMo) {
@@ -53,4 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lắng nghe sự kiện để cập nhật con số theo thời gian thực 
     // khi người dùng bấm nút Thêm/Xóa ở các trang khác
     window.addEventListener('capNhatYeuThich', capNhatHienThiYeuThich);
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', khoiTaoMain);
+} else {
+    khoiTaoMain();
+}

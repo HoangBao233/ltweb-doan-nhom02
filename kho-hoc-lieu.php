@@ -147,3 +147,7 @@ require __DIR__ . '/inc/header.php';
 
 <?php require __DIR__ . '/inc/footer.php'; ?>
 
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
+

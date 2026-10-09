@@ -37,13 +37,16 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= e($metaMoTa) ?>">
     <title><?= e($tieuDeTrang) ?> | ITeduShare</title>
     
+    <!-- Đánh dấu hỗ trợ JS ngay từ đầu để kích hoạt Menu Mobile mượt mà -->
+    <script>document.documentElement.classList.add('js');</script>
+
     <!-- CSS dùng chung của nhóm -->
     <link rel="stylesheet" href="<?= $goc ?>css/01-bien.css">
     <link rel="stylesheet" href="<?= $goc ?>css/02-chuan-hoa.css">
@@ -69,7 +72,7 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
     </header>
 
     <nav class="trang__dieu-huong" aria-label="Menu chính">
-        <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn) -->
+        <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn trên Desktop) -->
         <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
 
         <ul id="menu-chinh" class="menu-chinh menu" style="list-style: none;">
@@ -90,3 +93,25 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
             <?php endforeach; ?>
         </ul>
     </nav>
+    <script>
+    (function() {
+        var nutMenu = document.querySelector('.nut-menu');
+        var menuChinh = document.querySelector('.menu');
+        if (nutMenu && menuChinh && !nutMenu.dataset.daGan) {
+            nutMenu.dataset.daGan = 'true';
+            nutMenu.addEventListener('click', function() {
+                var dangMo = menuChinh.classList.toggle('mo');
+                nutMenu.setAttribute('aria-expanded', dangMo ? 'true' : 'false');
+                nutMenu.textContent = dangMo ? '✕ Đóng' : '☰ Menu';
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && menuChinh.classList.contains('mo')) {
+                    menuChinh.classList.remove('mo');
+                    nutMenu.setAttribute('aria-expanded', 'false');
+                    nutMenu.textContent = '☰ Menu';
+                    nutMenu.focus();
+                }
+            });
+        }
+    })();
+    </script>
