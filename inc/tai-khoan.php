@@ -10,6 +10,6 @@
 const TAI_KHOAN = [
     // Tên đăng nhập là 'admin', Mật khẩu là 'nhom02@ltweb'
     // Mã băm dưới đây được tạo sẵn bằng hàm password_hash()
-    'admin' => '$2y$10$wFq3mP.V/M.jU.v9U9C3h.T3uH4y6nF5g.R/R3x2x.Z/T5Q/Q9b9K' 
+    'admin' => '$2y$10$oCPFzO4aqMDgkDa.LxZrDOjORhQBa2heosWWdX7wZaOP0H6zar9Am'
 ];
 
