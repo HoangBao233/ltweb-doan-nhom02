@@ -73,7 +73,7 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
 
     <nav class="trang__dieu-huong" aria-label="Menu chính">
         <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn trên Desktop) -->
-        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
+        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh" onclick="window.batTatMenuMobile && window.batTatMenuMobile();">☰ Menu</button>
 
         <ul id="menu-chinh" class="menu-chinh menu" style="list-style: none;">
             <?php foreach ($menu as $tep => $ten): 
@@ -94,24 +94,30 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
         </ul>
     </nav>
     <script>
-    (function() {
-        var nutMenu = document.querySelector('.nut-menu');
-        var menuChinh = document.querySelector('.menu');
-        if (nutMenu && menuChinh && !nutMenu.dataset.daGan) {
-            nutMenu.dataset.daGan = 'true';
-            nutMenu.addEventListener('click', function() {
-                var dangMo = menuChinh.classList.toggle('mo');
-                nutMenu.setAttribute('aria-expanded', dangMo ? 'true' : 'false');
-                nutMenu.textContent = dangMo ? '✕ Đóng' : '☰ Menu';
-            });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && menuChinh.classList.contains('mo')) {
-                    menuChinh.classList.remove('mo');
-                    nutMenu.setAttribute('aria-expanded', 'false');
-                    nutMenu.textContent = '☰ Menu';
-                    nutMenu.focus();
-                }
-            });
+    window.batTatMenuMobile = function() {
+        var menu = document.getElementById('menu-chinh');
+        var nut = document.querySelector('.nut-menu');
+        if (!menu || !nut) return;
+        var dangMo = menu.classList.toggle('mo');
+        nut.setAttribute('aria-expanded', dangMo ? 'true' : 'false');
+        nut.textContent = dangMo ? '✕ Đóng' : '☰ Menu';
+    };
+
+    var nutMenu = document.querySelector('.nut-menu');
+    if (nutMenu) {
+        nutMenu.onclick = window.batTatMenuMobile;
+    }
+
+    document.addEventListener('keydown', function(e) {
+        var menu = document.getElementById('menu-chinh');
+        var nut = document.querySelector('.nut-menu');
+        if (e.key === 'Escape' && menu && menu.classList.contains('mo')) {
+            menu.classList.remove('mo');
+            if (nut) {
+                nut.setAttribute('aria-expanded', 'false');
+                nut.textContent = '☰ Menu';
+                nut.focus();
+            }
         }
-    })();
+    });
     </script>

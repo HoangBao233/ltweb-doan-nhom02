@@ -40,28 +40,30 @@ require_once 'inc/header.php';
 <main class="trang__chinh">
     <style>
     /* Cố định các hàng Grid bằng độ đặc hiệu chuẩn (specificity), hoàn toàn không dùng !important */
-    body.trang {
-        grid-template-rows: auto auto 1fr auto;
-        align-content: start;
-    }
-    header.trang__dau {
-        align-self: start;
-    }
-    nav.trang__dieu-huong {
-        align-self: start;
-    }
+    @media (min-width: 768px) {
+        body.trang {
+            grid-template-rows: auto auto 1fr auto;
+            align-content: start;
+        }
+        header.trang__dau {
+            align-self: start;
+        }
+        nav.trang__dieu-huong {
+            align-self: start;
+        }
 
-    /* Đồng bộ căn chỉnh thanh menu và huy hiệu số lượng */
-    nav .menu-chinh {
-        align-items: center;
-    }
-    nav .menu-chinh a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-    nav .menu-chinh .huy-hieu-so-luong {
-        line-height: 1;
+        /* Đồng bộ căn chỉnh thanh menu và huy hiệu số lượng trên Desktop */
+        nav .menu-chinh {
+            align-items: center;
+        }
+        nav .menu-chinh a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        nav .menu-chinh .huy-hieu-so-luong {
+            line-height: 1;
+        }
     }
     </style>
 

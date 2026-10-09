@@ -553,7 +553,8 @@ button:focus-visible {
   }
   
   /* Khi menu được gắn class .mo bằng JS */
-  .js .menu.mo {
+  .js .menu.mo,
+  .js #menu-chinh.mo {
     display: flex;
   }
   

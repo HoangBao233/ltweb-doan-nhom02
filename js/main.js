@@ -10,33 +10,32 @@ document.documentElement.classList.add('js');
 
 function khoiTaoMain() {
     // === 1. CHỨC NĂNG MENU MOBILE ===
+    window.batTatMenuMobile = function() {
+        const menu = document.getElementById('menu-chinh');
+        const nut = document.querySelector('.nut-menu');
+        if (!menu || !nut) return;
+        const dangMo = menu.classList.toggle('mo');
+        nut.setAttribute('aria-expanded', dangMo ? 'true' : 'false');
+        nut.textContent = dangMo ? '✕ Đóng' : '☰ Menu';
+    };
+
     const nutMenu = document.querySelector('.nut-menu');
-    const menuChinh = document.querySelector('.menu');
-
-    if (nutMenu && menuChinh && !nutMenu.dataset.daGan) {
-        nutMenu.dataset.daGan = 'true';
-        nutMenu.addEventListener('click', () => {
-            const dangMo = menuChinh.classList.contains('mo');
-            if (dangMo) {
-                menuChinh.classList.remove('mo');
-                nutMenu.setAttribute('aria-expanded', 'false');
-                nutMenu.textContent = '☰ Menu';
-            } else {
-                menuChinh.classList.add('mo');
-                nutMenu.setAttribute('aria-expanded', 'true');
-                nutMenu.textContent = '✕ Đóng';
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuChinh.classList.contains('mo')) {
-                menuChinh.classList.remove('mo');
-                nutMenu.setAttribute('aria-expanded', 'false');
-                nutMenu.textContent = '☰ Menu';
-                nutMenu.focus();
-            }
-        });
+    if (nutMenu) {
+        nutMenu.onclick = window.batTatMenuMobile;
     }
+
+    document.addEventListener('keydown', (e) => {
+        const menuChinh = document.getElementById('menu-chinh');
+        const nut = document.querySelector('.nut-menu');
+        if (e.key === 'Escape' && menuChinh && menuChinh.classList.contains('mo')) {
+            menuChinh.classList.remove('mo');
+            if (nut) {
+                nut.setAttribute('aria-expanded', 'false');
+                nut.textContent = '☰ Menu';
+                nut.focus();
+            }
+        }
+    });
 
     // === 2. CHỨC NĂNG SỐ ĐẾM YÊU THÍCH TỔNG ===
     const theDemYeuThich = document.getElementById('dem-yeu-thich');
