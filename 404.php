@@ -3,6 +3,7 @@
  * 404.php — Trang báo lỗi 404 không tìm thấy trang
  */
 require_once 'inc/config.php';
+http_response_code(404); // Đảm bảo luôn trả mã 404 dù truy cập trực tiếp hay gọi từ chi-tiet-giao-an.php
 $tieu_de_trang  = 'Không tìm thấy trang';
 $meta_mo_ta     = 'Trang bạn tìm kiếm không tồn tại.';
 $trang_hien_tai = '404';

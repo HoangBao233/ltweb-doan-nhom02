@@ -3,6 +3,7 @@
  * 500.php — Trang báo lỗi máy chủ 500
  */
 require_once 'inc/config.php';
+http_response_code(500); // Đảm bảo luôn trả mã 500 dù truy cập trực tiếp hay gọi từ set_exception_handler
 $tieu_de_trang  = 'Lỗi máy chủ';
 $meta_mo_ta     = 'Đã xảy ra lỗi máy chủ.';
 $trang_hien_tai = '500';
