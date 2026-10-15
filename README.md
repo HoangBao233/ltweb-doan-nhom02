@@ -103,58 +103,6 @@ Website có phân quyền truy cập trang Quản trị (`quan-tri.php`) thông 
 
 ---
 
-## 📁 Cấu trúc thư mục dự án
-
-```text
-ltweb-doan-nhom02/
-├── composer.json               # Cấu hình Composer và ánh xạ PSR-4 autoloading
-├── composer.lock               # Khóa phiên bản các gói phụ thuộc
-├── .gitignore                  # Bỏ qua /vendor/, /logs/*, /storage/*, file tạm
-├── README.md                   # Hướng dẫn cài đặt và thông tin dự án
-│
-├── index.php                   # Trang chủ website
-├── kho-hoc-lieu.php            # Trang danh sách kho học liệu
-├── chi-tiet-giao-an.php        # Trang chi tiết giáo án
-├── ve-chung-toi.php            # Trang giới thiệu và liên hệ
-├── dong-gop-tai-lieu.php       # Trang đóng góp tài liệu & upload
-├── gio-hang.php                # Trang quản lý giáo án đã lưu
-├── dang-nhap.php               # Trang đăng nhập quản trị
-├── dang-xuat.php               # Đăng xuất hệ thống
-├── quan-tri.php                # Trang bảng điều khiển quản trị
-├── 404.php / 500.php           # Các trang thông báo lỗi chuẩn HTTP
-│
-├── inc/                        # Thư mục chứa các thành phần và hàm dùng chung
-│   ├── config.php              # Cấu hình chung, session_start, timezone, bật error log
-│   ├── ham.php                 # Hàm tiện ích: e() chống XSS, vnd() định dạng tiền tệ
-│   ├── header.php              # Phần đầu trang và thanh Menu điều hướng chung
-│   ├── footer.php              # Phần chân trang chung
-│   ├── bao-ve.php              # Middleware bảo vệ trang yêu cầu quyền admin
-│   └── tai-khoan.php           # Danh sách tài khoản băm mật khẩu
-│
-├── src/                        # Mã nguồn hướng đối tượng (PSR-4: App\)
-│   ├── Models/
-│   │   └── GiaoAn.php          # Lớp đối tượng Giáo án
-│   ├── Data/
-│   │   ├── KhoGiaoAn.php       # Đọc, lọc, sắp xếp, tìm kiếm giáo án từ file JSON
-│   │   └── KhoLienHe.php       # Quản lý lưu trữ phản hồi liên hệ
-│   └── Services/
-│       └── DanhSachLuu.php     # Xử lý thêm, xóa, đếm giáo án đã lưu trong Session
-│
-├── data/                       # Dữ liệu tĩnh gốc
-│   └── giao-an.json            # 12 bản ghi giáo án Tin học mẫu
-├── storage/                    # Dữ liệu lưu trữ runtime (Lưu bút, đếm lượt xem)
-├── uploads/                    # Tệp tin tải lên (ảnh giáo án, tài liệu người dùng)
-├── logs/                       # Tệp ghi log hệ thống (php-error.log)
-├── css/                        # Hệ thống CSS tổ chức theo 5 lớp chuẩn BEM & Flex/Grid
-├── js/                         # JavaScript bổ trợ trải nghiệm người dùng (UX)
-│   ├── main.js                 # Điều khiển Menu Hamburger Mobile
-│   ├── yeu-thich.js            # Lưu trữ yêu thích LocalStorage đồng bộ giao diện
-│   └── trang-chu.js            # Widget tích hợp API thời tiết
-└── thanhvien/                  # Thư mục trang giới thiệu cá nhân của 4 thành viên
-```
-
----
-
 ## 🛡️ Các tiêu chuẩn kỹ thuật & thực hành bảo mật đã áp dụng
 
 1. **Phòng chống Cross-Site Scripting (XSS):** Mọi dữ liệu xuất ra màn hình HTML đều được lọc qua hàm `e(mixed $str): string` với cờ `ENT_QUOTES | ENT_SUBSTITUTE` chuẩn UTF-8.
