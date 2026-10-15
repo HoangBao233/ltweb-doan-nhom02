@@ -53,6 +53,9 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
     <link rel="stylesheet" href="<?= $goc ?>css/03-bo-cuc.css">
     <link rel="stylesheet" href="<?= $goc ?>css/04-thanh-phan.css">
     <link rel="stylesheet" href="<?= $goc ?>css/05-tien-ich.css">
+    <?php if ($trang_hien_tai === 'gio-hang'): ?>
+        <link rel="stylesheet" href="<?= $goc ?>css/gio-hang.css">
+    <?php endif; ?>
 </head>
 <body class="trang">
 

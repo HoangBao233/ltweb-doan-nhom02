@@ -1,0 +1,25 @@
+@media (min-width: 768px) {
+  body.trang {
+    grid-template-rows: auto auto 1fr auto;
+    align-content: start;
+  }
+
+  header.trang__dau,
+  nav.trang__dieu-huong {
+    align-self: start;
+  }
+
+  nav .menu-chinh {
+    align-items: center;
+  }
+
+  nav .menu-chinh a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  nav .menu-chinh .huy-hieu-so-luong {
+    line-height: 1;
+  }
+}
