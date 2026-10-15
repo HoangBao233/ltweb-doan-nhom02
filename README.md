@@ -10,8 +10,8 @@
 |:---:|:---:|:---|:---|:---|
 | 1 | **3120124003** | **Lê Hoàng Bảo** | Nhóm trưởng | Chức năng 1 (Cấu trúc chung, Header, Footer) & Chức năng 5 (Lưu giáo án Session) |
 | 2 | **3120124006** | **Lê Thị Xuân Châu** | Thành viên | Chức năng 3 (Chi tiết giáo án + Cookie đã xem gần đây) |
-| 3 | **3120124027** | **Nguyễn Thành Tấn** | Thành viên | Chức năng 2 (Kho học liệu, Tìm kiếm, Lọc, Sắp xếp) |
-| 4 | **3120222126** | **Lê Đức Thịnh** | Thành viên | Chức năng 4 (Đóng góp tài liệu, Upload file) & Chức năng 5 (Hỗ trợ danh sách lưu) |
+| 3 | **3120124027** | **Nguyễn Cảnh Tấn** | Thành viên | Chức năng 2 (Kho học liệu, Tìm kiếm, Lọc, Sắp xếp) |
+| 4 | **3120222126** | **Nguyễn Tiến Thịnh** | Thành viên | Chức năng 4 (Đóng góp tài liệu, Upload file) & Chức năng 5 (Hỗ trợ danh sách lưu) |
 
 ---
 
@@ -97,8 +97,8 @@ Website có phân quyền truy cập trang Quản trị (`quan-tri.php`) thông 
 - **Trang thành viên cá nhân:** 
   - Lê Hoàng Bảo: `/thanhvien/3120124003_bao/gioithieu.php`
   - Lê Thị Xuân Châu: `/thanhvien/3120124006_chau/gioithieu.php`
-  - Nguyễn Thành Tấn: `/thanhvien/3120124027_tan/gioithieu.php`
-  - Lê Đức Thịnh: `/thanhvien/3120222126_thinh/gioithieu.php`
+  - Nguyễn Cảnh Tấn: `/thanhvien/3120124027_tan/gioithieu.php`
+  - Nguyễn Tiến Thịnh: `/thanhvien/3120222126_thinh/gioithieu.php`
 - **Trang xử lý lỗi:** `404.php` (Không tìm thấy trang), `500.php` (Lỗi máy chủ nội bộ).
 
 ---
