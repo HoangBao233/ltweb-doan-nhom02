@@ -144,13 +144,6 @@ require_once __DIR__ . '/../../inc/header.php';
 
     <link rel="stylesheet" href="css/canhan-thinh.css">
 
-    <nav class="trang__dieu-huong" aria-label="Menu điều hướng trang cá nhân" style="background: var(--nen-phu, #f4f6f8); padding: 0.75rem 1rem;">
-        <ul class="menu-chinh" style="display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0; flex-wrap: wrap;">
-            <li><a href="<?= $goc ?>index.php" class="menu-chinh__lien-ket">&laquo; Quay về Trang Chủ Nhóm</a></li>
-            <li><a href="<?= $goc ?>ve-chung-toi.php" class="menu-chinh__lien-ket">&laquo; Quay về Trang Giới Thiệu Nhóm</a></li>
-        </ul>
-    </nav>
-
     <main class="trang__chinh" style="max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem;">
         <h1 class="can-giua-chu">Hồ sơ thành viên: Nguyễn Tiến Thịnh</h1>
 
