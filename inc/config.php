@@ -15,7 +15,7 @@ define('STORAGE_DIR', ROOT_DIR . 'storage/');
 define('UPLOADS_DIR', ROOT_DIR . 'uploads/');
 
 // Môi trường ('dev' để hiện lỗi, đổi thành 'prod' khi nộp bài)
-const MOI_TRUONG = 'prod
+const MOI_TRUONG = 'prod';
 
 // Bật tắt báo lỗi theo môi trường
 error_reporting(E_ALL);
