@@ -4,11 +4,13 @@
  */
 require_once 'inc/config.php';
 
-$loi       = [];
-$thanh_cong = false;
+$loi    = [];
+$ho_ten = '';
+$email  = '';
+$sdt    = '';
 
 // Xử lý POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $ho_ten = trim($_POST['hoten'] ?? '');
     $email  = trim($_POST['email'] ?? '');
     $sdt    = trim($_POST['sdt']   ?? '');
@@ -42,18 +44,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Lưu file nếu không có lỗi
     if (empty($loi)) {
+        if (!is_dir(UPLOADS_DIR)) {
+            mkdir(UPLOADS_DIR, 0777, true);
+        }
+
         // Tạo tên file duy nhất để tránh ghi đè
         $ten_file_moi = time() . '_' . preg_replace('/[^a-z0-9._-]/i', '_', $file['name']);
         $duong_dan_luu = UPLOADS_DIR . $ten_file_moi;
 
         if (move_uploaded_file($file['tmp_name'], $duong_dan_luu)) {
-            $thanh_cong = true;
-            $ho_ten = $email = $sdt = '';
+            // Áp dụng mô hình PRG (Post-Redirect-Get): Lưu thông báo vào Session và chuyển hướng
+            $_SESSION['flash_dong_gop'] = 'Cảm ơn bạn đã đóng góp! Tài liệu của bạn đã được nhận và sẽ được xem xét.';
+            header('Location: dong-gop-tai-lieu.php');
+            exit;
         } else {
             $loi['tailieu'] = 'Không thể lưu file. Vui lòng thử lại.';
         }
     }
 }
+
+// Đọc và xóa flash message
+$thongBaoThanhCong = $_SESSION['flash_dong_gop'] ?? null;
+unset($_SESSION['flash_dong_gop']);
 
 $tieu_de_trang  = 'Đóng góp tài liệu';
 $meta_mo_ta     = 'Gửi biểu mẫu đóng góp tài liệu hoặc liên hệ hợp tác với ban quản trị website.';
@@ -65,9 +77,9 @@ require_once 'inc/header.php';
     <main class="trang__chinh phan-lien-he">
         <h1 class="phan-lien-he__tieu-de">Biểu mẫu đóng góp học liệu</h1>
 
-        <?php if ($thanh_cong): ?>
+        <?php if ($thongBaoThanhCong): ?>
             <div role="alert" style="background: #e8f5e9; color: #2e7d32; padding: 1rem; border-radius: 6px; text-align: center; margin-bottom: 1.5rem; max-width: 600px; margin-inline: auto;">
-                ✅ Cảm ơn bạn đã đóng góp! Tài liệu của bạn đã được nhận và sẽ được xem xét.
+                ✅ <?= e($thongBaoThanhCong) ?>
             </div>
         <?php endif; ?>
 
