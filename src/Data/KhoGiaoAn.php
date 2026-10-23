@@ -1,35 +1,28 @@
 <?php
-// src/Data/KhoGiaoAn.php — Nơi DUY NHẤT đọc tệp data/giao-an.json
-// Phụ trách: Tấn (MSSV 3120124027) — Chương 6 chỉ cần viết lại lớp này bằng PDO
-// Cách thử: $kho = new KhoGiaoAn(__DIR__ . '/../../data/giao-an.json'); var_dump($kho->tatCa());
+// src/Data/KhoGiaoAn.php — Nơi DUY NHẤT truy vấn bảng giao_an qua PDO
+// Phụ trách: Tấn (MSSV 3120124027) — Bước 2 & Chức năng 2 Bảng 1
 namespace App\Data;
 
 use App\Models\GiaoAn;
-use RuntimeException;
+use PDO;
 
 class KhoGiaoAn
 {
-    private ?array $ds = null;  // mỗi request chỉ đọc tệp một lần
-
-    public function __construct(private string $tepJson) {}
+    public function __construct(private PDO|string|null $db = null)
+    {
+        if (!($this->db instanceof PDO)) {
+            $this->db = db();
+        }
+    }
 
     /**
-     * Trả về toàn bộ mảng GiaoAn từ JSON.
+     * Trả về toàn bộ danh sách GiaoAn từ CSDL MySQL.
+     * @return GiaoAn[]
      */
     public function tatCa(): array
     {
-        if ($this->ds === null) {
-            if (!is_file($this->tepJson)) {
-                throw new RuntimeException("Không tìm thấy tệp dữ liệu: {$this->tepJson}");
-            }
-            $json = file_get_contents($this->tepJson);
-            if (str_starts_with($json, "\xEF\xBB\xBF")) {
-                $json = substr($json, 3);
-            }
-            $mang = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-            $this->ds = array_map(fn(array $d) => GiaoAn::tuMang($d), $mang);
-        }
-        return $this->ds;
+        $st = $this->db->query("SELECT * FROM giao_an ORDER BY id DESC");
+        return array_map(fn(array $d) => GiaoAn::tuMang($d), $st->fetchAll());
     }
 
     /**
@@ -37,55 +30,98 @@ class KhoGiaoAn
      */
     public function timTheoId(int $id): ?GiaoAn
     {
-        foreach ($this->tatCa() as $ga) {
-            if ($ga->id === $id) return $ga;
-        }
-        return null;
+        $st = $this->db->prepare("SELECT * FROM giao_an WHERE id = ?");
+        $st->execute([$id]);
+        $d = $st->fetch();
+        return $d ? GiaoAn::tuMang($d) : null;
     }
 
     /**
-     * Tìm kiếm và lọc danh sách giáo án — dùng cho trang kho-hoc-lieu.php.
-     *
-     * @param string $q       Từ khoá tìm kiếm (tên hoặc mô tả)
-     * @param string $capHoc  'Tất cả' | 'THCS' | 'THPT'
-     * @param string $sapXep  'ten-az' | 'gia-tang' | 'gia-giam'
+     * Bộ lọc của trang danh sách → [$where, $ts]. dem() và trang() cùng
+     * gọi hàm này nên hai câu SQL luôn có đúng một điều kiện lọc.
+     */
+    private function dieuKien(array $loc): array
+    {
+        $dk = [];
+        $ts = [];
+
+        // Tìm theo từ khóa (tên giáo án): dùng addcslashes để escape ký tự đặc biệt % và _
+        if (isset($loc['q']) && $loc['q'] !== '') {
+            $dk[] = 'ten LIKE ?';
+            $ts[] = '%' . addcslashes($loc['q'], '%_\\') . '%';
+        }
+
+        // Lọc theo danh mục
+        if (!empty($loc['dm'])) {
+            $dk[] = 'danh_muc_id = ?';
+            $ts[] = (int) $loc['dm'];
+        }
+
+        // Lọc theo cấp học (nếu có lựa chọn khác 'Tất cả')
+        if (!empty($loc['cap_hoc']) && $loc['cap_hoc'] !== 'Tất cả') {
+            $dk[] = 'cap_hoc = ?';
+            $ts[] = $loc['cap_hoc'];
+        }
+
+        // Lọc theo giá tối đa
+        if (!empty($loc['giaToiDa'])) {
+            $dk[] = 'gia <= ?';
+            $ts[] = (int) $loc['giaToiDa'];
+        }
+
+        $where = $dk ? 'WHERE ' . implode(' AND ', $dk) : '';
+        return [$where, $ts];
+    }
+
+    /**
+     * Đếm tổng số dòng khớp với bộ lọc.
+     */
+    public function dem(array $loc): int
+    {
+        [$where, $ts] = $this->dieuKien($loc);
+        $st = $this->db->prepare("SELECT COUNT(*) FROM giao_an $where");
+        $st->execute($ts);
+        return (int) $st->fetchColumn();
+    }
+
+    /**
+     * Một trang danh sách GiaoAn theo bộ lọc, sắp xếp và phân trang.
+     * @return GiaoAn[]
+     */
+    public function trang(array $loc, string $sx, int $soDong, int $boQua): array
+    {
+        [$where, $ts] = $this->dieuKien($loc);
+
+        // Danh sách whitelist sắp xếp an toàn chống SQL Injection
+        $orderBy = match ($sx) {
+            'gia-tang' => 'gia ASC, id',
+            'gia-giam' => 'gia DESC, id',
+            'ten'      => 'ten ASC, id',
+            default    => 'id DESC', // 'moi' hoặc giá trị lạ
+        };
+
+        $st = $this->db->prepare("SELECT * FROM giao_an $where ORDER BY $orderBy LIMIT ? OFFSET ?");
+        $idx = 1;
+        foreach ($ts as $v) {
+            $st->bindValue($idx++, $v);
+        }
+        $st->bindValue($idx++, (int) $soDong, PDO::PARAM_INT);
+        $st->bindValue($idx++, (int) $boQua, PDO::PARAM_INT);
+        $st->execute();
+
+        return array_map(fn(array $d) => GiaoAn::tuMang($d), $st->fetchAll());
+    }
+
+    /**
+     * Giữ lại hàm timKiem để tương thích ngược nếu có tệp cũ gọi.
      * @return GiaoAn[]
      */
     public function timKiem(string $q, string $capHoc, string $sapXep): array
     {
-        // Danh sách giá trị cho phép — chặn dữ liệu không hợp lệ
-        $capHocHopLe  = ['Tất cả', 'THCS', 'THPT'];
-        $sapXepHopLe  = ['ten-az', 'gia-tang', 'gia-giam'];
-
-        if (!in_array($capHoc, $capHocHopLe, true)) $capHoc = 'Tất cả';
-        if (!in_array($sapXep, $sapXepHopLe, true)) $sapXep = 'ten-az';
-
-        $q = mb_strtolower(trim($q), 'UTF-8');
-
-        // Lọc theo từ khoá và cấp học
-        $ketQua = array_filter($this->tatCa(), function (GiaoAn $ga) use ($q, $capHoc): bool {
-            $khopCapHoc = ($capHoc === 'Tất cả') || ($ga->cap_hoc === $capHoc);
-            if (!$khopCapHoc) return false;
-
-            if ($q === '') return true;
-
-            // Tìm trong tên hoặc mô tả (không phân biệt hoa thường)
-            return mb_stripos($ga->ten, $q, 0, 'UTF-8') !== false
-                || mb_stripos($ga->mo_ta, $q, 0, 'UTF-8') !== false;
-        });
-
-        // Sắp xếp
-        $mang = array_values($ketQua);
-        usort($mang, function (GiaoAn $a, GiaoAn $b) use ($sapXep): int {
-            return match ($sapXep) {
-                'ten-az'    => mb_strtolower($a->ten, 'UTF-8') <=> mb_strtolower($b->ten, 'UTF-8'),
-                'gia-tang'  => $a->gia <=> $b->gia,
-                'gia-giam'  => $b->gia <=> $a->gia,
-                default     => 0,
-            };
-        });
-
-        return $mang;
+        $loc = [
+            'q'       => $q,
+            'cap_hoc' => $capHoc,
+        ];
+        return $this->trang($loc, $sapXep, 100, 0);
     }
 }
-

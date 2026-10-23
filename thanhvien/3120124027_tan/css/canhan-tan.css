@@ -168,3 +168,309 @@ body.che-do-doc-sach .cot-trai, body.che-do-doc-sach tr:nth-child(even) { backgr
     border-radius: 4px;
     min-width: 50px;
 }
+
+
+/* =========================================
+   8. THÔNG BÁO FLASH (PRG) & LỖI
+   ========================================= */
+.thong-bao-flash {
+  background-color: #e6fffa;
+  border: 1px solid #38b2ac;
+  color: #234e52;
+  padding: 0.75rem 1rem;
+  border-radius: var(--bo-goc, 8px);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.thong-bao-loi {
+  background-color: #fff5f5;
+  border: 1px solid #feb2b2;
+  color: #9b2c2c;
+  padding: 0.75rem 1rem;
+  border-radius: var(--bo-goc, 8px);
+  margin-bottom: 1rem;
+}
+.tin-loi {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* =========================================
+   9. BẢNG THỐNG KÊ LƯỢT XEM 7 NGÀY
+   ========================================= */
+.khung-thong-ke-xem {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+.bang-mini {
+  width: 100%;
+  font-size: 0.85rem;
+  border-collapse: collapse;
+}
+.bang-mini th, .bang-mini td {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--vien, #e0e0e0);
+  text-align: center;
+}
+.bang-mini th {
+  background-color: #2b6cb0;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+/* =========================================
+   10. SỔ LƯU BÚT (CHỨC NĂNG 1)
+   ========================================= */
+.khung-luu-but {
+  background: #fff;
+  border: 1px solid var(--vien, #e0e0e0);
+  border-radius: var(--bo-goc, 8px);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.form-luu-but {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+.nhom-nhap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  text-align: left;
+}
+.nhom-nhap label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #2d3748;
+}
+.nhom-nhap input,
+.nhom-nhap textarea,
+.nhom-nhap select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.nhom-nhap input:focus,
+.nhom-nhap textarea:focus,
+.nhom-nhap select:focus {
+  outline: none;
+  border-color: #2b6cb0;
+  box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.2);
+}
+.ds-luu-but {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.item-luu-but {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #2b6cb0;
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+}
+.header-luu-but {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.ten-khach-lb {
+  font-weight: 700;
+  color: #2d3748;
+}
+.thoi-gian-lb {
+  font-size: 0.8rem;
+  color: #718096;
+}
+.noi-dung-lb {
+  color: #4a5568;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.nut-xoa-lb {
+  background: #e53e3e;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.nut-xoa-lb:hover {
+  background: #c53030;
+}
+
+/* =========================================
+   11. PHÂN TRANG (PAGINATION)
+   ========================================= */
+.phan-trang {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+.nut-trang {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  color: #2b6cb0;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  background: #fff;
+  transition: all 0.2s;
+}
+.nut-trang:hover {
+  background: #edf2f7;
+  border-color: #a0aec0;
+}
+.nut-trang.hien-tai {
+  background: #2b6cb0;
+  color: #fff;
+  border-color: #2b6cb0;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+/* =========================================
+   12. TRA CỨU DỰ ÁN (CHỨC NĂNG 2)
+   ========================================= */
+.khung-tim-kiem-du-an {
+  background: #fff;
+  border: 1px solid var(--vien, #e0e0e0);
+  border-radius: var(--bo-goc, 8px);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+.form-tim-du-an {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .form-tim-du-an {
+    grid-template-columns: 2fr 1.2fr 1.2fr auto;
+    align-items: end;
+  }
+}
+.du-an-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .du-an-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.du-an-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--bo-goc, 8px);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 0;
+}
+.du-an-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+.du-an-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #1a202c;
+  word-break: break-word;
+}
+.du-an-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.tag-cn {
+  display: inline-block;
+  background: #ebf8ff;
+  color: #2b6cb0;
+  border: 1px solid #bee3f8;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.tag-nam {
+  display: inline-block;
+  background: #f7fafc;
+  color: #718096;
+  border: 1px solid #e2e8f0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+.du-an-mo-ta {
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  flex-grow: 1;
+}
+.du-an-footer {
+  font-size: 0.85rem;
+  color: #718096;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #edf2f7;
+  padding-top: 0.5rem;
+}
+
+/* =========================================
+   13. TRẠNG THÁI KIỂM THỬ CHỦ TRANG
+   ========================================= */
+.thanh-test-quyen {
+  background: #ebf8ff;
+  border: 1px dashed #3182ce;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Đảm bảo 360px không bị tràn ngang */
+@media (max-width: 480px) {
+  .trang-ca-nhan {
+    padding: 0;
+  }
+  .cot-trai, .cot-phai {
+    padding: 0.75rem;
+  }
+  .thanh-test-quyen {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
