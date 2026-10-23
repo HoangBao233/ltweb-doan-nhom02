@@ -8,6 +8,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Nạp các hàm tiện ích
 require_once __DIR__ . '/ham.php';
 
+// Nạp kết nối CSDL và xác thực
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/xac-thuc.php';
+
 // Các hằng số thư mục (đã có)
 define('ROOT_DIR', __DIR__ . '/../');
 define('DATA_DIR', ROOT_DIR . 'data/');
