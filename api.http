@@ -1,0 +1,53 @@
+# api.http — Kiểm thử REST API (Dùng với VS Code REST Client extension)
+# Bấm "Send Request" trên từng request bên dưới để kiểm thử các mã trạng thái HTTP
+
+@goc = http://localhost/ltweb-doan-nhom02
+
+### 1. Tìm kiếm giáo án hợp lệ → 200 {"du_lieu": [...]}
+GET {{goc}}/api/giao-an.php?q=python
+
+### 2. Xem chi tiết giáo án hợp lệ → 200 {"du_lieu": {...}}
+GET {{goc}}/api/giao-an.php?id=1
+
+### 3. Giáo án không tồn tại → 404 {"loi": "Không tìm thấy giáo án"}
+GET {{goc}}/api/giao-an.php?id=999999
+
+### 4. ID giáo án không hợp lệ → 400 {"loi": "ID giáo án không hợp lệ"}
+GET {{goc}}/api/giao-an.php?id=abc
+
+### 5. Thêm giáo án vào giỏ hàng thành công → 200 {"thanh_cong": true, "so_mon": ...}
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+
+{"id": 1, "sl": 1}
+
+### 6. Xem danh sách giỏ hàng hiện tại qua GET → 200 {"so_mon": ..., "gio_hang": ...}
+GET {{goc}}/api/gio-hang.php
+
+### 7. Thân request sai định dạng JSON → 400 {"loi": "Dữ liệu yêu cầu phải là JSON hợp lệ"}
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+
+{id: 1}
+
+### 8. Số lượng âm → 422 {"loi": "Số lượng phải là số nguyên dương lớn hơn 0"}
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+
+{"id": 1, "sl": -3}
+
+### 9. Thêm mặt hàng không tồn tại vào giỏ → 404 {"loi": "Giáo án không tồn tại"}
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+
+{"id": 999999, "sl": 1}
+
+### 10. Thêm số lượng vượt quá tồn kho → 422 {"loi": "Số lượng yêu cầu vượt quá tồn kho..."}
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+
+{"id": 2, "sl": 99999}
+
+### 11. Sai phương thức HTTP → 405 Method Not Allowed (Kèm header Allow: GET, POST)
+DELETE {{goc}}/api/gio-hang.php
+

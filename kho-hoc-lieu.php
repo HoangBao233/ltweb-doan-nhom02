@@ -182,7 +182,7 @@ require __DIR__ . '/inc/header.php';
                                     <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : ($ga->cap_hoc === 'THPT' ? 'nhan-nho--cam' : 'nhan-nho--tim') ?>">
                                         <?= e($ga->cap_hoc) ?>
                                     </span>
-                                    <button type="button" class="nut-yeu-thich" title="Yêu thích"
+                                    <button type="button" class="nut-yeu-thich nut-luu-giao-an" data-id="<?= $ga->id ?>" title="Lưu giáo án"
                                             style="background: none; border: none; cursor: pointer; font-size: 1.4rem; color: #ccc; transition: color 0.2s;"
                                             onclick="this.classList.toggle('da-thich'); this.style.color = this.classList.contains('da-thich') ? '#e74c3c' : '#ccc';">
                                         ♥
@@ -248,5 +248,7 @@ require __DIR__ . '/inc/header.php';
 <?php require __DIR__ . '/inc/footer.php'; ?>
 
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/tim-kiem.js"></script>
+    <script type="module" src="js/gio-hang.js"></script>
 </body>
 </html>
