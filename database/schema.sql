@@ -40,6 +40,7 @@ CREATE TABLE giao_an (
   mo_ta       TEXT NULL,
   cap_hoc     VARCHAR(50) NOT NULL DEFAULT 'THCS',
   video_url   VARCHAR(255) NULL,
+  luot_tai    INT UNSIGNED NOT NULL DEFAULT 0,
   ngay_tao    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (danh_muc_id) REFERENCES danh_muc(id),
   INDEX idx_giao_an_dm_gia (danh_muc_id, gia),
