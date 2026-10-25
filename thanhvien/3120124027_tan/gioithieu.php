@@ -33,8 +33,12 @@ $ndHienTai  = nguoiDung();
 $laChuTrang = (($ndHienTai['id'] ?? 0) === ($tv['nguoi_dung_id'] ?? null)) && ($tv['nguoi_dung_id'] !== null);
 
 // 2. Tự động tăng bộ đếm lượt xem theo ngày (INSERT ... ON DUPLICATE KEY UPDATE)
-$stTangXem = db()->prepare('INSERT INTO tv_luot_xem (mssv, ngay, so_luot) VALUES (?, CURDATE(), 1) ON DUPLICATE KEY UPDATE so_luot = so_luot + 1');
-$stTangXem->execute([MSSV]);
+// Mỗi phiên (Session) chỉ đếm 1 lần để tránh tăng liên tục khi F5
+if (empty($_SESSION['da_dem_xem_tan'])) {
+    $stTangXem = db()->prepare('INSERT INTO tv_luot_xem (mssv, ngay, so_luot) VALUES (?, CURDATE(), 1) ON DUPLICATE KEY UPDATE so_luot = so_luot + 1');
+    $stTangXem->execute([MSSV]);
+    $_SESSION['da_dem_xem_tan'] = true;
+}
 
 // Lấy lượt xem hôm nay và tổng lượt xem
 $stHomNay = db()->prepare('SELECT so_luot FROM tv_luot_xem WHERE mssv = ? AND ngay = CURDATE()');

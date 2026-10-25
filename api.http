@@ -1,7 +1,11 @@
 # api.http — Kiểm thử REST API (Dùng với VS Code REST Client extension)
 # Bấm "Send Request" trên từng request bên dưới để kiểm thử các mã trạng thái HTTP
-
+#
+# Chọn URL gốc phù hợp với cách chạy của bạn (bỏ dấu # trước dòng tương ứng):
+# - Nếu chạy XAMPP (Apache):
 @goc = http://localhost/ltweb-doan-nhom02
+# - Nếu chạy bằng lệnh `php -S localhost:8000` (theo README):
+# @goc = http://localhost:8000
 
 ### 1. Tìm kiếm giáo án hợp lệ → 200 {"du_lieu": [...]}
 GET {{goc}}/api/giao-an.php?q=python
