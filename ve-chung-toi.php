@@ -80,29 +80,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // 5. Nếu không có lỗi: lưu vào storage/lien-he.jsonl, gán $_SESSION['flash'], redirect PRG
+    // 5. Nếu không có lỗi: lưu vào MySQL bảng lien_he qua KhoLienHe, gán $_SESSION['flash'], redirect PRG
     if (empty($loi)) {
-        if (!is_dir(STORAGE_DIR)) {
-            mkdir(STORAGE_DIR, 0777, true);
-        }
-
-        $khoLienHe = new KhoLienHe(STORAGE_DIR . 'lien-he.jsonl');
+        $khoLienHe = new KhoLienHe();
         $khoLienHe->them([
-            'hoten'    => $du['hoten'],
+            'ho_ten'   => $du['hoten'],
             'email'    => $du['email'],
             'sdt'      => $du['sdt'],
-            'noidung'  => $du['noidung'],
+            'noi_dung' => $du['noidung'],
             'anh'      => $ten_anh_uploaded,
-            'ngay_tao' => date('Y-m-d H:i:s')
         ]);
 
         $_SESSION['flash'] = [
             'type'    => 'success',
-            'message' => '✅ Cảm ơn bạn! Tin nhắn của bạn đã được ghi nhận.'
+            'message' => '✅ Cảm ơn bạn! Tin nhắn của bạn đã được ghi nhận vào hệ thống.'
         ];
 
-        header('Location: ve-chung-toi.php');
-        exit;
+        chuyen_trang('ve-chung-toi.php');
     }
 }
 

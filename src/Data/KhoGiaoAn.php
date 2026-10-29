@@ -124,4 +124,61 @@ class KhoGiaoAn
         ];
         return $this->trang($loc, $sapXep, 100, 0);
     }
+
+    /**
+     * L?y danh sách giáo án m?i nh?t (ph?c v? Trang ch?).
+     * Ph? trách: B?o (Ch?c nang 1)
+     * 
+     * @param int $gioiHan S? bài vi?t m?i nh?t c?n l?y (m?c d?nh 8)
+     * @return GiaoAn[]
+     */
+    public function moiNhat(int $gioiHan = 8): array
+    {
+        $st = $this->db->prepare("SELECT * FROM giao_an ORDER BY id DESC LIMIT ?");
+        $st->bindValue(1, $gioiHan, PDO::PARAM_INT);
+        $st->execute();
+        return array_map(fn(array $d) => GiaoAn::tuMang($d), $st->fetchAll());
+    }
+
+    /**
+     * L?y danh sách giáo án theo m?ng ID (ph?c v? Gi? hàng & L?ch s? xem).
+     * Gi?i quy?t tri?t d? l?i N+1 truy v?n b?ng 1 câu l?nh SQL duy nh?t: WHERE id IN (?, ?, ...).
+     * Ph? trách: B?o (Ch?c nang 1)
+     * 
+     * @param int[] $ids M?ng ch?a các ID c?n truy v?n
+     * @return GiaoAn[]
+     */
+    public function theoDanhSachId(array $ids): array
+    {
+        $ids = array_values(array_filter(array_map('intval', $ids), fn($id) => $id > 0));
+        if (empty($ids)) {
+            return [];
+        }
+
+        $dauHoi = implode(',', array_fill(0, count($ids), '?'));
+        $st = $this->db->prepare("SELECT * FROM giao_an WHERE id IN ($dauHoi)");
+        $st->execute($ids);
+
+        return array_map(fn(array $d) => GiaoAn::tuMang($d), $st->fetchAll());
+    }
+
+    /**
+     * L?y các giáo án liên quan cùng danh m?c, tr? giáo án dang xem (ph?c v? Trang chi ti?t).
+     * Ph? trách: B?o (Ch?c nang 1)
+     * 
+     * @param int $danhMucId ID danh m?c
+     * @param int $truId ID giáo án c?n lo?i tr? (giáo án hi?n t?i)
+     * @param int $gioiHan S? bài liên quan t?i da (m?c d?nh 4)
+     * @return GiaoAn[]
+     */
+    public function cungDanhMuc(int $danhMucId, int $truId, int $gioiHan = 4): array
+    {
+        $st = $this->db->prepare("SELECT * FROM giao_an WHERE danh_muc_id = ? AND id != ? ORDER BY id DESC LIMIT ?");
+        $st->bindValue(1, $danhMucId, PDO::PARAM_INT);
+        $st->bindValue(2, $truId, PDO::PARAM_INT);
+        $st->bindValue(3, $gioiHan, PDO::PARAM_INT);
+        $st->execute();
+
+        return array_map(fn(array $d) => GiaoAn::tuMang($d), $st->fetchAll());
+    }
 }
