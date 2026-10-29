@@ -19,6 +19,10 @@ if (class_exists('App\Services\DanhSachLuu')) {
     $soLuongLuu = count($_SESSION['danh_sach_luu']);
 }
 
+// Thông tin người dùng hiện tại
+$uHienTai = function_exists('nguoiDung') ? nguoiDung() : null;
+$daDangNhap = ($uHienTai !== null);
+
 // Danh sách menu điều hướng
 $menu = [
     'index.php'             => 'Trang chủ',
@@ -27,6 +31,15 @@ $menu = [
     've-chung-toi.php'      => 'Về chúng tôi',
     'dong-gop-tai-lieu.php' => 'Đóng góp tài liệu',
 ];
+
+// Phân biệt menu theo vai trò người dùng (Chức năng 4)
+if ($daDangNhap) {
+    if (($uHienTai['vai_tro'] ?? '') === 'quan_tri') {
+        $menu['quan-tri.php'] = 'Quản trị';
+    } else {
+        $menu['don-hang.php'] = 'Đơn hàng';
+    }
+}
 
 // Chuẩn hóa tên trang hiện tại để đánh dấu menu đang xem
 $trangHienTai = $trang;
@@ -62,14 +75,22 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
     <header class="trang__dau can-giua-chu" style="display:flex; align-items:center; justify-content:space-between; padding:0.5rem 1rem;">
         <p class="trang__khieu-giao" style="margin:0;">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
         
-        <div class="dang-nhap-goc" style="display:flex; align-items:center; gap:0.4rem; white-space:nowrap;">
-            <?php if (isset($_SESSION['user'])): ?>
+        <div class="dang-nhap-goc" style="display:flex; align-items:center; gap:0.5rem; white-space:nowrap; flex-wrap:wrap;">
+            <?php if ($daDangNhap): ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span style="font-weight:600;"><?= e($_SESSION['user']) ?></span>
-                <a href="<?= $goc ?>dang-xuat.php" style="margin-left:0.5rem; font-size:0.85rem;">Đăng xuất</a>
+                <span style="font-weight:600; color:var(--mau-chinh, #004085);"><?= e($uHienTai['ho_ten'] ?? $_SESSION['user'] ?? '') ?></span>
+                <?php if (($uHienTai['vai_tro'] ?? '') === 'quan_tri'): ?>
+                    <span style="background:#e67e22; color:#fff; font-size:0.75rem; padding:0.15rem 0.45rem; border-radius:4px; font-weight:bold;">Quản trị</span>
+                    <a href="<?= $goc ?>quan-tri.php" class="nut-thao-tac nut-thao-tac--xem" style="padding:0.25rem 0.6rem; font-size:0.8rem; text-decoration:none;">🛠️ Quản trị</a>
+                <?php else: ?>
+                    <a href="<?= $goc ?>don-hang.php" style="font-size:0.85rem; color:#2c3e50; text-decoration:none; margin-left:0.2rem;">📦 Đơn hàng</a>
+                <?php endif; ?>
+                <a href="<?= $goc ?>dang-xuat.php" style="margin-left:0.3rem; font-size:0.85rem; color:#e74c3c; text-decoration:none;">Đăng xuất</a>
             <?php else: ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <a href="<?= $goc ?>dang-nhap.php" style="font-weight:600;">Đăng nhập</a>
+                <a href="<?= $goc ?>dang-nhap.php" style="font-weight:600; color:var(--mau-chinh, #004085); text-decoration:none;">Đăng nhập</a>
+                <span style="color:#aaa;">|</span>
+                <a href="<?= $goc ?>dang-ky.php" style="font-size:0.9rem; color:#555; text-decoration:none;">Đăng ký</a>
             <?php endif; ?>
         </div>
     </header>
