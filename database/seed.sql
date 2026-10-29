@@ -267,15 +267,15 @@ INSERT INTO tv_yeu_cau_cv (mssv, email, loi_nhan, ip_gui, ngay_tao) VALUES
   ('3120222126', 'tuyendung@viettel.vn', 'Mời bạn nộp hồ sơ xét tuyển kỹ sư phần mềm.', '127.0.0.1', '2026-10-20 14:30:00');
 
 
--- D? li?u m?u b?ng tv_du_an_tan c?a T?n (3120124027)
+-- Dữ liệu mẫu bảng tv_du_an_tan của Tấn (3120124027)
 INSERT INTO tv_du_an_tan (id, mssv, ten_du_an, cong_nghe, nam_thuc_hien, mo_ta, luot_tai) VALUES
-  (1, '3120124027', 'Ph?n m?m m� ph?ng thu?t to�n s?p x?p', 'Python', 2024, 'M� ph?ng tr?c quan c�c thu?t to�n Bubble Sort, Quick Sort, Merge Sort v?i Pygame ph?c v? gi?ng d?y Tin h?c 11.', 145),
-  (2, '3120124027', 'H? th?ng thi tr?c nghi?m tr?c tuy?n Edutest', 'PHP & MySQL', 2024, 'N?n t?ng thi v� ch?m tr?c nghi?m tr?c tuy?n t? d?ng, ph�n quy?n gi�o vi�n - h?c sinh, th?ng k� ph? di?m chi ti?t.', 230),
-  (3, '3120124027', 'Tr? l� ?o h? tr? h?c t?p EduBot', 'Python', 2025, '?ng d?ng chatbot tra c?u t�i li?u h?c t?p v� gi?i d�p c�u h?i c� ph�p l?p tr�nh t? d?ng b?ng x? l� ng�n ng? t? nhi�n.', 89),
-  (4, '3120124027', '?ng d?ng nh?n di?n c? ch? tay tr�nh chi?u', 'Python', 2023, 'S? d?ng OpenCV v� MediaPipe nh?n di?n c? ch? ng�n tay d? l?t trang b�i gi?ng PowerPoint t? xa kh�ng c?n chu?t.', 112),
-  (5, '3120124027', 'Kho h?c li?u s? gi�o d?c ITeduShare', 'PHP & MySQL', 2025, 'Website chia s? gi�o �n di?n t?, d? thi v� video h?c li?u tin h?c b�m s�t chuong tr�nh GDPT 2018 cho gi�o vi�n.', 420),
-  (6, '3120124027', 'B? b�i gi?ng STEM L?p tr�nh Robotics', 'C++', 2023, 'Chu?i b�i gi?ng v� t�i li?u hu?ng d?n h?c sinh THCS l?p tr�nh di?u khi?n xe robot d� du?ng b?ng Arduino.', 78),
-  (7, '3120124027', 'Game gi�o d?c: Cu?c phi�u luu v�o x? s? Binary', 'Python', 2024, 'Tr� choi h�a b�i h?c chuy?n d?i h? nh? ph�n sang th?p ph�n tr�n n?n t?ng Pygame, k�ch th�ch h?ng th� c?a h?c sinh.', 165),
-  (8, '3120124027', 'H? th?ng qu?n l� thu vi?n tru?ng h?c LibManage', 'C# & SQL Server', 2022, 'Ph?n m?m desktop qu?n l� d?u s�ch, th? d?c gi?, mu?n tr? v� in phi?u nh?c h?n t? d?ng.', 95),
-  (9, '3120124027', 'Website portfolio c� nh�n su ph?m tin h?c', 'HTML/CSS/JS', 2023, 'Trang web gi?i thi?u h? so nang l?c c� nh�n, s?n ph?m gi?ng d?y v� th�nh t�ch h?c t?p v?i thi?t k? chu?n responsive.', 310),
-  (10, '3120124027', 'H? th?ng t? d?ng ch?m b�i t?p l?p tr�nh CodeJudge', 'Python', 2025, 'H? th?ng sandbox th?c thi v� ch?m di?m t? d?ng c�c b�i n?p thu?t to�n c?a h?c sinh theo c�c test case ?n.', 180);
+  (1, '3120124027', 'Phần mềm mô phỏng thuật toán sắp xếp', 'Python', 2024, 'Mô phỏng trực quan các thuật toán Bubble Sort, Quick Sort, Merge Sort với Pygame phục vụ giảng dạy Tin học 11.', 145),
+  (2, '3120124027', 'Hệ thống thi trắc nghiệm trực tuyến Edutest', 'PHP & MySQL', 2024, 'Nền tảng thi và chấm trắc nghiệm trực tuyến tự động, phân quyền giáo viên - học sinh, thống kê phổ điểm chi tiết.', 230),
+  (3, '3120124027', 'Trợ lý ảo hỗ trợ học tập EduBot', 'Python', 2025, 'Ứng dụng chatbot tra cứu tài liệu học tập và giải đáp câu hỏi cú pháp lập trình tự động bằng xử lý ngôn ngữ tự nhiên.', 89),
+  (4, '3120124027', 'Ứng dụng nhận diện cử chỉ tay trình chiếu', 'Python', 2023, 'Sử dụng OpenCV và MediaPipe nhận diện cử chỉ ngón tay để lật trang bài giảng PowerPoint từ xa không cần chuột.', 112),
+  (5, '3120124027', 'Kho học liệu số giáo dục ITeduShare', 'PHP & MySQL', 2025, 'Website chia sẻ giáo án điện tử, đề thi và video học liệu tin học bám sát chương trình GDPT 2018 cho giáo viên.', 420),
+  (6, '3120124027', 'Bộ bài giảng STEM Lập trình Robotics', 'C++', 2023, 'Chuỗi bài giảng và tài liệu hướng dẫn học sinh THCS lập trình điều khiển xe robot dò đường bằng Arduino.', 78),
+  (7, '3120124027', 'Game giáo dục: Cuộc phiêu lưu vào xứ sở Binary', 'Python', 2024, 'Trò chơi hóa bài học chuyển đổi hệ nhị phân sang thập phân trên nền tảng Pygame, kích thích hứng thú của học sinh.', 165),
+  (8, '3120124027', 'Hệ thống quản lý thư viện trường học LibManage', 'C# & SQL Server', 2022, 'Phần mềm desktop quản lý đầu sách, thẻ độc giả, mượn trả và in phiếu nhắc hẹn tự động.', 95),
+  (9, '3120124027', 'Website portfolio cá nhân sư phạm tin học', 'HTML/CSS/JS', 2023, 'Trang web giới thiệu hồ sơ năng lực cá nhân, sản phẩm giảng dạy và thành tích học tập với thiết kế chuẩn responsive.', 310),
+  (10, '3120124027', 'Hệ thống tự động chấm bài tập lập trình CodeJudge', 'Python', 2025, 'Hệ thống sandbox thực thi và chấm điểm tự động các bài nộp thuật toán của học sinh theo các test case ẩn.', 180);
