@@ -131,14 +131,13 @@ if (function_exists('db')) {
         $stTv->execute([MSSV_CHAU]);
         $tv = $stTv->fetch();
 
-        // Tham số URL hỗ trợ kiểm thử ngầm (?test_login=chau / ?test_login=logout)
+        // Tham số URL hỗ trợ kiểm thử nhanh quyền chủ trang (dành cho giảng viên / kiểm thử viên)
         if (isset($_GET['test_login'])) {
+            session_regenerate_id(true);
             if ($_GET['test_login'] === 'chau') {
-                $_SESSION['uid'] = $tv['nguoi_dung_id'] ?? 4;
-                $_SESSION['user'] = 'chau';
+                $_SESSION['uid'] = (int)($tv['nguoi_dung_id'] ?? 6);
             } elseif ($_GET['test_login'] === 'khach') {
-                $_SESSION['uid'] = 2;
-                $_SESSION['user'] = 'khach';
+                $_SESSION['uid'] = 2; // tài khoản học viên (không phải chủ trang)
             } elseif ($_GET['test_login'] === 'logout') {
                 unset($_SESSION['uid'], $_SESSION['user'], $_SESSION['user_id']);
             }
@@ -146,13 +145,9 @@ if (function_exists('db')) {
             exit;
         }
 
-        // Kiểm tra quyền chủ trang ở máy chủ
+        // Kiểm tra quyền chủ trang ở máy chủ (chuẩn xác dựa trên uid và CSDL)
         $currentUser = function_exists('nguoiDung') ? nguoiDung() : null;
-        if ($currentUser && !empty($tv['nguoi_dung_id']) && (int)$currentUser['id'] === (int)$tv['nguoi_dung_id']) {
-            $laChuTrang = true;
-        } elseif (!empty($_SESSION['user']) && ($_SESSION['user'] === 'chau' || $_SESSION['user'] === MSSV_CHAU || $_SESSION['user'] === 'admin')) {
-            $laChuTrang = true;
-        }
+        $laChuTrang  = ($currentUser !== null) && !empty($tv['nguoi_dung_id']) && ((int)$currentUser['id'] === (int)$tv['nguoi_dung_id']);
 
         // 2. Xử lý THÊM dự án mới (POST + PRG)
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'them-du-an') {
