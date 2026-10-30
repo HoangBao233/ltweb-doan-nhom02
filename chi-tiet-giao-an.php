@@ -70,7 +70,7 @@ require_once 'inc/header.php';
                     <input type="hidden" name="id" value="<?= $ga->id ?>">
                     <input type="hidden" name="sl" value="1">
                     <button type="submit" class="nut-thao-tac" style="cursor: pointer; border: none; font-size: 1rem; font-family: inherit; min-width: 140px; text-align: center;">
-                        <?= $daLuu ? '🗑️ Bỏ khỏi giỏ' : '🛒 Thêm vào giỏ' ?>
+                        <?= $daLuu ? 'Bỏ khỏi giỏ' : 'Thêm vào giỏ' ?>
                     </button>
                 </form>
 
@@ -160,7 +160,7 @@ require_once 'inc/header.php';
         <!-- KHU VỰC GIÁO ÁN LIÊN QUAN CÙNG DANH MỤC -->
         <?php if (!empty($dsLienQuan)): ?>
             <section class="gioi-thieu-tinh-nang" style="margin-top: 4rem; border-top: 1px solid #eee; padding-top: 2rem;">
-                <h2>📖 Giáo án liên quan cùng danh mục</h2>
+                <h2>Giáo án liên quan cùng danh mục</h2>
                 <div class="danh-sach-the__luoi">
                     <?php foreach ($dsLienQuan as $lq): ?>
                         <article class="the-hoc-lieu">

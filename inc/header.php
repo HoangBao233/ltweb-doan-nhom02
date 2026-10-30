@@ -77,20 +77,15 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
         
         <div class="dang-nhap-goc" style="display:flex; align-items:center; gap:0.5rem; white-space:nowrap; flex-wrap:wrap;">
             <?php if ($daDangNhap): ?>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span style="font-weight:600; color:var(--mau-chinh, #004085);"><?= e($uHienTai['ho_ten'] ?? $_SESSION['user'] ?? '') ?></span>
-                <?php if (($uHienTai['vai_tro'] ?? '') === 'quan_tri'): ?>
-                    <span style="background:#e67e22; color:#fff; font-size:0.75rem; padding:0.15rem 0.45rem; border-radius:4px; font-weight:bold;">Quản trị</span>
-                    <a href="<?= $goc ?>quan-tri.php" class="nut-thao-tac nut-thao-tac--xem" style="padding:0.25rem 0.6rem; font-size:0.8rem; text-decoration:none;">🛠️ Quản trị</a>
-                <?php else: ?>
-                    <a href="<?= $goc ?>don-hang.php" style="font-size:0.85rem; color:#2c3e50; text-decoration:none; margin-left:0.2rem;">📦 Đơn hàng</a>
-                <?php endif; ?>
-                <a href="<?= $goc ?>dang-xuat.php" style="margin-left:0.3rem; font-size:0.85rem; color:#e74c3c; text-decoration:none;">Đăng xuất</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; color:var(--mau-chinh, #004085);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085);"><?= (($uHienTai['vai_tro'] ?? '') === 'quan_tri') ? 'Quản trị viên' : e($uHienTai['ho_ten'] ?? $_SESSION['user'] ?? '') ?></span>
+                <span style="color:#cbd5e1; margin:0 0.15rem;">|</span>
+                <a href="<?= $goc ?>dang-xuat.php" style="font-size:0.9rem; color:#e11d48; text-decoration:none; font-weight:500;">Đăng xuất</a>
             <?php else: ?>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <a href="<?= $goc ?>dang-nhap.php" style="font-weight:600; color:var(--mau-chinh, #004085); text-decoration:none;">Đăng nhập</a>
-                <span style="color:#aaa;">|</span>
-                <a href="<?= $goc ?>dang-ky.php" style="font-size:0.9rem; color:#555; text-decoration:none;">Đăng ký</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; color:var(--mau-chinh, #004085);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <a href="<?= $goc ?>dang-nhap.php" style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085); text-decoration:none;">Đăng nhập</a>
+                <span style="color:#cbd5e1; margin:0 0.15rem;">|</span>
+                <a href="<?= $goc ?>dang-ky.php" style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085); text-decoration:none;">Đăng ký</a>
             <?php endif; ?>
         </div>
     </header>
@@ -145,3 +140,5 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
         }
     });
     </script>
+</body>
+</html>

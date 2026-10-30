@@ -56,15 +56,8 @@ require __DIR__ . '/inc/header.php';
 
 <main class="trang__chinh" style="max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem;">
     <!-- Thanh tiêu đề quản trị -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
-        <div>
-            <h1 style="margin: 0; font-size: 1.75rem; color: var(--mau-chinh, #004085);">Trang Quản trị</h1>
-        </div>
-        <div style="font-size: 0.95rem;">
-            <span style="color: #475569;">Quản trị viên</span>
-            &nbsp;|&nbsp;
-            <a href="dang-xuat.php" style="color: #e11d48; text-decoration: none; font-weight: 600;">Đăng xuất</a>
-        </div>
+    <div style="margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
+        <h1 style="margin: 0; font-size: 1.75rem; color: var(--mau-chinh, #004085);">Trang Quản trị</h1>
     </div>
 
     <!-- Thông báo Flash (Thành công / Thất bại) -->

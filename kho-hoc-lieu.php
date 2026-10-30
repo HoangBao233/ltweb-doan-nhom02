@@ -80,7 +80,7 @@ require __DIR__ . '/inc/header.php';
                 <!-- Ô tìm kiếm — giữ lại từ khoá đã nhập -->
                 <div style="flex: 1; min-width: 220px;">
                     <label for="o-tim-kiem" style="font-weight: bold; display: block; margin-bottom: 0.5rem;">
-                        🔍 Từ khóa:
+                        Từ khóa:
                     </label>
                     <input type="text" id="o-tim-kiem" name="q"
                            value="<?= e($loc['q']) ?>"
@@ -166,7 +166,7 @@ require __DIR__ . '/inc/header.php';
             <?php if (empty($danhSach)): ?>
                 <!-- Thông báo thân thiện khi không tìm thấy kết quả -->
                 <p role="status" style="text-align: center; padding: 2rem; color: #666; font-style: italic;">
-                    😕 Không tìm thấy giáo án nào phù hợp với bộ lọc hiện tại.
+                    Không tìm thấy giáo án nào phù hợp với bộ lọc hiện tại.
                     <br><a href="kho-hoc-lieu.php" style="display: inline-block; margin-top: 0.5rem; color: var(--mau-chinh, #007bff);">Xem tất cả giáo án</a>
                 </p>
             <?php else: ?>
@@ -174,9 +174,9 @@ require __DIR__ . '/inc/header.php';
                     <?php foreach ($danhSach as $ga): ?>
                         <article class="the-hoc-lieu">
                             <img src="<?= e($ga->hinh_anh) ?>"
-                                 alt="<?= e($ga->ten) ?>"
-                                 class="the-hoc-lieu__anh"
-                                 width="300" height="180" loading="lazy">
+                                  alt="<?= e($ga->ten) ?>"
+                                  class="the-hoc-lieu__anh"
+                                  width="300" height="180" loading="lazy">
                             <div class="the-hoc-lieu__noi-dung">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : ($ga->cap_hoc === 'THPT' ? 'nhan-nho--cam' : 'nhan-nho--tim') ?>">

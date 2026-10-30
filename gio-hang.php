@@ -53,7 +53,7 @@ require_once 'inc/header.php';
 ?>
 
 <main class="trang__chinh">
-    <h1 class="can-giua-chu">🔖 Danh sách giáo án trong giỏ hàng</h1>
+    <h1 class="can-giua-chu">Danh sách giáo án trong giỏ hàng</h1>
     <p class="can-giua-chu" style="color: #666; margin-bottom: 2rem;">
         Trang quản lý các tài liệu bạn dự định tải xuống hoặc đặt mua. 
         Bạn đang có <strong><?= count($dsGiaoAn) ?></strong> giáo án trong giỏ hàng.
@@ -71,7 +71,7 @@ require_once 'inc/header.php';
                 <form action="gio-hang.php" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xoá tất cả giáo án khỏi giỏ hàng?');">
                     <input type="hidden" name="action" value="xoa_het">
                     <button type="submit" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">
-                        🗑️ Xoá tất cả
+                        Xoá tất cả
                     </button>
                 </form>
             </div>
