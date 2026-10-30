@@ -130,10 +130,10 @@ class KhoGiaoAn
     }
 
     /**
-     * L?y danh s�ch gi�o �n m?i nh?t (ph?c v? Trang ch?).
-     * Ph? tr�ch: B?o (Ch?c nang 1)
+     * Lấy danh sách giáo án mới nhất (phục vụ Trang chủ).
+     * Phụ trách: Bảo (Chức năng 1)
      * 
-     * @param int $gioiHan S? b�i vi?t m?i nh?t c?n l?y (m?c d?nh 8)
+     * @param int $gioiHan Số bài viết mới nhất cần lấy (mặc định 8)
      * @return GiaoAn[]
      */
     public function moiNhat(int $gioiHan = 8): array
@@ -145,11 +145,11 @@ class KhoGiaoAn
     }
 
     /**
-     * L?y danh s�ch gi�o �n theo m?ng ID (ph?c v? Gi? h�ng & L?ch s? xem).
-     * Gi?i quy?t tri?t d? l?i N+1 truy v?n b?ng 1 c�u l?nh SQL duy nh?t: WHERE id IN (?, ?, ...).
-     * Ph? tr�ch: B?o (Ch?c nang 1)
+     * Lấy danh sách giáo án theo mảng ID (phục vụ Giỏ hàng & Lịch sử xem).
+     * Giải quyết triệt để lỗi N+1 truy vấn bằng 1 câu lệnh SQL duy nhất: WHERE id IN (?, ?, ...).
+     * Phụ trách: Bảo (Chức năng 1)
      * 
-     * @param int[] $ids M?ng ch?a c�c ID c?n truy v?n
+     * @param int[] $ids Mảng chứa các ID cần truy vấn
      * @return GiaoAn[]
      */
     public function theoDanhSachId(array $ids): array
@@ -167,12 +167,12 @@ class KhoGiaoAn
     }
 
     /**
-     * L?y c�c gi�o �n li�n quan c�ng danh m?c, tr? gi�o �n dang xem (ph?c v? Trang chi ti?t).
-     * Ph? tr�ch: B?o (Ch?c nang 1)
+     * Lấy các giáo án liên quan cùng danh mục, trừ giáo án đang xem (phục vụ Trang chi tiết).
+     * Phụ trách: Bảo (Chức năng 1)
      * 
-     * @param int $danhMucId ID danh m?c
-     * @param int $truId ID gi�o �n c?n lo?i tr? (gi�o �n hi?n t?i)
-     * @param int $gioiHan S? b�i li�n quan t?i da (m?c d?nh 4)
+     * @param int $danhMucId ID danh mục
+     * @param int $truId ID giáo án cần loại trừ (giáo án hiện tại)
+     * @param int $gioiHan Số bài liên quan tối đa (mặc định 4)
      * @return GiaoAn[]
      */
     public function cungDanhMuc(int $danhMucId, int $truId, int $gioiHan = 4): array
