@@ -30,7 +30,11 @@ class KhoGiaoAn
      */
     public function timTheoId(int $id): ?GiaoAn
     {
-        $st = $this->db->prepare("SELECT * FROM giao_an WHERE id = ?");
+        $sql = "SELECT g.*, d.ten AS ten_danh_muc, d.slug AS slug_danh_muc 
+                FROM giao_an g 
+                LEFT JOIN danh_muc d ON g.danh_muc_id = d.id 
+                WHERE g.id = ?";
+        $st = $this->db->prepare($sql);
         $st->execute([$id]);
         $d = $st->fetch();
         return $d ? GiaoAn::tuMang($d) : null;
@@ -126,10 +130,10 @@ class KhoGiaoAn
     }
 
     /**
-     * L?y danh sách giáo án m?i nh?t (ph?c v? Trang ch?).
-     * Ph? trách: B?o (Ch?c nang 1)
+     * L?y danh sï¿½ch giï¿½o ï¿½n m?i nh?t (ph?c v? Trang ch?).
+     * Ph? trï¿½ch: B?o (Ch?c nang 1)
      * 
-     * @param int $gioiHan S? bài vi?t m?i nh?t c?n l?y (m?c d?nh 8)
+     * @param int $gioiHan S? bï¿½i vi?t m?i nh?t c?n l?y (m?c d?nh 8)
      * @return GiaoAn[]
      */
     public function moiNhat(int $gioiHan = 8): array
@@ -141,11 +145,11 @@ class KhoGiaoAn
     }
 
     /**
-     * L?y danh sách giáo án theo m?ng ID (ph?c v? Gi? hàng & L?ch s? xem).
-     * Gi?i quy?t tri?t d? l?i N+1 truy v?n b?ng 1 câu l?nh SQL duy nh?t: WHERE id IN (?, ?, ...).
-     * Ph? trách: B?o (Ch?c nang 1)
+     * L?y danh sï¿½ch giï¿½o ï¿½n theo m?ng ID (ph?c v? Gi? hï¿½ng & L?ch s? xem).
+     * Gi?i quy?t tri?t d? l?i N+1 truy v?n b?ng 1 cï¿½u l?nh SQL duy nh?t: WHERE id IN (?, ?, ...).
+     * Ph? trï¿½ch: B?o (Ch?c nang 1)
      * 
-     * @param int[] $ids M?ng ch?a các ID c?n truy v?n
+     * @param int[] $ids M?ng ch?a cï¿½c ID c?n truy v?n
      * @return GiaoAn[]
      */
     public function theoDanhSachId(array $ids): array
@@ -163,12 +167,12 @@ class KhoGiaoAn
     }
 
     /**
-     * L?y các giáo án liên quan cùng danh m?c, tr? giáo án dang xem (ph?c v? Trang chi ti?t).
-     * Ph? trách: B?o (Ch?c nang 1)
+     * L?y cï¿½c giï¿½o ï¿½n liï¿½n quan cï¿½ng danh m?c, tr? giï¿½o ï¿½n dang xem (ph?c v? Trang chi ti?t).
+     * Ph? trï¿½ch: B?o (Ch?c nang 1)
      * 
      * @param int $danhMucId ID danh m?c
-     * @param int $truId ID giáo án c?n lo?i tr? (giáo án hi?n t?i)
-     * @param int $gioiHan S? bài liên quan t?i da (m?c d?nh 4)
+     * @param int $truId ID giï¿½o ï¿½n c?n lo?i tr? (giï¿½o ï¿½n hi?n t?i)
+     * @param int $gioiHan S? bï¿½i liï¿½n quan t?i da (m?c d?nh 4)
      * @return GiaoAn[]
      */
     public function cungDanhMuc(int $danhMucId, int $truId, int $gioiHan = 4): array

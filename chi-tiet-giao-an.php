@@ -18,7 +18,7 @@ if ($id === false || $id === null) {
     exit;
 }
 
-// 2. Truy vấn giáo án từ CSDL MySQL qua KhoGiaoAn
+// 2. Truy vấn giáo án từ CSDL MySQL qua KhoGiaoAn (kèm tên danh mục qua JOIN)
 $kho = new KhoGiaoAn();
 $ga  = $kho->timTheoId($id);
 
@@ -51,6 +51,13 @@ require_once 'inc/header.php';
 
     <main class="trang__chinh chi-tiet-giao-an">
         <div id="vung-chi-tiet" aria-live="polite">
+            <!-- Breadcrumb hiển thị cấp học & danh mục (JOIN) -->
+            <nav aria-label="Đường dẫn điều hướng" style="margin-bottom: 0.75rem; font-size: 0.9rem; color: #666;">
+                <a href="index.php" style="color: var(--mau-chinh); text-decoration: none;">Trang chủ</a> &raquo; 
+                <a href="kho-hoc-lieu.php" style="color: var(--mau-chinh); text-decoration: none;">Kho học liệu</a> &raquo; 
+                <a href="kho-hoc-lieu.php?dm=<?= $ga->danh_muc_id ?>" style="color: var(--mau-chinh); text-decoration: none; font-weight: 600;"><?= e($ga->ten_danh_muc ?: 'Tin học') ?></a>
+            </nav>
+
             <h1 class="chi-tiet-giao-an__tieu-de"><?= e($ga->ten) ?></h1>
 
             <div style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
@@ -58,9 +65,10 @@ require_once 'inc/header.php';
                 $dsLuu = new DanhSachLuu();
                 $daLuu = $dsLuu->daLuu($ga->id);
                 ?>
-                <form action="gio-hang.php" method="POST" style="margin: 0;">
+                <form action="gio-hang.php" method="POST" class="form-luu-giao-an" style="margin: 0;">
                     <input type="hidden" name="action" value="<?= $daLuu ? 'xoa' : 'them' ?>">
                     <input type="hidden" name="id" value="<?= $ga->id ?>">
+                    <input type="hidden" name="sl" value="1">
                     <button type="submit" class="nut-thao-tac" style="cursor: pointer; border: none; font-size: 1rem; font-family: inherit; min-width: 140px; text-align: center;">
                         <?= $daLuu ? '🗑️ Bỏ khỏi giỏ' : '🛒 Thêm vào giỏ' ?>
                     </button>
@@ -114,6 +122,14 @@ require_once 'inc/header.php';
                             <tr class="bang-hoc-lieu__hang">
                                 <th scope="row" class="bang-hoc-lieu__o-tieu-de">Mã tài liệu</th>
                                 <td class="bang-hoc-lieu__o">#<?= $ga->id ?></td>
+                            </tr>
+                            <tr class="bang-hoc-lieu__hang">
+                                <th scope="row" class="bang-hoc-lieu__o-tieu-de">Danh mục</th>
+                                <td class="bang-hoc-lieu__o">
+                                    <a href="kho-hoc-lieu.php?dm=<?= $ga->danh_muc_id ?>" style="color: var(--mau-chinh); font-weight: bold; text-decoration: none;">
+                                        <?= e($ga->ten_danh_muc ?: 'Chưa phân loại') ?>
+                                    </a>
+                                </td>
                             </tr>
                             <tr class="bang-hoc-lieu__hang">
                                 <th scope="row" class="bang-hoc-lieu__o-tieu-de">Cấp học</th>
@@ -178,5 +194,6 @@ require_once 'inc/header.php';
 <?php require_once 'inc/footer.php'; ?>
 
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/gio-hang.js"></script>
 </body>
 </html>
