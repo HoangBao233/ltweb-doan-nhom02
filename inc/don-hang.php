@@ -81,11 +81,11 @@ function luuDonHang(int $nguoiDungId, array $gioHang, string $ghiChu = ''): int 
         $stDon->execute([$nguoiDungId, $tongTien, $ghiChuChuan]);
         $donHangId = (int)$db->lastInsertId();
 
-        // 4. Trừ tồn kho và lưu chi tiết từng giáo án vào chi_tiet_don
+        // 4. Trừ tồn kho và lưu chi tiết từng giáo án vào chi_tiet_don (dùng tham số vị trí ? để tương thích MySQL Native Prepared Statements khi EMULATE_PREPARES false)
         $stTruKho = $db->prepare("
             UPDATE giao_an 
-            SET ton_kho = ton_kho - :sl 
-            WHERE id = :id AND ton_kho >= :sl
+            SET ton_kho = ton_kho - ? 
+            WHERE id = ? AND ton_kho >= ?
         ");
 
         $stChiTiet = $db->prepare("
@@ -96,8 +96,8 @@ function luuDonHang(int $nguoiDungId, array $gioHang, string $ghiChu = ''): int 
         foreach ($matHang as $id => $sl) {
             $ga = $mapGiaoAn[$id];
 
-            // Trừ tồn kho có điều kiện WHERE ton_kho >= :sl (chống Race condition khi 2 người mua cùng lúc - Ca 10)
-            $stTruKho->execute([':sl' => $sl, ':id' => $id]);
+            // Trừ tồn kho có điều kiện WHERE ton_kho >= ? (chống Race condition khi 2 người mua cùng lúc - Ca 10)
+            $stTruKho->execute([$sl, $id, $sl]);
             if ($stTruKho->rowCount() === 0) {
                 // Không cập nhật được dòng nào -> chứng tỏ đã bị người khác mua trước và hết hàng
                 throw new Exception("Giáo án '{$ga['ten']}' vừa hết hàng. Giao dịch đã được hủy.");
