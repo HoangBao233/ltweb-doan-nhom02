@@ -140,5 +140,3 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
         }
     });
     </script>
-</body>
-</html>
