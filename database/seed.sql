@@ -238,7 +238,7 @@ INSERT INTO lien_he (id, ho_ten, email, sdt, noi_dung, anh, ngay_tao) VALUES
 -- 7. NẠP DỮ LIỆU MẪU CHO PHẦN B (CÁC BẢNG tv_...)
 -- ============================================================================
 
--- Bảng tv_luu_but (Trang Bảo - 3120124003)
+-- Bảng tv_luu_but (Trang Bảo - 3120124003 và Trang Tấn - 3120124027)
 INSERT INTO tv_luu_but (id, mssv, ten_khach, loi_nhan, thoi_gian) VALUES
   (1, '3120124003', 'Nguyễn Cảnh Tấn', 'Website thiết kế giao diện rất sáng và đẹp mắt!', '2026-10-16 08:00:00'),
   (2, '3120124003', 'Lê Thị Xuân Châu', 'Hệ thống chạy mượt, chúc dự án đạt điểm cao nhé Bảo.', '2026-10-16 09:30:00'),
@@ -247,7 +247,9 @@ INSERT INTO tv_luu_but (id, mssv, ten_khach, loi_nhan, thoi_gian) VALUES
   (5, '3120124003', 'Bạn học cùng lớp', 'Chúc mừng nhóm trưởng đã hoàn thành đúng tiến độ!', '2026-10-16 14:00:00'),
   (6, '3120124003', 'Trần Thị Thu Hà', 'Giao diện trang cá nhân của bạn Bảo rất sáng sủa và dễ dùng!', '2026-10-17 08:30:00'),
   (7, '3120124003', 'Phan Văn Hùng', 'Chúc Bảo và nhóm hoàn thành xuất sắc đồ án Thiết kế Web!', '2026-10-18 10:00:00'),
-  (8, '3120124003', 'Võ Hoàng Nam', 'Slide bài giảng và học liệu chia sẻ rất bổ ích cho sinh viên.', '2026-10-19 15:45:00');
+  (8, '3120124003', 'Võ Hoàng Nam', 'Slide bài giảng và học liệu chia sẻ rất bổ ích cho sinh viên.', '2026-10-19 15:45:00'),
+  (9, '3120124027', 'Lê Hoàng Bảo', 'Trang cá nhân của Tấn trình bày kỹ năng và dự án rất ấn tượng!', '2026-10-20 09:15:00'),
+  (10, '3120124027', 'Lê Thị Xuân Châu', 'Biểu đồ lượt xem cập nhật rất trực quan, làm tốt lắm Tấn!', '2026-10-21 14:30:00');
 
 -- Bảng tv_luot_xem (Trang Tấn - 3120124027): Thống kê 7 ngày gần nhất
 INSERT INTO tv_luot_xem (mssv, ngay, so_luot) VALUES
