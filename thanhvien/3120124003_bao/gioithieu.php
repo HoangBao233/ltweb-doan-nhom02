@@ -31,7 +31,7 @@ $stTV->execute([MSSV_BAO]);
 $thongTinTV = $stTV->fetch();
 
 $userHienTai = nguoiDung();
-$laChuTrang  = ($userHienTai !== null) && ((int)($userHienTai['id'] ?? 0) === (int)($thongTinTV['nguoi_dung_id'] ?? 0));
+$laChuTrang  = ($userHienTai !== null) && !empty($thongTinTV['nguoi_dung_id']) && ((int)($userHienTai['id'] ?? 0) === (int)$thongTinTV['nguoi_dung_id']);
 
 // ============================================================================
 // 2. XỬ LÝ CÁC YÊU CẦU POST (THÊM / XÓA LƯU BÚT, BÌNH CHỌN)
