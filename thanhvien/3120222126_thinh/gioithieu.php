@@ -35,8 +35,9 @@ $tv = $stTv->fetch();
 
 // Tiện ích hỗ trợ kiểm thử nhanh quyền chủ trang (dành cho chấm bài)
 if (isset($_GET['test_login'])) {
+    session_regenerate_id(true);
     if ($_GET['test_login'] === 'thinh') {
-        $_SESSION['uid'] = $tv['nguoi_dung_id'] ?? 7;
+        $_SESSION['uid'] = (int)($tv['nguoi_dung_id'] ?? 7);
     } elseif ($_GET['test_login'] === 'khach') {
         $_SESSION['uid'] = 2; // tài khoản học viên (không phải chủ trang)
     } elseif ($_GET['test_login'] === 'logout') {
@@ -47,7 +48,7 @@ if (isset($_GET['test_login'])) {
 
 // Kiểm tra quyền chủ trang ở máy chủ
 $ndHienTai  = nguoiDung();
-$laChuTrang = ($ndHienTai && (int)($ndHienTai['id'] ?? 0) === (int)($tv['nguoi_dung_id'] ?? 7));
+$laChuTrang = ($ndHienTai !== null) && !empty($tv['nguoi_dung_id']) && ((int)($ndHienTai['id'] ?? 0) === (int)$tv['nguoi_dung_id']);
 
 // ============================================================================
 // CHỨC NĂNG PHP 1 (BTN5): MÁY TÍNH ĐIỂM TỔNG KẾT MÔN HỌC & QUY ĐỔI GPA
