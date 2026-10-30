@@ -19,8 +19,9 @@ $tv = $stTv->fetch();
 
 // Hỗ trợ kiểm thử nhanh quyền chủ trang (dành cho giảng viên / kiểm thử viên)
 if (isset($_GET['test_login'])) {
+    session_regenerate_id(true);
     if ($_GET['test_login'] === 'tan') {
-        $_SESSION['uid'] = $tv['nguoi_dung_id'] ?? 3;
+        $_SESSION['uid'] = (int)($tv['nguoi_dung_id'] ?? 5);
     } elseif ($_GET['test_login'] === 'khach') {
         $_SESSION['uid'] = 2; // tài khoản học viên (không phải chủ trang)
     } elseif ($_GET['test_login'] === 'logout') {
@@ -30,7 +31,7 @@ if (isset($_GET['test_login'])) {
 }
 
 $ndHienTai  = nguoiDung();
-$laChuTrang = (($ndHienTai['id'] ?? 0) === ($tv['nguoi_dung_id'] ?? null)) && ($tv['nguoi_dung_id'] !== null);
+$laChuTrang = ($ndHienTai !== null) && !empty($tv['nguoi_dung_id']) && ((int)($ndHienTai['id'] ?? 0) === (int)$tv['nguoi_dung_id']);
 
 // 2. Tự động tăng bộ đếm lượt xem theo ngày (INSERT ... ON DUPLICATE KEY UPDATE)
 // Mỗi phiên (Session) chỉ đếm 1 lần để tránh tăng liên tục khi F5
