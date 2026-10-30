@@ -244,7 +244,10 @@ INSERT INTO tv_luu_but (id, mssv, ten_khach, loi_nhan, thoi_gian) VALUES
   (2, '3120124003', 'Lê Thị Xuân Châu', 'Hệ thống chạy mượt, chúc dự án đạt điểm cao nhé Bảo.', '2026-10-16 09:30:00'),
   (3, '3120124003', 'Nguyễn Tiến Thịnh', 'Các chức năng phân quyền và giỏ hàng rất ổn định.', '2026-10-16 10:15:00'),
   (4, '3120124003', 'Thầy H.', 'Nhóm triển khai tốt các yêu cầu của Bài tập 6.', '2026-10-16 11:00:00'),
-  (5, '3120124003', 'Bạn học cùng lớp', 'Chúc mừng nhóm trưởng đã hoàn thành đúng tiến độ!', '2026-10-16 14:00:00');
+  (5, '3120124003', 'Bạn học cùng lớp', 'Chúc mừng nhóm trưởng đã hoàn thành đúng tiến độ!', '2026-10-16 14:00:00'),
+  (6, '3120124003', 'Trần Thị Thu Hà', 'Giao diện trang cá nhân của bạn Bảo rất sáng sủa và dễ dùng!', '2026-10-17 08:30:00'),
+  (7, '3120124003', 'Phan Văn Hùng', 'Chúc Bảo và nhóm hoàn thành xuất sắc đồ án Thiết kế Web!', '2026-10-18 10:00:00'),
+  (8, '3120124003', 'Võ Hoàng Nam', 'Slide bài giảng và học liệu chia sẻ rất bổ ích cho sinh viên.', '2026-10-19 15:45:00');
 
 -- Bảng tv_luot_xem (Trang Tấn - 3120124027): Thống kê 7 ngày gần nhất
 INSERT INTO tv_luot_xem (mssv, ngay, so_luot) VALUES
