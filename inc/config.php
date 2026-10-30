@@ -19,7 +19,8 @@ define('STORAGE_DIR', ROOT_DIR . 'storage/');
 define('UPLOADS_DIR', ROOT_DIR . 'uploads/');
 
 // Môi trường ('dev' để hiện lỗi, đổi thành 'prod' khi nộp bài)
-const MOI_TRUONG = 'prod';
+// Nop bai voi MOI_TRUONG = 'dev' theo dung yeu cau de bai BTN6
+const MOI_TRUONG = 'dev';
 
 // Bật tắt báo lỗi theo môi trường
 error_reporting(E_ALL);
