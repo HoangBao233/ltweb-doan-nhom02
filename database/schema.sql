@@ -144,7 +144,7 @@ CREATE TABLE tv_luot_xem (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Bảng riêng của Lê Thị Xuân Châu (3120124006): Quản lý danh sách dự án cá nhân
--- B?ng ri�ng c?a Nguy?n C?nh T?n (3120124027): D? �n c� nh�n v� h?c li?u ti�u bi?u
+-- Bảng riêng của Nguyễn Cảnh Tấn (3120124027): Dự án cá nhân và học liệu tiêu biểu bi?u
 CREATE TABLE tv_du_an_tan (
   id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   mssv          CHAR(10) NOT NULL,
