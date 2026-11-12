@@ -77,51 +77,51 @@ require_once 'inc/header.php';
 
 <main class="trang__chinh">
     <h1 class="can-giua-chu">Danh sách giáo án trong giỏ hàng</h1>
-    <p class="can-giua-chu" style="color: #666; margin-bottom: 2rem;">
+    <p class="can-giua-chu gio-hang__mo-ta">
         Trang quản lý các tài liệu bạn dự định tải xuống hoặc đặt mua. 
         Bạn đang có <strong><?= count($dsGiaoAn) ?></strong> giáo án trong giỏ hàng.
     </p>
 
     <?php if ($thongBao !== ''): ?>
-        <div role="status" style="max-width: 1000px; margin: 0 auto 1.25rem; background: #e8f5e9; border: 1px solid #4caf50; border-radius: 8px; padding: 0.9rem 1.25rem; color: #2e7d32;">
+        <div role="status" class="hop-thong-bao hop-thong-bao--thanh-cong hop-thong-bao--rong">
             <?= e($thongBao) ?>
         </div>
     <?php endif; ?>
 
     <?php if ($loi !== ''): ?>
-        <div role="alert" style="max-width: 1000px; margin: 0 auto 1.25rem; background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 0.9rem 1.25rem; color: #c0392b;">
+        <div role="alert" class="hop-thong-bao hop-thong-bao--loi hop-thong-bao--rong">
             <?= e($loi) ?>
         </div>
     <?php endif; ?>
 
     <?php if (empty($dsGiaoAn)): ?>
-        <div style="max-width: 800px; margin: 0 auto; padding: 2rem; background: var(--nen-phu, #f9f9f9); border-radius: 8px; text-align: center; border: 1px dashed var(--vien, #ccc);">
-            <p style="font-size: 1.1rem; color: #555; margin-bottom: 1.5rem;">Hiện tại chưa có giáo án nào trong giỏ hàng của bạn.</p>
-            <a href="kho-hoc-lieu.php" class="nut-thao-tac nut-thao-tac--xem" style="display: inline-block; text-decoration: none;">Khám phá Kho học liệu ngay</a>
+        <div class="gio-hang__rong">
+            <p class="gio-hang__rong-chu">Hiện tại chưa có giáo án nào trong giỏ hàng của bạn.</p>
+            <a href="kho-hoc-lieu.php" class="nut-thao-tac nut-thao-tac--xem gio-hang__rong-nut">Khám phá Kho học liệu ngay</a>
         </div>
     <?php else: ?>
-        <div style="max-width: 1050px; margin: 0 auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-                <a href="kho-hoc-lieu.php" style="text-decoration: none; color: var(--mau-chinh); font-weight: bold;">&larr; Tiếp tục chọn thêm giáo án</a>
+        <div class="gio-hang__khung">
+            <div class="gio-hang__thanh-cong-cu">
+                <a href="kho-hoc-lieu.php" class="gio-hang__tiep-tuc">&larr; Tiếp tục chọn thêm giáo án</a>
                 <form action="gio-hang.php" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xoá tất cả giáo án khỏi giỏ hàng?');">
                     <input type="hidden" name="action" value="xoa_het">
-                    <button type="submit" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">
+                    <button type="submit" class="gio-hang__nut-xoa-het">
                         Xoá tất cả
                     </button>
                 </form>
             </div>
             
             <div class="khung-cuon-bang">
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+                <table class="gio-hang__bang">
                     <thead>
-                        <tr style="background: var(--nen-phu, #f4f6f8); border-bottom: 2px solid #ddd;">
-                            <th style="padding: 1rem; text-align: left;">Giáo án</th>
-                            <th style="padding: 1rem; text-align: left;">Cấp học</th>
-                            <th style="padding: 1rem; text-align: center;">Tồn kho</th>
-                            <th style="padding: 1rem; text-align: right;">Đơn giá</th>
-                            <th style="padding: 1rem; text-align: center;">Số lượng</th>
-                            <th style="padding: 1rem; text-align: right;">Thành tiền</th>
-                            <th style="padding: 1rem; text-align: center;">Thao tác</th>
+                        <tr>
+                            <th class="gio-hang__o-trai">Giáo án</th>
+                            <th class="gio-hang__o-trai">Cấp học</th>
+                            <th class="gio-hang__o-giua">Tồn kho</th>
+                            <th class="gio-hang__o-phai">Đơn giá</th>
+                            <th class="gio-hang__o-giua">Số lượng</th>
+                            <th class="gio-hang__o-phai">Thành tiền</th>
+                            <th class="gio-hang__o-giua">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -129,43 +129,43 @@ require_once 'inc/header.php';
                             $sl = max(1, $dsLuu->soLuong($ga->id));
                             $thanhTien = $ga->gia * $sl;
                         ?>
-                            <tr style="border-bottom: 1px solid #ddd;">
-                                <td style="padding: 1rem;">
-                                    <a href="chi-tiet-giao-an.php?id=<?= $ga->id ?>" style="font-weight: bold; text-decoration: none; color: var(--mau-chinh);">
+                            <tr>
+                                <td>
+                                    <a href="chi-tiet-giao-an.php?id=<?= $ga->id ?>" class="gio-hang__ten-link">
                                         <?= e($ga->ten) ?>
                                     </a>
                                 </td>
-                                <td style="padding: 1rem;">
+                                <td>
                                     <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : ($ga->cap_hoc === 'THPT' ? 'nhan-nho--cam' : 'nhan-nho--tim') ?>">
                                         <?= e($ga->cap_hoc) ?>
                                     </span>
                                 </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <?= $ga->ton_kho > 0 ? "Còn {$ga->ton_kho}" : '<strong style="color: red;">Hết hàng</strong>' ?>
+                                <td class="gio-hang__o-giua">
+                                    <?= $ga->ton_kho > 0 ? "Còn {$ga->ton_kho}" : '<strong class="gio-hang__het-hang">Hết hàng</strong>' ?>
                                 </td>
-                                <td style="padding: 1rem; text-align: right; color: var(--mau-chinh, #004085); font-weight: 600;">
+                                <td class="gio-hang__o-phai gio-hang__don-gia">
                                     <?= $ga->gia === 0 ? 'Miễn phí' : vnd($ga->gia) ?>
                                 </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <form action="gio-hang.php" method="POST" style="margin: 0; display: inline-flex; align-items: center; gap: 0.35rem; justify-content: center;">
+                                <td class="gio-hang__o-giua">
+                                    <form action="gio-hang.php" method="POST" class="gio-hang__form-sl">
                                         <input type="hidden" name="action" value="cap_nhat">
                                         <input type="hidden" name="id" value="<?= $ga->id ?>">
                                         <input type="number" name="sl" value="<?= $sl ?>" min="1" max="<?= max(1, $ga->ton_kho) ?>"
                                                aria-label="Số lượng cho <?= e($ga->ten) ?>"
-                                               style="width: 60px; padding: 0.3rem; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center;">
-                                        <button type="submit" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 0.3rem 0.55rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                                               class="gio-hang__input-sl">
+                                        <button type="submit" class="gio-hang__nut-cap-nhat">
                                             Cập nhật
                                         </button>
                                     </form>
                                 </td>
-                                <td style="padding: 1rem; text-align: right; color: var(--mau-nhan, #e65100); font-weight: bold;">
+                                <td class="gio-hang__o-phai gio-hang__thanh-tien">
                                     <?= $thanhTien === 0 ? 'Miễn phí' : vnd($thanhTien) ?>
                                 </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <form action="gio-hang.php" method="POST" style="margin: 0; display: inline-block;">
+                                <td class="gio-hang__o-giua">
+                                    <form action="gio-hang.php" method="POST" class="gio-hang__form-xoa">
                                         <input type="hidden" name="action" value="xoa">
                                         <input type="hidden" name="id" value="<?= $ga->id ?>">
-                                        <button type="submit" style="background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 0.35rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.85rem;" title="Xoá mục này">
+                                        <button type="submit" class="gio-hang__nut-xoa" title="Xoá mục này">
                                             Xoá
                                         </button>
                                     </form>
@@ -174,13 +174,13 @@ require_once 'inc/header.php';
                         <?php endforeach; ?>
                     </tbody>
                     <tfoot>
-                        <tr style="background: #e9ecef; font-weight: bold;">
-                            <td colspan="5" style="padding: 1rem; text-align: right; font-size: 1.05rem;">Tổng cộng thanh toán:</td>
-                            <td style="padding: 1rem; text-align: right; color: #d32f2f; font-size: 1.25rem;">
+                        <tr class="gio-hang__hang-tong">
+                            <td colspan="5" class="gio-hang__o-phai gio-hang__nhan-tong">Tổng cộng thanh toán:</td>
+                            <td class="gio-hang__o-phai gio-hang__gia-tong">
                                 <?= vnd($tongTien) ?>
                             </td>
-                            <td style="padding: 1rem; text-align: center;">
-                                <a href="dat-hang.php" class="nut-thao-tac nut-thao-tac--xem" style="text-decoration: none; padding: 0.5rem 1rem; display: inline-block; white-space: nowrap;">
+                            <td class="gio-hang__o-giua">
+                                <a href="dat-hang.php" class="nut-thao-tac nut-thao-tac--xem gio-hang__nut-dat-hang">
                                     Đặt hàng ngay &rarr;
                                 </a>
                             </td>

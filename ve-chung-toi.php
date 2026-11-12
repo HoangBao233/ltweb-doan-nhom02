@@ -128,11 +128,11 @@ require_once 'inc/header.php';
         </ul>
 
         <!-- Form Liên hệ -->
-        <section class="phan-lien-he" style="max-width: 600px; margin: 2rem auto; padding: 1.5rem; background: var(--nen-phu, #f9f9f9); border: 1px solid var(--vien, #ddd); border-radius: 8px;">
+        <section class="phan-lien-he phan-lien-he--hop">
             <h2 class="can-giua-chu">Liên hệ với nhóm phát triển</h2>
 
             <?php if ($flash): ?>
-                <div role="alert" style="background: #e8f5e9; color: #2e7d32; padding: 1rem; border-radius: 6px; text-align: center; margin-bottom: 1rem;">
+                <div role="alert" class="hop-thong-bao hop-thong-bao--thanh-cong hop-thong-bao--trung-tam">
                     <?= e($flash['message']) ?>
                 </div>
             <?php endif; ?>
@@ -143,52 +143,46 @@ require_once 'inc/header.php';
                 <div class="bieu-mau__nhom">
                     <label for="hoten">Họ và tên <span class="bat-buoc">*</span></label>
                     <input type="text" id="hoten" name="hoten"
-                           class="bieu-mau__o-nhap"
-                           style="width: 100%; padding: 0.5rem; border: 1px solid <?= isset($loi['hoten']) ? 'red' : '#ccc' ?>; border-radius: 4px;"
+                           class="bieu-mau__o-nhap bieu-mau__o-nhap--gon <?= isset($loi['hoten']) ? 'bieu-mau__o-nhap--loi' : '' ?>"
                            value="<?= e($du['hoten']) ?>"
                            required minlength="2">
-                    <span class="bieu-mau__loi" style="color: red; font-size: 0.9rem; margin-top: 0.25rem; display: block;"><?= e($loi['hoten'] ?? '') ?></span>
+                    <span class="bieu-mau__loi"><?= e($loi['hoten'] ?? '') ?></span>
                 </div>
 
-                <div class="bieu-mau__nhom" style="margin-top: 1rem;">
+                <div class="bieu-mau__nhom bieu-mau__nhom--cach">
                     <label for="email">Email <span class="bat-buoc">*</span></label>
                     <input type="email" id="email" name="email"
-                           class="bieu-mau__o-nhap"
-                           style="width: 100%; padding: 0.5rem; border: 1px solid <?= isset($loi['email']) ? 'red' : '#ccc' ?>; border-radius: 4px;"
+                           class="bieu-mau__o-nhap bieu-mau__o-nhap--gon <?= isset($loi['email']) ? 'bieu-mau__o-nhap--loi' : '' ?>"
                            value="<?= e($du['email']) ?>"
                            required>
-                    <span class="bieu-mau__loi" style="color: red; font-size: 0.9rem; margin-top: 0.25rem; display: block;"><?= e($loi['email'] ?? '') ?></span>
+                    <span class="bieu-mau__loi"><?= e($loi['email'] ?? '') ?></span>
                 </div>
 
-                <div class="bieu-mau__nhom" style="margin-top: 1rem;">
+                <div class="bieu-mau__nhom bieu-mau__nhom--cach">
                     <label for="sdt">Số điện thoại <span class="bat-buoc">*</span></label>
                     <input type="tel" id="sdt" name="sdt"
-                           class="bieu-mau__o-nhap"
-                           style="width: 100%; padding: 0.5rem; border: 1px solid <?= isset($loi['sdt']) ? 'red' : '#ccc' ?>; border-radius: 4px;"
+                           class="bieu-mau__o-nhap bieu-mau__o-nhap--gon <?= isset($loi['sdt']) ? 'bieu-mau__o-nhap--loi' : '' ?>"
                            value="<?= e($du['sdt']) ?>"
                            required pattern="[0-9]{9,11}">
-                    <span class="bieu-mau__loi" style="color: red; font-size: 0.9rem; margin-top: 0.25rem; display: block;"><?= e($loi['sdt'] ?? '') ?></span>
+                    <span class="bieu-mau__loi"><?= e($loi['sdt'] ?? '') ?></span>
                 </div>
 
-                <div class="bieu-mau__nhom" style="margin-top: 1rem;">
+                <div class="bieu-mau__nhom bieu-mau__nhom--cach">
                     <label for="noidung">Tin nhắn / Nội dung <span class="bat-buoc">*</span></label>
                     <textarea id="noidung" name="noidung"
-                              class="bieu-mau__o-nhap" rows="4"
-                              style="width: 100%; padding: 0.5rem; border: 1px solid <?= isset($loi['noidung']) ? 'red' : '#ccc' ?>; border-radius: 4px;"
+                              class="bieu-mau__o-nhap bieu-mau__o-nhap--gon <?= isset($loi['noidung']) ? 'bieu-mau__o-nhap--loi' : '' ?>" rows="4"
                               required minlength="10"><?= e($du['noidung']) ?></textarea>
-                    <span class="bieu-mau__loi" style="color: red; font-size: 0.9rem; margin-top: 0.25rem; display: block;"><?= e($loi['noidung'] ?? '') ?></span>
+                    <span class="bieu-mau__loi"><?= e($loi['noidung'] ?? '') ?></span>
                 </div>
 
-                <div class="bieu-mau__nhom" style="margin-top: 1rem;">
+                <div class="bieu-mau__nhom bieu-mau__nhom--cach">
                     <label for="anh">Hình ảnh đính kèm (nếu có)</label>
                     <input type="file" id="anh" name="anh" accept="image/jpeg,image/png,image/webp"
-                           class="bieu-mau__o-nhap"
-                           style="width: 100%; padding: 0.5rem; border: 1px solid <?= isset($loi['anh']) ? 'red' : '#ccc' ?>; border-radius: 4px;">
-                    <span class="bieu-mau__loi" style="color: red; font-size: 0.9rem; margin-top: 0.25rem; display: block;"><?= e($loi['anh'] ?? '') ?></span>
+                           class="bieu-mau__o-nhap bieu-mau__o-nhap--gon <?= isset($loi['anh']) ? 'bieu-mau__o-nhap--loi' : '' ?>">
+                    <span class="bieu-mau__loi"><?= e($loi['anh'] ?? '') ?></span>
                 </div>
 
-                <button type="submit" id="nut-gui" class="nut-bam"
-                        style="margin-top: 1.5rem; width: 100%; padding: 0.75rem; background: var(--mau-chinh, #004d40); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                <button type="submit" id="nut-gui" class="nut-bam nut-bam--day-du">
                     Gửi tin nhắn
                 </button>
             </form>

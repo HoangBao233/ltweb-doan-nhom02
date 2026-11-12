@@ -33,11 +33,21 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     } else {
         $duoi_hop_le = ['pdf', 'doc', 'docx'];
         $duoi_file   = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $kich_thuoc_mb = $file['size'] / 1024 / 1024;
+        $kich_thuoc_max = 5 * 1024 * 1024;
 
-        if (!in_array($duoi_file, $duoi_hop_le, true)) {
-            $loi['tailieu'] = 'Chỉ chấp nhận file .pdf, .doc, .docx.';
-        } elseif ($kich_thuoc_mb > 5) {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+
+        $cho_phep_mime = [
+            'application/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+        ];
+
+        if (!in_array($duoi_file, $duoi_hop_le, true) || !array_key_exists($mime, $cho_phep_mime)) {
+            $loi['tailieu'] = 'Chỉ chấp nhận tệp .pdf, .doc, .docx hợp lệ.';
+        } elseif ($file['size'] > $kich_thuoc_max) {
             $loi['tailieu'] = 'File quá lớn (tối đa 5 MB).';
         }
     }
@@ -48,8 +58,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             mkdir(UPLOADS_DIR, 0777, true);
         }
 
-        // Tạo tên file duy nhất để tránh ghi đè
-        $ten_file_moi = time() . '_' . preg_replace('/[^a-z0-9._-]/i', '_', $file['name']);
+        // Tạo tên file ngẫu nhiên kèm đuôi từ bảng ánh xạ MIME
+        $ten_file_moi = bin2hex(random_bytes(8)) . '.' . $cho_phep_mime[$mime];
         $duong_dan_luu = UPLOADS_DIR . $ten_file_moi;
 
         if (move_uploaded_file($file['tmp_name'], $duong_dan_luu)) {
@@ -78,7 +88,7 @@ require_once 'inc/header.php';
         <h1 class="phan-lien-he__tieu-de">Biểu mẫu đóng góp học liệu</h1>
 
         <?php if ($thongBaoThanhCong): ?>
-            <div role="alert" style="background: #e8f5e9; color: #2e7d32; padding: 1rem; border-radius: 6px; text-align: center; margin-bottom: 1.5rem; max-width: 600px; margin-inline: auto;">
+            <div role="alert" class="hop-thong-bao hop-thong-bao--thanh-cong hop-thong-bao--trung-tam">
                 <?= e($thongBaoThanhCong) ?>
             </div>
         <?php endif; ?>
@@ -93,7 +103,7 @@ require_once 'inc/header.php';
                     <input class="bieu-mau__o-nhap" type="text" id="hoten" name="hoten"
                            value="<?= e($ho_ten ?? '') ?>" required minlength="5">
                     <?php if (isset($loi['hoten'])): ?>
-                        <span style="color:red; font-size:0.9rem;"><?= e($loi['hoten']) ?></span>
+                        <span class="bieu-mau__loi"><?= e($loi['hoten']) ?></span>
                     <?php endif; ?>
                 </p>
 
@@ -102,7 +112,7 @@ require_once 'inc/header.php';
                     <input class="bieu-mau__o-nhap" type="email" id="email" name="email"
                            value="<?= e($email ?? '') ?>" required>
                     <?php if (isset($loi['email'])): ?>
-                        <span style="color:red; font-size:0.9rem;"><?= e($loi['email']) ?></span>
+                        <span class="bieu-mau__loi"><?= e($loi['email']) ?></span>
                     <?php endif; ?>
                 </p>
 
@@ -113,7 +123,7 @@ require_once 'inc/header.php';
                            pattern="(84|0[35789])+([0-9]{8})"
                            title="Vui lòng nhập số điện thoại Việt Nam hợp lệ">
                     <?php if (isset($loi['sdt'])): ?>
-                        <span style="color:red; font-size:0.9rem;"><?= e($loi['sdt']) ?></span>
+                        <span class="bieu-mau__loi"><?= e($loi['sdt']) ?></span>
                     <?php endif; ?>
                 </p>
 
@@ -122,7 +132,7 @@ require_once 'inc/header.php';
                     <input class="bieu-mau__o-nhap" type="file" id="tailieu" name="tailieu"
                            accept=".pdf,.doc,.docx" required>
                     <?php if (isset($loi['tailieu'])): ?>
-                        <span style="color:red; font-size:0.9rem;"><?= e($loi['tailieu']) ?></span>
+                        <span class="bieu-mau__loi"><?= e($loi['tailieu']) ?></span>
                     <?php endif; ?>
                 </p>
 

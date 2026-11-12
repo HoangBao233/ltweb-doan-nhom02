@@ -23,3 +23,173 @@
     line-height: 1;
   }
 }
+
+.gio-hang__mo-ta {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.gio-hang__rong {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--nen-phu, #f9f9f9);
+  border-radius: 8px;
+  text-align: center;
+  border: 1px dashed var(--vien, #ccc);
+}
+
+.gio-hang__rong-chu {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.gio-hang__rong-nut {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.gio-hang__khung {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.gio-hang__thanh-cong-cu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gio-hang__tiep-tuc {
+  text-decoration: none;
+  color: var(--mau-chinh);
+  font-weight: bold;
+}
+
+.gio-hang__nut-xoa-het {
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.gio-hang__bang {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.gio-hang__bang thead tr {
+  background-color: var(--nen-phu, #f4f6f8);
+  border-bottom: 2px solid #ddd;
+}
+
+.gio-hang__bang th,
+.gio-hang__bang td {
+  padding: 1rem;
+}
+
+.gio-hang__bang tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.gio-hang__o-trai {
+  text-align: left;
+}
+
+.gio-hang__o-giua {
+  text-align: center;
+}
+
+.gio-hang__o-phai {
+  text-align: right;
+}
+
+.gio-hang__ten-link {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--mau-chinh);
+}
+
+.gio-hang__het-hang {
+  color: #c62828;
+}
+
+.gio-hang__don-gia {
+  color: var(--mau-chinh, #004085);
+  font-weight: 600;
+}
+
+.gio-hang__thanh-tien {
+  color: var(--mau-nhan, #e65100);
+  font-weight: bold;
+}
+
+.gio-hang__form-sl {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.gio-hang__input-sl {
+  width: 60px;
+  padding: 0.3rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.gio-hang__nut-cap-nhat {
+  background-color: #e2e8f0;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.gio-hang__form-xoa {
+  margin: 0;
+  display: inline-block;
+}
+
+.gio-hang__nut-xoa {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.gio-hang__hang-tong {
+  background-color: #e9ecef;
+  font-weight: bold;
+}
+
+.gio-hang__nhan-tong {
+  font-size: 1.05rem;
+}
+
+.gio-hang__gia-tong {
+  color: #d32f2f;
+  font-size: 1.25rem;
+}
+
+.gio-hang__nut-dat-hang {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  white-space: nowrap;
+}
