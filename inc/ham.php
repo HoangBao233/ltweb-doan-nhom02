@@ -3,6 +3,12 @@
  * ham.php — Các hàm tiện ích đơn giản
  */
 
+// Làm sạch tham số chuỗi — tránh lỗi TypeError khi người dùng gửi mảng ?q[]=... (Chương 7)
+function chuoi(mixed $v): string
+{
+    return is_string($v) ? $v : '';
+}
+
 // Escape chống XSS
 function e(mixed $str): string {
     return htmlspecialchars((string)$str, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -56,7 +62,6 @@ function traJson(mixed $duLieu, int $maHttp = 200): never {
     echo json_encode($duLieu, JSON_UNESCAPED_UNICODE);
     exit;
 }
-
 
 /**
  * Ghi sự kiện bảo mật vào logs/bao-mat.log (Chương 7, Biện pháp 7)

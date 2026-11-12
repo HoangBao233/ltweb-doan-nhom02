@@ -45,10 +45,11 @@ $diem = [
 $loiDiem = [];
 $ketQuaDiem = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'tinh_diem') {
-    $diem['a1'] = trim($_POST['a1'] ?? '');
-    $diem['a2'] = trim($_POST['a2'] ?? '');
-    $diem['a3'] = trim($_POST['a3'] ?? '');
+$actionPost = chuoi($_POST['action'] ?? '');
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $actionPost === 'tinh_diem') {
+    $diem['a1'] = trim(chuoi($_POST['a1'] ?? ''));
+    $diem['a2'] = trim(chuoi($_POST['a2'] ?? ''));
+    $diem['a3'] = trim(chuoi($_POST['a3'] ?? ''));
 
     // Validate A1
     if ($diem['a1'] === '' || !is_numeric($diem['a1'])) {
@@ -124,9 +125,9 @@ $emailCV = '';
 $loiNhanCV = '';
 $loiCV = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'yeu_cau_cv') {
-    $emailCV   = trim($_POST['email_cv'] ?? '');
-    $loiNhanCV = trim($_POST['loi_nhan'] ?? '');
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && chuoi($_POST['action'] ?? '') === 'yeu_cau_cv') {
+    $emailCV   = trim(chuoi($_POST['email_cv'] ?? ''));
+    $loiNhanCV = trim(chuoi($_POST['loi_nhan'] ?? ''));
 
     if (empty($emailCV)) {
         $loiCV = 'Vui lòng nhập địa chỉ Email của bạn.';
@@ -160,13 +161,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // ============================================================================
 // CHỨC NĂNG CSDL 2: QUẢN LÝ & XÓA YÊU CẦU CV (DÀNH CHO CHỦ TRANG)
 // ============================================================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'xoa_cv') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && chuoi($_POST['action'] ?? '') === 'xoa_cv') {
     if (!$laChuTrang) {
         $_SESSION['flash_cv_loi'] = 'Bạn không có quyền xóa yêu cầu này.';
         chuyen_trang('gioithieu.php#khu-vuc-cv');
     }
 
-    $idXoa = filter_var($_POST['id_cv'] ?? 0, FILTER_VALIDATE_INT);
+    $rawIdXoa = $_POST['id_cv'] ?? 0;
+    $idXoa = is_scalar($rawIdXoa) ? filter_var($rawIdXoa, FILTER_VALIDATE_INT) : 0;
     if ($idXoa && $idXoa > 0) {
         try {
             // Ràng buộc AND mssv = MSSV để không xóa nhầm dữ liệu thành viên khác
@@ -194,9 +196,13 @@ $tongYeuCauCV = (int)$stDemCV->fetchColumn();
 $soDongMoiTrang = 5;
 $tongSoTrangCV  = max(1, (int)ceil($tongYeuCauCV / $soDongMoiTrang));
 
-$trangHienTaiCV = filter_var($_GET['trang_cv'] ?? 1, FILTER_VALIDATE_INT, [
+$rawTrangCV = $_GET['trang_cv'] ?? 1;
+if (!is_scalar($rawTrangCV)) {
+    $rawTrangCV = 1;
+}
+$trangHienTaiCV = filter_var($rawTrangCV, FILTER_VALIDATE_INT, [
     'options' => ['min_range' => 1, 'default' => 1]
-]);
+]) ?: 1;
 if ($trangHienTaiCV > $tongSoTrangCV) {
     $trangHienTaiCV = $tongSoTrangCV;
 }
