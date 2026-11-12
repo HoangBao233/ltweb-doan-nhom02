@@ -761,3 +761,115 @@ button:focus-visible {
   text-align: center;
   text-decoration: none;
 }
+
+/* -----------------------------------------
+   14. Khung xác thực & Biểu mẫu Đăng nhập / Đăng ký (Phụ trách: Thịnh)
+   ----------------------------------------- */
+.khung-xac-thuc {
+  max-width: 480px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.khung-xac-thuc__tieu-de {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--mau-chinh, #004085);
+}
+
+.thong-bao-thanh-cong {
+  background: #e8f5e9;
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #2e7d32;
+}
+
+.thong-bao-loi {
+  background: #fff3f3;
+  border: 1px solid #e74c3c;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #c0392b;
+}
+
+.bieu-mau-xac-thuc {
+  background: #ffffff;
+  border: 1px solid var(--vien, #dddddd);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.bieu-mau-xac-thuc__nhom {
+  margin-bottom: 1.25rem;
+}
+
+.bieu-mau-xac-thuc__nhom--cuoi {
+  margin-bottom: 1.5rem;
+}
+
+.bieu-mau-xac-thuc__nhan {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333333;
+}
+
+.bieu-mau-xac-thuc__bat-buoc {
+  color: #e74c3c;
+}
+
+.bieu-mau-xac-thuc__o-nhap {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.bieu-mau-xac-thuc__o-nhap:focus {
+  border-color: var(--mau-chinh, #007bff);
+  outline: none;
+}
+
+.bieu-mau-xac-thuc__nut-gui {
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1.05rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.bieu-mau-xac-thuc__chuyen-trang {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555555;
+}
+
+.bieu-mau-xac-thuc__lien-ket {
+  color: var(--mau-chinh, #007bff);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hop-tai-khoan-thu {
+  margin-top: 2rem;
+  background: #f8f9fa;
+  border: 1px dashed #ced4da;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: #666666;
+}
+
+.hop-tai-khoan-thu__danh-sach {
+  margin: 0.5rem 0 0 1.25rem;
+  padding: 0;
+}
