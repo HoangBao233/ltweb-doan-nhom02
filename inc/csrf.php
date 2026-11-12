@@ -32,3 +32,4 @@ function csrfHopLe(): bool
     $gui = $_POST['csrf'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
     return is_string($gui) && hash_equals(csrfToken(), $gui);
 }
+
