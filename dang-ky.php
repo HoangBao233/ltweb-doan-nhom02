@@ -2,10 +2,11 @@
 /**
  * dang-ky.php — Trang đăng ký tài khoản khách hàng mới
  * Đồ án Lập trình Web - Nhóm 02
- * Phụ trách: Nguyễn Tiến Thịnh (MSSV: 3120222126) — Chức năng 4
+ * Phụ trách: Nguyễn Tiến Thịnh (MSSV: 3120222126) — Chức năng 4 & Biện pháp 1, 3
  */
 
 require_once __DIR__ . '/inc/config.php';
+require_once __DIR__ . '/inc/csrf.php';
 
 // Nếu đã đăng nhập thì chuyển về trang chủ
 if (daDangNhap()) {
@@ -16,12 +17,12 @@ if (daDangNhap()) {
 $loi = [];
 $loiChung = '';
 
-$hoTenNhap   = trim($_POST['ho_ten'] ?? '');
-$emailNhap   = trim($_POST['email'] ?? '');
+$hoTenNhap   = trim(chuoi($_POST['ho_ten'] ?? ''));
+$emailNhap   = trim(chuoi($_POST['email'] ?? ''));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $matKhauNhap        = $_POST['mat_khau'] ?? '';
-    $xacNhanMatKhauNhap = $_POST['xac_nhan_mat_khau'] ?? '';
+    $matKhauNhap        = chuoi($_POST['mat_khau'] ?? '');
+    $xacNhanMatKhauNhap = chuoi($_POST['xac_nhan_mat_khau'] ?? '');
 
     // 1. Kiểm tra họ tên
     if ($hoTenNhap === '') {
@@ -86,96 +87,94 @@ $trang  = 'dang-ky';
 require_once __DIR__ . '/inc/header.php';
 ?>
 
-    <main class="trang__chinh" style="max-width: 520px; margin: 3rem auto; padding: 0 1rem;">
-        <h1 style="text-align: center; margin-bottom: 0.5rem; color: var(--mau-chinh, #004085);">Đăng ký tài khoản</h1>
-        <p style="text-align: center; color: #555; margin-bottom: 2rem;">Tạo tài khoản để tham gia tải giáo án và lưu bài giảng yêu thích</p>
+    <main class="trang__chinh khung-xac-thuc khung-xac-thuc--rong">
+        <h1 class="khung-xac-thuc__tieu-de">Đăng ký tài khoản</h1>
+        <p class="khung-xac-thuc__mo-ta">Tạo tài khoản để tham gia tải giáo án và lưu bài giảng yêu thích</p>
 
         <?php if ($loiChung !== ''): ?>
-            <div role="alert" aria-live="assertive" style="background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #c0392b;">
+            <div role="alert" aria-live="assertive" class="thong-bao-loi">
                 <?= e($loiChung) ?>
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="dang-ky.php" novalidate
-              style="background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-            
+        <form method="POST" action="dang-ky.php" novalidate class="bieu-mau-xac-thuc">
+            <?= csrfField() ?>
             <!-- Ô Họ và tên -->
-            <div style="margin-bottom: 1.25rem;">
-                <label for="ho-ten" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: #333;">
-                    Họ và tên <span style="color: #e74c3c;" aria-hidden="true">*</span>
+            <div class="bieu-mau-xac-thuc__nhom">
+                <label for="ho-ten" class="bieu-mau-xac-thuc__nhan">
+                    Họ và tên <span class="bieu-mau-xac-thuc__bat-buoc" aria-hidden="true">*</span>
                 </label>
                 <input type="text" id="ho-ten" name="ho_ten"
                        value="<?= e($hoTenNhap) ?>"
                        required autocomplete="name"
                        placeholder="Họ và tên"
                        <?= isset($loi['ho_ten']) ? 'aria-invalid="true" aria-describedby="loi-ho-ten"' : '' ?>
-                       style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['ho_ten']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
+                       class="bieu-mau-xac-thuc__o-nhap <?= isset($loi['ho_ten']) ? 'bieu-mau-xac-thuc__o-nhap--loi' : '' ?>">
                 <?php if (isset($loi['ho_ten'])): ?>
-                    <p id="loi-ho-ten" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
+                    <p id="loi-ho-ten" role="alert" class="bieu-mau-xac-thuc__loi-nhap">
                         <?= e($loi['ho_ten']) ?>
                     </p>
                 <?php endif; ?>
             </div>
 
             <!-- Ô Email -->
-            <div style="margin-bottom: 1.25rem;">
-                <label for="email" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: #333;">
-                    Địa chỉ Email <span style="color: #e74c3c;" aria-hidden="true">*</span>
+            <div class="bieu-mau-xac-thuc__nhom">
+                <label for="email" class="bieu-mau-xac-thuc__nhan">
+                    Địa chỉ Email <span class="bieu-mau-xac-thuc__bat-buoc" aria-hidden="true">*</span>
                 </label>
                 <input type="email" id="email" name="email"
                        value="<?= e($emailNhap) ?>"
                        required autocomplete="email"
                        placeholder="Địa chỉ email"
                        <?= isset($loi['email']) ? 'aria-invalid="true" aria-describedby="loi-email"' : '' ?>
-                       style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['email']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
+                       class="bieu-mau-xac-thuc__o-nhap <?= isset($loi['email']) ? 'bieu-mau-xac-thuc__o-nhap--loi' : '' ?>">
                 <?php if (isset($loi['email'])): ?>
-                    <p id="loi-email" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
+                    <p id="loi-email" role="alert" class="bieu-mau-xac-thuc__loi-nhap">
                         <?= e($loi['email']) ?>
                     </p>
                 <?php endif; ?>
             </div>
 
             <!-- Ô Mật khẩu -->
-            <div style="margin-bottom: 1.25rem;">
-                <label for="mat-khau" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: #333;">
-                    Mật khẩu (tối thiểu 8 ký tự) <span style="color: #e74c3c;" aria-hidden="true">*</span>
+            <div class="bieu-mau-xac-thuc__nhom">
+                <label for="mat-khau" class="bieu-mau-xac-thuc__nhan">
+                    Mật khẩu (tối thiểu 8 ký tự) <span class="bieu-mau-xac-thuc__bat-buoc" aria-hidden="true">*</span>
                 </label>
                 <input type="password" id="mat-khau" name="mat_khau"
                        required autocomplete="new-password"
                        placeholder="Mật khẩu"
                        <?= isset($loi['mat_khau']) ? 'aria-invalid="true" aria-describedby="loi-mat-khau"' : '' ?>
-                       style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['mat_khau']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
+                       class="bieu-mau-xac-thuc__o-nhap <?= isset($loi['mat_khau']) ? 'bieu-mau-xac-thuc__o-nhap--loi' : '' ?>">
                 <?php if (isset($loi['mat_khau'])): ?>
-                    <p id="loi-mat-khau" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
+                    <p id="loi-mat-khau" role="alert" class="bieu-mau-xac-thuc__loi-nhap">
                         <?= e($loi['mat_khau']) ?>
                     </p>
                 <?php endif; ?>
             </div>
 
             <!-- Ô Xác nhận mật khẩu -->
-            <div style="margin-bottom: 1.75rem;">
-                <label for="xac-nhan-mat-khau" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: #333;">
-                    Xác nhận lại mật khẩu <span style="color: #e74c3c;" aria-hidden="true">*</span>
+            <div class="bieu-mau-xac-thuc__nhom--cuoi">
+                <label for="xac-nhan-mat-khau" class="bieu-mau-xac-thuc__nhan">
+                    Xác nhận lại mật khẩu <span class="bieu-mau-xac-thuc__bat-buoc" aria-hidden="true">*</span>
                 </label>
                 <input type="password" id="xac-nhan-mat-khau" name="xac_nhan_mat_khau"
                        required autocomplete="new-password"
                        placeholder="Xác nhận lại mật khẩu"
                        <?= isset($loi['xac_nhan_mat_khau']) ? 'aria-invalid="true" aria-describedby="loi-xac-nhan"' : '' ?>
-                       style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['xac_nhan_mat_khau']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
+                       class="bieu-mau-xac-thuc__o-nhap <?= isset($loi['xac_nhan_mat_khau']) ? 'bieu-mau-xac-thuc__o-nhap--loi' : '' ?>">
                 <?php if (isset($loi['xac_nhan_mat_khau'])): ?>
-                    <p id="loi-xac-nhan" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
+                    <p id="loi-xac-nhan" role="alert" class="bieu-mau-xac-thuc__loi-nhap">
                         <?= e($loi['xac_nhan_mat_khau']) ?>
                     </p>
                 <?php endif; ?>
             </div>
 
-            <button type="submit" class="nut-thao-tac nut-thao-tac--xem"
-                    style="width: 100%; padding: 0.85rem; font-size: 1.05rem; font-weight: bold; border-radius: 6px; cursor: pointer;">
+            <button type="submit" class="nut-thao-tac nut-thao-tac--xem bieu-mau-xac-thuc__nut-gui">
                 Đăng ký tài khoản
             </button>
 
-            <div style="margin-top: 1.5rem; text-align: center; font-size: 0.95rem; color: #555;">
-                Đã có tài khoản? <a href="dang-nhap.php" style="color: var(--mau-chinh, #007bff); font-weight: 600; text-decoration: none;">Đăng nhập</a>
+            <div class="bieu-mau-xac-thuc__chuyen-trang">
+                Đã có tài khoản? <a href="dang-nhap.php" class="bieu-mau-xac-thuc__lien-ket">Đăng nhập</a>
             </div>
         </form>
     </main>

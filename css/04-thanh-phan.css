@@ -873,3 +873,211 @@ button:focus-visible {
   margin: 0.5rem 0 0 1.25rem;
   padding: 0;
 }
+
+.khung-xac-thuc--rong {
+  max-width: 520px;
+}
+
+.khung-xac-thuc__mo-ta {
+  text-align: center;
+  color: #555555;
+  margin-bottom: 2rem;
+}
+
+.bieu-mau-xac-thuc__o-nhap--loi {
+  border-color: #e74c3c !important;
+}
+
+.bieu-mau-xac-thuc__loi-nhap {
+  color: #c0392b;
+  font-size: 0.875rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+}
+
+/* -----------------------------------------
+   15. Giao diện Đặt hàng & Quản lý đơn hàng (Phụ trách: Thịnh & Bảo)
+   ----------------------------------------- */
+.khung-don-hang {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.khung-don-hang--rong {
+  max-width: 1000px;
+}
+
+.khung-don-hang__tieu-de {
+  color: var(--mau-chinh, #004085);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.khung-don-hang__tieu-de--trai {
+  text-align: left;
+  margin: 0;
+}
+
+.khung-don-hang__mo-ta {
+  text-align: center;
+  color: #666666;
+  margin-bottom: 2rem;
+}
+
+.khung-don-hang__mo-ta--trai {
+  text-align: left;
+}
+
+.khung-don-hang__thanh-tieu-de {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.the-trang-thong-tin {
+  background: #ffffff;
+  border: 1px solid var(--vien, #dddddd);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.the-trang-thong-tin__tieu-de {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 0.5rem;
+  color: #333333;
+}
+
+.luoi-hai-cot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.chu-nhan-phu {
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.chu-gia-tri {
+  margin: 0.25rem 0 0 0;
+  font-weight: bold;
+}
+
+.bang-du-lieu {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bang-du-lieu th {
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.bang-du-lieu td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.bang-du-lieu tfoot tr {
+  background: #fdfdfe;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-top: 2px solid #dee2e6;
+}
+
+.bang-du-lieu tfoot td {
+  padding: 1rem;
+}
+
+.chu-tong-tien {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.chu-can-trai {
+  text-align: left;
+}
+
+.chu-can-giua {
+  text-align: center;
+}
+
+.chu-can-phai {
+  text-align: right;
+}
+
+.form-cap-nhat-trang-thai {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.o-chon-trang-thai {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #cccccc;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.khung-phan-cach-form {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #ced4da;
+}
+
+.nhan-trang-thai {
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.nhan-trang-thai--hoan-tat {
+  background: #d4edda;
+  color: #155724;
+}
+
+.nhan-trang-thai--da-huy {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.nhan-trang-thai--cho-duyet {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.hop-trong-don-hang {
+  background: #f8f9fa;
+  border: 1px dashed #ced4da;
+  border-radius: 12px;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.hop-trong-don-hang__chu {
+  font-size: 1.1rem;
+  color: #666666;
+  margin-bottom: 1.5rem;
+}
+
+.khung-chuyen-trang-hang {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

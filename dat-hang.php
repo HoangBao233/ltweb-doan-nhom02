@@ -2,10 +2,11 @@
 /**
  * dat-hang.php — Trang xác nhận và xử lý đặt hàng / đăng ký tải giáo án
  * Đồ án Lập trình Web - Nhóm 02
- * Phụ trách: Nguyễn Tiến Thịnh (MSSV: 3120222126) & Lê Hoàng Bảo — Chức năng 5
+ * Phụ trách: Nguyễn Tiến Thịnh (MSSV: 3120222126) & Lê Hoàng Bảo — Chức năng 5 & Biện pháp 1, 3
  */
 
 require_once __DIR__ . '/inc/config.php';
+require_once __DIR__ . '/inc/csrf.php';
 require_once __DIR__ . '/inc/don-hang.php';
 
 use App\Services\DanhSachLuu;
@@ -32,7 +33,7 @@ $loiDatHang = '';
 
 // Xử lý gửi đơn hàng (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $ghiChu = trim($_POST['ghi_chu'] ?? '');
+    $ghiChu = trim(chuoi($_POST['ghi_chu'] ?? ''));
 
     try {
         // Thực hiện lưu đơn hàng trong Transaction
@@ -68,42 +69,42 @@ $trang  = 'dat-hang';
 require_once __DIR__ . '/inc/header.php';
 ?>
 
-<main class="trang__chinh" style="max-width: 800px; margin: 3rem auto; padding: 0 1rem;">
-    <h1 style="color: var(--mau-chinh, #004085); margin-bottom: 0.5rem; text-align: center;">Xác nhận đặt giáo án</h1>
-    <p style="text-align: center; color: #666; margin-bottom: 2rem;">Vui lòng kiểm tra lại danh sách học liệu và thông tin người nhận</p>
+<main class="trang__chinh khung-don-hang">
+    <h1 class="khung-don-hang__tieu-de">Xác nhận đặt giáo án</h1>
+    <p class="khung-don-hang__mo-ta">Vui lòng kiểm tra lại danh sách học liệu và thông tin người nhận</p>
 
     <?php if ($loiDatHang !== ''): ?>
-        <div role="alert" aria-live="assertive" style="background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; color: #c0392b;">
+        <div role="alert" aria-live="assertive" class="thong-bao-loi">
             <strong>Không thể hoàn tất đơn hàng:</strong> <?= e($loiDatHang) ?>
         </div>
     <?php endif; ?>
 
-    <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 2rem;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; color: #333;">
+    <div class="the-trang-thong-tin">
+        <h2 class="the-trang-thong-tin__tieu-de">
             Thông tin người đặt
         </h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+        <div class="luoi-hai-cot">
             <div>
-                <span style="color: #666; font-size: 0.9rem;">Họ và tên:</span>
-                <p style="margin: 0.25rem 0 0 0; font-weight: bold;"><?= e($u['ho_ten']) ?></p>
+                <span class="chu-nhan-phu">Họ và tên:</span>
+                <p class="chu-gia-tri"><?= e($u['ho_ten']) ?></p>
             </div>
             <div>
-                <span style="color: #666; font-size: 0.9rem;">Email nhận tài liệu:</span>
-                <p style="margin: 0.25rem 0 0 0; font-weight: bold;"><?= e($u['email']) ?></p>
+                <span class="chu-nhan-phu">Email nhận tài liệu:</span>
+                <p class="chu-gia-tri"><?= e($u['email']) ?></p>
             </div>
         </div>
 
-        <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; color: #333;">
+        <h2 class="the-trang-thong-tin__tieu-de">
             Danh sách giáo án đăng ký tải
         </h2>
-        <div class="khung-cuon-bang" style="overflow-x: auto; margin-bottom: 1.5rem;">
-            <table style="width: 100%; border-collapse: collapse;">
+        <div class="khung-cuon-bang">
+            <table class="bang-du-lieu">
                 <thead>
-                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
-                        <th style="padding: 0.75rem; text-align: left;">Tên giáo án</th>
-                        <th style="padding: 0.75rem; text-align: center;">Số lượng</th>
-                        <th style="padding: 0.75rem; text-align: right;">Đơn giá</th>
-                        <th style="padding: 0.75rem; text-align: right;">Thành tiền</th>
+                    <tr>
+                        <th class="chu-can-trai">Tên giáo án</th>
+                        <th class="chu-can-giua">Số lượng</th>
+                        <th class="chu-can-phai">Đơn giá</th>
+                        <th class="chu-can-phai">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,42 +112,42 @@ require_once __DIR__ . '/inc/header.php';
                         $sl = $gioHang[$ga->id] ?? 1;
                         $thanhTien = $ga->gia * $sl;
                     ?>
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 0.75rem; font-weight: 500;">
+                        <tr>
+                            <td class="chu-can-trai">
                                 <?= e($ga->ten) ?>
-                                <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : 'nhan-nho--cam' ?>" style="font-size: 0.75rem; margin-left: 0.5rem;">
+                                <span class="nhan-nho <?= $ga->cap_hoc === 'THCS' ? 'nhan-nho--xanh' : 'nhan-nho--cam' ?>">
                                     <?= e($ga->cap_hoc) ?>
                                 </span>
                             </td>
-                            <td style="padding: 0.75rem; text-align: center;"><?= $sl ?></td>
-                            <td style="padding: 0.75rem; text-align: right;"><?= $ga->gia === 0 ? 'Miễn phí' : vnd($ga->gia) ?></td>
-                            <td style="padding: 0.75rem; text-align: right; font-weight: bold; color: var(--mau-nhan, #e65100);"><?= vnd($thanhTien) ?></td>
+                            <td class="chu-can-giua"><?= $sl ?></td>
+                            <td class="chu-can-phai"><?= $ga->gia === 0 ? 'Miễn phí' : vnd($ga->gia) ?></td>
+                            <td class="chu-can-phai chu-tong-tien"><?= vnd($thanhTien) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
                 <tfoot>
-                    <tr style="background: #fdfdfe; font-weight: bold; font-size: 1.1rem; border-top: 2px solid #dee2e6;">
-                        <td colspan="3" style="padding: 1rem; text-align: right;">Tổng thanh toán:</td>
-                        <td style="padding: 1rem; text-align: right; color: #d32f2f;"><?= vnd($tongTien) ?></td>
+                    <tr>
+                        <td colspan="3" class="chu-can-phai">Tổng thanh toán:</td>
+                        <td class="chu-can-phai chu-tong-tien"><?= vnd($tongTien) ?></td>
                     </tr>
                 </tfoot>
             </table>
         </div>
 
         <form method="POST" action="dat-hang.php">
-            <div style="margin-bottom: 1.5rem;">
-                <label for="ghi-chu" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #333;">
+            <?= csrfField() ?>
+            <div class="bieu-mau-xac-thuc__nhom--cuoi">
+                <label for="ghi-chu" class="bieu-mau-xac-thuc__nhan">
                     Ghi chú đơn hàng (tuỳ chọn)
                 </label>
                 <textarea id="ghi-chu" name="ghi_chu" rows="3"
                           placeholder="Ví dụ: Xin file Word chỉnh sửa được, hoặc xuất hóa đơn cho nhà trường..."
-                          style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit; font-size: 0.95rem;"></textarea>
+                          class="bieu-mau-xac-thuc__o-nhap"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <a href="gio-hang.php" style="color: #666; text-decoration: none;">&larr; Quay lại giỏ hàng</a>
-                <button type="submit" class="nut-thao-tac nut-thao-tac--xem"
-                        style="padding: 0.85rem 2rem; font-size: 1.05rem; font-weight: bold; border-radius: 6px; cursor: pointer;">
+            <div class="khung-chuyen-trang-hang">
+                <a href="gio-hang.php" class="bieu-mau-xac-thuc__lien-ket">&larr; Quay lại giỏ hàng</a>
+                <button type="submit" class="nut-thao-tac nut-thao-tac--xem">
                     Xác nhận đặt đơn hàng
                 </button>
             </div>
