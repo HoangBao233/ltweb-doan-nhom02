@@ -56,3 +56,25 @@ function traJson(mixed $duLieu, int $maHttp = 200): never {
     echo json_encode($duLieu, JSON_UNESCAPED_UNICODE);
     exit;
 }
+
+
+/**
+ * Ghi sự kiện bảo mật vào logs/bao-mat.log (Chương 7, Biện pháp 7)
+ * Phụ trách: Nguyễn Tiến Thịnh (MSSV: 3120222126)
+ * Mỗi sự kiện được ghi trên một dòng kèm timestamp và JSON ngữ cảnh.
+ * TUYỆT ĐỐI KHÔNG ghi mật khẩu, PHPSESSID hoặc mã CSRF vào log!
+ */
+function ghiLogBaoMat(string $suKien, array $chiTiet = []): void
+{
+    $chiTiet += [
+        'ip'  => $_SERVER['REMOTE_ADDR'] ?? '-',
+        'uid' => $_SESSION['uid'] ?? null,
+    ];
+    $json = json_encode($chiTiet, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $dong = date('Y-m-d H:i:s') . " {$suKien} {$json}";
+    $thuMucLog = __DIR__ . '/../logs';
+    if (!is_dir($thuMucLog)) {
+        mkdir($thuMucLog, 0755, true);
+    }
+    error_log($dong . PHP_EOL, 3, $thuMucLog . '/bao-mat.log');
+}

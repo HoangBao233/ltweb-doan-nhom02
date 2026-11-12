@@ -186,3 +186,20 @@ CREATE TABLE tv_yeu_cau_cv (
   FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
+-- ============================================================================
+-- 9. BẢNG GHI LẠI CÁC LẦN ĐĂNG NHẬP SAI (dang_nhap_sai) — BẢO MẬT CHƯƠNG 7
+-- Phục vụ: Biện pháp 7 — Chống dò mật khẩu Brute-force & Ghi log bảo mật
+-- Phụ trách: Nguyễn Tiến Thịnh (MSSV: 3120222126)
+-- Ràng buộc & Chỉ mục:
+--   - INDEX idx_dang_nhap_sai_email_tg (email, thoi_gian): Tối ưu truy vấn đếm số lần sai
+--     trong 15 phút gần nhất: WHERE email = ? AND thoi_gian > NOW() - INTERVAL 15 MINUTE
+-- ============================================================================
+CREATE TABLE dang_nhap_sai (
+  id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  email     VARCHAR(255) NOT NULL,
+  ip        VARCHAR(45) NOT NULL,
+  thoi_gian DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_dang_nhap_sai_email_tg (email, thoi_gian)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
