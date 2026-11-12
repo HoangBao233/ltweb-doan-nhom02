@@ -7,6 +7,13 @@
 # - Nếu chạy bằng lệnh `php -S localhost:8000` (theo README):
 # @goc = http://localhost:8000
 
+# Điền PHPSESSID từ response của request ### 0 (Set-Cookie) và giá trị trong thẻ <meta name="csrf-token">
+@phpsessid = THAY_BANG_PHPSESSID_SAU_KHI_CHAY_MUC_0
+@csrf = THAY_BANG_MA_CSRF_TRONG_META_TOKEN
+
+### 0. Mở trang chủ để lấy cookie PHPSESSID và mã <meta name="csrf-token">
+GET {{goc}}/index.php
+
 ### 1. Tìm kiếm giáo án hợp lệ → 200 {"du_lieu": [...]}
 GET {{goc}}/api/giao-an.php?q=python
 
@@ -22,36 +29,54 @@ GET {{goc}}/api/giao-an.php?id=abc
 ### 5. Thêm giáo án vào giỏ hàng thành công → 200 {"thanh_cong": true, "so_mon": ...}
 POST {{goc}}/api/gio-hang.php
 Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+X-CSRF-Token: {{csrf}}
 
 {"id": 1, "sl": 1}
 
 ### 6. Xem danh sách giỏ hàng hiện tại qua GET → 200 {"so_mon": ..., "gio_hang": ...}
 GET {{goc}}/api/gio-hang.php
+Cookie: PHPSESSID={{phpsessid}}
 
 ### 7. Thân request sai định dạng JSON → 400 {"loi": "Dữ liệu yêu cầu phải là JSON hợp lệ"}
 POST {{goc}}/api/gio-hang.php
 Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+X-CSRF-Token: {{csrf}}
 
 {id: 1}
 
 ### 8. Số lượng âm → 422 {"loi": "Số lượng phải là số nguyên dương lớn hơn 0"}
 POST {{goc}}/api/gio-hang.php
 Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+X-CSRF-Token: {{csrf}}
 
 {"id": 1, "sl": -3}
 
 ### 9. Thêm mặt hàng không tồn tại vào giỏ → 404 {"loi": "Giáo án không tồn tại"}
 POST {{goc}}/api/gio-hang.php
 Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+X-CSRF-Token: {{csrf}}
 
 {"id": 999999, "sl": 1}
 
 ### 10. Thêm số lượng vượt quá tồn kho → 422 {"loi": "Số lượng yêu cầu vượt quá tồn kho..."}
 POST {{goc}}/api/gio-hang.php
 Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+X-CSRF-Token: {{csrf}}
 
 {"id": 2, "sl": 99999}
 
 ### 11. Sai phương thức HTTP → 405 Method Not Allowed (Kèm header Allow: GET, POST)
 DELETE {{goc}}/api/gio-hang.php
+
+### 12. POST thiếu X-CSRF-Token → 403 JSON (kiểm tra sau khi bật chặn CSRF trong inc/config.php)
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+
+{"id": 1, "sl": 1}
 

@@ -50,6 +50,10 @@ function hienThongBao(noiDung, loai = 'thanh-cong') {
     }, 2500);
 }
 
+function layCsrfToken() {
+    return document.querySelector('meta[name="csrf-token"]')?.content || '';
+}
+
 function khoiTaoGioHangFetch() {
     // 1. Bắt sự kiện trên các form lưu giáo án (nếu có trên trang)
     document.addEventListener('submit', async (e) => {
@@ -67,7 +71,10 @@ function khoiTaoGioHangFetch() {
         try {
             const res = await fetch('api/gio-hang.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': layCsrfToken()
+                },
                 body: JSON.stringify({ id, sl })
             });
             const data = await res.json();
@@ -94,7 +101,10 @@ function khoiTaoGioHangFetch() {
         try {
             const res = await fetch('api/gio-hang.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': layCsrfToken()
+                },
                 body: JSON.stringify({ id, sl: 1 })
             });
             const data = await res.json();
