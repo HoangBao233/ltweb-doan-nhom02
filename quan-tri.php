@@ -56,8 +56,16 @@ require __DIR__ . '/inc/header.php';
 
 <main class="trang__chinh" style="max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem;">
     <!-- Thanh tiêu đề quản trị -->
-    <div style="margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
         <h1 style="margin: 0; font-size: 1.75rem; color: var(--mau-chinh, #004085);">Trang Quản trị</h1>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="don-hang.php" class="nut-thao-tac" style="background: #0f766e; color: #fff; padding: 0.55rem 1.1rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
+                Quản lý đơn hàng
+            </a>
+            <a href="them-giao-an.php" class="nut-thao-tac" style="background: #0284c7; color: #fff; padding: 0.55rem 1.1rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
+                + Thêm giáo án mới
+            </a>
+        </div>
     </div>
 
     <!-- Thông báo Flash (Thành công / Thất bại) -->
@@ -113,7 +121,7 @@ require __DIR__ . '/inc/header.php';
                                 </td>
                                 <td style="padding: 0.75rem 0.5rem; text-align: center;">
                                     <?php if (!empty($ga['hinh_anh'])): ?>
-                                        <img src="uploads/<?= e($ga['hinh_anh']) ?>" 
+                                        <img src="<?= e(anhGiaoAn($ga['hinh_anh'])) ?>" 
                                              alt="<?= e($ga['ten']) ?>" 
                                              style="width: 60px; height: 42px; object-fit: cover; border-radius: 4px; border: 1px solid #e2e8f0;">
                                     <?php else: ?>
@@ -226,8 +234,9 @@ require __DIR__ . '/inc/header.php';
                                 </td>
                                 <td style="padding: 0.75rem 0.5rem; text-align: center;">
                                     <?php if (!empty($lh['anh'])): ?>
-                                        <a href="uploads/<?= e($lh['anh']) ?>" target="_blank" rel="noopener noreferrer">
-                                            <img src="uploads/<?= e($lh['anh']) ?>"
+                                        <?php $srcAnhLh = anhGiaoAn($lh['anh']); ?>
+                                        <a href="<?= e($srcAnhLh) ?>" target="_blank" rel="noopener noreferrer">
+                                            <img src="<?= e($srcAnhLh) ?>"
                                                  alt="Đính kèm từ <?= e($lh['ho_ten'] ?? '') ?>"
                                                  style="max-width: 80px; max-height: 55px; border-radius: 4px; object-fit: cover; border: 1px solid #e2e8f0;">
                                         </a>

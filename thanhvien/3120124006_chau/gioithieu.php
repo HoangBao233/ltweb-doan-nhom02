@@ -131,20 +131,6 @@ if (function_exists('db')) {
         $stTv->execute([MSSV_CHAU]);
         $tv = $stTv->fetch();
 
-        // Tham số URL hỗ trợ kiểm thử nhanh quyền chủ trang (dành cho giảng viên / kiểm thử viên)
-        if (isset($_GET['test_login'])) {
-            session_regenerate_id(true);
-            if ($_GET['test_login'] === 'chau') {
-                $_SESSION['uid'] = (int)($tv['nguoi_dung_id'] ?? 6);
-            } elseif ($_GET['test_login'] === 'khach') {
-                $_SESSION['uid'] = 2; // tài khoản học viên (không phải chủ trang)
-            } elseif ($_GET['test_login'] === 'logout') {
-                unset($_SESSION['uid'], $_SESSION['user'], $_SESSION['user_id']);
-            }
-            header('Location: gioithieu.php');
-            exit;
-        }
-
         // Kiểm tra quyền chủ trang ở máy chủ (chuẩn xác dựa trên uid và CSDL)
         $currentUser = function_exists('nguoiDung') ? nguoiDung() : null;
         $laChuTrang  = ($currentUser !== null) && !empty($tv['nguoi_dung_id']) && ((int)$currentUser['id'] === (int)$tv['nguoi_dung_id']);
@@ -295,9 +281,13 @@ require_once __DIR__ . '/../../inc/header.php';
         <h2 style="margin: 0;">Dự án cá nhân</h2>
         <div>
           <?php if ($laChuTrang): ?>
-            <a href="?test_login=logout" style="font-size: 0.85rem; color: #dc3545; text-decoration: underline;">Đăng xuất</a>
+            <span style="font-size: 0.85rem; color: #155724; font-weight: 600; margin-right: 0.5rem;">[Chủ trang: Lê Thị Xuân Châu]</span>
+            <a href="<?= $goc ?>dang-xuat.php" style="font-size: 0.85rem; color: #dc3545; text-decoration: underline;">Đăng xuất</a>
+          <?php elseif ($currentUser): ?>
+            <span style="font-size: 0.85rem; color: #64748b; margin-right: 0.5rem;">Đang đăng nhập: <?= e($currentUser['ho_ten']) ?> (Khách)</span>
+            <a href="<?= $goc ?>dang-xuat.php" style="font-size: 0.85rem; color: #dc3545; text-decoration: underline;">Đăng xuất</a>
           <?php else: ?>
-            <a href="?test_login=chau" style="font-size: 0.85rem; color: var(--mau-chinh); text-decoration: underline;">Đăng nhập</a>
+            <a href="<?= $goc ?>dang-nhap.php" style="font-size: 0.85rem; color: var(--mau-chinh); text-decoration: underline;">Đăng nhập chủ trang</a>
           <?php endif; ?>
         </div>
       </div>

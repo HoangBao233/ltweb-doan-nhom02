@@ -36,6 +36,7 @@ $menu = [
 if ($daDangNhap) {
     if (($uHienTai['vai_tro'] ?? '') === 'quan_tri') {
         $menu['quan-tri.php'] = 'Quản trị';
+        $menu['don-hang.php'] = 'Đơn hàng';
     } else {
         $menu['don-hang.php'] = 'Đơn hàng';
     }
@@ -78,7 +79,7 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
         <div class="dang-nhap-goc" style="display:flex; align-items:center; gap:0.5rem; white-space:nowrap; flex-wrap:wrap;">
             <?php if ($daDangNhap): ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; color:var(--mau-chinh, #004085);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085);"><?= (($uHienTai['vai_tro'] ?? '') === 'quan_tri') ? 'Quản trị viên' : e($uHienTai['ho_ten'] ?? $_SESSION['user'] ?? '') ?></span>
+                <span style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085);"><?= (($uHienTai['vai_tro'] ?? '') === 'quan_tri') ? 'Quản trị viên' : e($uHienTai['ho_ten'] ?? '') ?></span>
                 <span style="color:#cbd5e1; margin:0 0.15rem;">|</span>
                 <a href="<?= $goc ?>dang-xuat.php" style="font-size:0.9rem; color:#e11d48; text-decoration:none; font-weight:500;">Đăng xuất</a>
             <?php else: ?>

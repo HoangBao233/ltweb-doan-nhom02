@@ -133,6 +133,16 @@ CREATE TABLE tv_luu_but (
   FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Bảng riêng của Lê Hoàng Bảo (3120124003): Khảo sát / bình chọn công nghệ yêu thích
+CREATE TABLE tv_binh_chon (
+  id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  mssv      CHAR(10) NOT NULL,
+  lua_chon  VARCHAR(50) NOT NULL,
+  so_phieu  INT UNSIGNED NOT NULL DEFAULT 0,
+  UNIQUE KEY uk_tv_binh_chon (mssv, lua_chon),
+  FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Bảng riêng của Nguyễn Cảnh Tấn (3120124027): Bộ đếm lượt xem theo ngày (ON DUPLICATE KEY UPDATE)
 CREATE TABLE tv_luot_xem (
   id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

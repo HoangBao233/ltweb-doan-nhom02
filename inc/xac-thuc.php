@@ -22,28 +22,6 @@ function nguoiDung(): ?array {
     }
 
     $uid = $_SESSION['uid'] ?? null;
-    if (!$uid && !empty($_SESSION['user_id'])) {
-        $uid = (int)$_SESSION['user_id'];
-    }
-
-    // Hỗ trợ tương thích ngược nếu còn phiên làm việc cũ
-    if (!$uid && !empty($_SESSION['user'])) {
-        if ($_SESSION['user'] === 'admin') {
-            $uid = 1;
-        } elseif ($_SESSION['user'] === 'lan') {
-            $uid = 2;
-        } elseif ($_SESSION['user'] === 'an') {
-            $uid = 3;
-        } elseif ($_SESSION['user'] === 'bao' || $_SESSION['user'] === '3120124003') {
-            $uid = 4;
-        } elseif ($_SESSION['user'] === 'tan' || $_SESSION['user'] === '3120124027') {
-            $uid = 5;
-        } elseif ($_SESSION['user'] === 'chau' || $_SESSION['user'] === '3120124006') {
-            $uid = 6;
-        } elseif ($_SESSION['user'] === 'thinh' || $_SESSION['user'] === '3120222126') {
-            $uid = 7;
-        }
-    }
 
     if (!$uid) {
         return null;

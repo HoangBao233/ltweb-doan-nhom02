@@ -3,7 +3,7 @@
 // Nhóm 02 — ITeduShare
 namespace App\Models;
 
-class GiaoAn
+class GiaoAn implements \JsonSerializable
 {
     public function __construct(
         public readonly int    $id,
@@ -37,5 +37,29 @@ class GiaoAn
             luot_tai:     (int)($d['luot_tai']     ?? 0),
             ten_danh_muc: (string)($d['ten_danh_muc'] ?? ''),
         );
+    }
+
+    /**
+     * Chỉ xuất các trường công khai khi chuyển sang JSON cho REST API.
+     */
+    public function jsonSerialize(): array
+    {
+        $duongDanAnh = function_exists('anhGiaoAn')
+            ? anhGiaoAn($this->hinh_anh)
+            : ($this->hinh_anh !== '' ? $this->hinh_anh : 'images/banner-trang-chu.jpg');
+
+        return [
+            'id'           => $this->id,
+            'danh_muc_id'  => $this->danh_muc_id,
+            'ten'          => $this->ten,
+            'mo_ta'        => $this->mo_ta,
+            'cap_hoc'      => $this->cap_hoc,
+            'gia'          => $this->gia,
+            'ton_kho'      => $this->ton_kho,
+            'hinh_anh'     => $duongDanAnh,
+            'video_url'    => $this->video_url,
+            'luot_tai'     => $this->luot_tai,
+            'ten_danh_muc' => $this->ten_danh_muc,
+        ];
     }
 }

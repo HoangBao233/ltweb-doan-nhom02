@@ -13,11 +13,27 @@ class DanhSachLuu
         }
     }
 
-    // Thêm một giáo án vào danh sách lưu
-    public function them(int $id): void
+    // Thêm một giáo án vào danh sách lưu (cộng dồn số lượng)
+    public function them(int $id, int $sl = 1): void
     {
-        // Lưu id làm key, giá trị 1 để đánh dấu là đã lưu (giống số lượng trong giỏ hàng)
-        $_SESSION['danh_sach_luu'][$id] = 1;
+        $hienTai = (int)($_SESSION['danh_sach_luu'][$id] ?? 0);
+        $_SESSION['danh_sach_luu'][$id] = $hienTai + max(1, $sl);
+    }
+
+    // Cập nhật số lượng của một giáo án trong danh sách lưu
+    public function capNhat(int $id, int $sl): void
+    {
+        if ($sl <= 0) {
+            unset($_SESSION['danh_sach_luu'][$id]);
+        } else {
+            $_SESSION['danh_sach_luu'][$id] = $sl;
+        }
+    }
+
+    // Lấy số lượng của một giáo án trong giỏ
+    public function soLuong(int $id): int
+    {
+        return (int)($_SESSION['danh_sach_luu'][$id] ?? 0);
     }
 
     // Xoá một giáo án khỏi danh sách

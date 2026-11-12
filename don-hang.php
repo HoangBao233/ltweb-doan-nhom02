@@ -213,11 +213,17 @@ if (isset($_GET['id'])) {
 // ============================================================================
 
 if ($isAdmin) {
-    // Quản trị viên xem tất cả đơn hàng trong hệ thống
+    // Quản trị viên xem tất cả đơn hàng trong hệ thống (kèm JOIN + GROUP BY + SUM)
     $st = db()->query('
-        SELECT dh.*, nd.ho_ten, nd.email 
-        FROM don_hang dh 
-        JOIN nguoi_dung nd ON dh.nguoi_dung_id = nd.id 
+        SELECT dh.id, dh.nguoi_dung_id, dh.tong_tien, dh.trang_thai, dh.ghi_chu, dh.ngay_tao,
+               nd.ho_ten, nd.email,
+               COUNT(ct.giao_an_id) AS so_mon,
+               COALESCE(SUM(ct.so_luong), 0) AS tong_so_luong,
+               COALESCE(SUM(ct.so_luong * ct.don_gia), dh.tong_tien) AS tong_tien_chi_tiet
+        FROM don_hang dh
+        JOIN nguoi_dung nd ON dh.nguoi_dung_id = nd.id
+        LEFT JOIN chi_tiet_don ct ON dh.id = ct.don_hang_id
+        GROUP BY dh.id, dh.nguoi_dung_id, dh.tong_tien, dh.trang_thai, dh.ghi_chu, dh.ngay_tao, nd.ho_ten, nd.email
         ORDER BY dh.id DESC
     ');
     $danhSachDon = $st->fetchAll();
@@ -225,10 +231,16 @@ if ($isAdmin) {
 } else {
     // Khách hàng chỉ xem danh sách đơn hàng của chính mình (WHERE nguoi_dung_id = ?)
     $st = db()->prepare('
-        SELECT dh.*, nd.ho_ten, nd.email 
-        FROM don_hang dh 
-        JOIN nguoi_dung nd ON dh.nguoi_dung_id = nd.id 
-        WHERE dh.nguoi_dung_id = ? 
+        SELECT dh.id, dh.nguoi_dung_id, dh.tong_tien, dh.trang_thai, dh.ghi_chu, dh.ngay_tao,
+               nd.ho_ten, nd.email,
+               COUNT(ct.giao_an_id) AS so_mon,
+               COALESCE(SUM(ct.so_luong), 0) AS tong_so_luong,
+               COALESCE(SUM(ct.so_luong * ct.don_gia), dh.tong_tien) AS tong_tien_chi_tiet
+        FROM don_hang dh
+        JOIN nguoi_dung nd ON dh.nguoi_dung_id = nd.id
+        LEFT JOIN chi_tiet_don ct ON dh.id = ct.don_hang_id
+        WHERE dh.nguoi_dung_id = ?
+        GROUP BY dh.id, dh.nguoi_dung_id, dh.tong_tien, dh.trang_thai, dh.ghi_chu, dh.ngay_tao, nd.ho_ten, nd.email
         ORDER BY dh.id DESC
     ');
     $st->execute([(int)$u['id']]);
@@ -279,6 +291,7 @@ require_once __DIR__ . '/inc/header.php';
                             <th style="padding: 1rem; text-align: left;">Khách hàng</th>
                         <?php endif; ?>
                         <th style="padding: 1rem; text-align: left;">Ngày đặt</th>
+                        <th style="padding: 1rem; text-align: center;">Số mục</th>
                         <th style="padding: 1rem; text-align: right;">Tổng thanh toán</th>
                         <th style="padding: 1rem; text-align: center;">Trạng thái</th>
                         <th style="padding: 1rem; text-align: center;">Thao tác</th>
@@ -299,8 +312,11 @@ require_once __DIR__ . '/inc/header.php';
                             <td style="padding: 1rem; color: #555;">
                                 <?= e($don['ngay_tao']) ?>
                             </td>
+                            <td style="padding: 1rem; text-align: center; color: #334155;">
+                                <?= (int)($don['so_mon'] ?? 0) ?> giáo án (SL: <?= (int)($don['tong_so_luong'] ?? 0) ?>)
+                            </td>
                             <td style="padding: 1rem; text-align: right; font-weight: bold; color: #d32f2f;">
-                                <?= vnd($don['tong_tien']) ?>
+                                <?= vnd($don['tong_tien_chi_tiet'] ?? $don['tong_tien']) ?>
                             </td>
                             <td style="padding: 1rem; text-align: center;">
                                 <?php if ($don['trang_thai'] === 'da_giao'): ?>

@@ -251,6 +251,13 @@ INSERT INTO tv_luu_but (id, mssv, ten_khach, loi_nhan, thoi_gian) VALUES
   (9, '3120124027', 'Lê Hoàng Bảo', 'Trang cá nhân của Tấn trình bày kỹ năng và dự án rất ấn tượng!', '2026-10-20 09:15:00'),
   (10, '3120124027', 'Lê Thị Xuân Châu', 'Biểu đồ lượt xem cập nhật rất trực quan, làm tốt lắm Tấn!', '2026-10-21 14:30:00');
 
+-- Bảng tv_binh_chon (Trang Bảo - 3120124003): Dữ liệu khảo sát ngôn ngữ lập trình yêu thích
+INSERT INTO tv_binh_chon (mssv, lua_chon, so_phieu) VALUES
+  ('3120124003', 'PHP', 3),
+  ('3120124003', 'Python', 2),
+  ('3120124003', 'JavaScript', 2),
+  ('3120124003', 'C++', 1);
+
 -- Bảng tv_luot_xem (Trang Tấn - 3120124027): Thống kê 7 ngày gần nhất
 INSERT INTO tv_luot_xem (mssv, ngay, so_luot) VALUES
   ('3120124027', '2026-10-17', 12),

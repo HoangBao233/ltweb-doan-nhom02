@@ -84,7 +84,7 @@ require_once 'inc/header.php';
 
                 <?php if (!empty($ga->hinh_anh)): ?>
                 <figure>
-                    <img src="<?= e($ga->hinh_anh) ?>"
+                    <img src="<?= e(anhGiaoAn($ga->hinh_anh)) ?>"
                          alt="Hình ảnh minh họa cho <?= e($ga->ten) ?>"
                          loading="lazy" width="600" height="400"
                          style="max-width: 100%; height: auto; border-radius: 8px;">
@@ -164,7 +164,7 @@ require_once 'inc/header.php';
                 <div class="danh-sach-the__luoi">
                     <?php foreach ($dsLienQuan as $lq): ?>
                         <article class="the-hoc-lieu">
-                            <img src="<?= e($lq->hinh_anh ?: 'images/banner-trang-chu.jpg') ?>"
+                            <img src="<?= e(anhGiaoAn($lq->hinh_anh)) ?>"
                                  alt="<?= e($lq->ten) ?>"
                                  class="the-hoc-lieu__anh"
                                  width="300" height="180" loading="lazy">

@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 if (move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $uploadDir . $tenFileMoi)) {
-                    $tenHinhAnh = $tenFileMoi;
+                    $tenHinhAnh = 'uploads/' . $tenFileMoi;
                 } else {
                     $loi['hinh_anh'] = 'Không thể lưu tệp ảnh tải lên.';
                 }
@@ -188,6 +188,7 @@ require __DIR__ . '/inc/header.php';
                     </label>
                     <select id="cap_hoc" name="cap_hoc" required
                             style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid <?= isset($loi['cap_hoc']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; background: #fff;">
+                        <option value="">-- Chọn cấp học --</option>
                         <option value="THCS" <?= ($f['cap_hoc'] ?? '') === 'THCS' ? 'selected' : '' ?>>Trung học cơ sở (THCS)</option>
                         <option value="THPT" <?= ($f['cap_hoc'] ?? '') === 'THPT' ? 'selected' : '' ?>>Trung học phổ thông (THPT)</option>
                         <option value="Tiểu học" <?= ($f['cap_hoc'] ?? '') === 'Tiểu học' ? 'selected' : '' ?>>Tiểu học</option>
@@ -231,7 +232,7 @@ require __DIR__ . '/inc/header.php';
                 </label>
                 <?php if (!empty($cu['hinh_anh'])): ?>
                     <div style="margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem;">
-                        <img src="uploads/<?= e($cu['hinh_anh']) ?>" alt="Ảnh hiện tại" 
+                        <img src="<?= e(anhGiaoAn($cu['hinh_anh'])) ?>" alt="Ảnh hiện tại" 
                              style="width: 100px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
                         <span style="color: #64748b; font-size: 0.85rem;">Ảnh hiện tại. Chọn tệp bên dưới nếu muốn thay ảnh khác.</span>
                     </div>

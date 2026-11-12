@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Lưu ID phiên (Session chỉ lưu uid để chống lỗi phân quyền cũ)
                 $_SESSION['uid'] = (int)$u['id'];
-                $_SESSION['user'] = $u['ho_ten']; // tương thích hiển thị cũ
 
                 // Chuyển hướng sau khi đăng nhập (PRG)
                 if (($u['vai_tro'] ?? '') === 'quan_tri') {

@@ -173,7 +173,7 @@ require __DIR__ . '/inc/header.php';
                 <div class="danh-sach-the__luoi">
                     <?php foreach ($danhSach as $ga): ?>
                         <article class="the-hoc-lieu">
-                            <img src="<?= e($ga->hinh_anh) ?>"
+                            <img src="<?= e(anhGiaoAn($ga->hinh_anh)) ?>"
                                   alt="<?= e($ga->ten) ?>"
                                   class="the-hoc-lieu__anh"
                                   width="300" height="180" loading="lazy">

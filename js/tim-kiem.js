@@ -12,6 +12,84 @@ function debounce(ham, thoiGian = 300) {
     };
 }
 
+function chuanHoaDuongDanAnh(duongDan) {
+    const macDinh = 'images/banner-trang-chu.jpg';
+    if (typeof duongDan !== 'string') return macDinh;
+    const sach = duongDan.trim().replace(/^\/+/, '');
+    if (sach === '' || sach.includes('..') || /^javascript:/i.test(sach)) {
+        return macDinh;
+    }
+    if (sach.startsWith('images/') || sach.startsWith('uploads/')) {
+        return sach;
+    }
+    return 'uploads/' + sach;
+}
+
+function taoMucGoiY(ga) {
+    const theA = document.createElement('a');
+    const id = parseInt(ga.id, 10) || 0;
+    theA.href = `chi-tiet-giao-an.php?id=${id}`;
+    theA.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.15s;
+    `;
+    theA.addEventListener('mouseenter', () => {
+        theA.style.background = '#f8f9fa';
+    });
+    theA.addEventListener('mouseleave', () => {
+        theA.style.background = 'transparent';
+    });
+
+    const anh = document.createElement('img');
+    anh.src = chuanHoaDuongDanAnh(ga.hinh_anh);
+    anh.alt = typeof ga.ten === 'string' ? ga.ten : '';
+    anh.style.cssText = 'width: 50px; height: 35px; object-fit: cover; border-radius: 4px; flex-shrink: 0;';
+
+    const khoiNoiDung = document.createElement('div');
+    khoiNoiDung.style.cssText = 'flex: 1; min-width: 0;';
+
+    const tenEl = document.createElement('div');
+    tenEl.style.cssText = 'font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
+    tenEl.textContent = ga.ten ?? '';
+
+    const thongTinEl = document.createElement('div');
+    thongTinEl.style.cssText = 'font-size: 0.8rem; color: #888;';
+
+    const capHoc = typeof ga.cap_hoc === 'string' ? ga.cap_hoc : '';
+    const giaSo = Number(ga.gia) || 0;
+    const giaDinhDang = giaSo === 0 ? 'Miễn phí' : giaSo.toLocaleString('vi-VN') + ' đ';
+
+    thongTinEl.appendChild(document.createTextNode(`${capHoc} • `));
+    const giaEl = document.createElement('strong');
+    giaEl.style.color = '#007bff';
+    giaEl.textContent = giaDinhDang;
+    thongTinEl.appendChild(giaEl);
+
+    khoiNoiDung.appendChild(tenEl);
+    khoiNoiDung.appendChild(thongTinEl);
+
+    theA.appendChild(anh);
+    theA.appendChild(khoiNoiDung);
+    return theA;
+}
+
+function taoThongBaoRong(tuKhoa) {
+    const hop = document.createElement('div');
+    hop.style.cssText = 'padding: 1rem; color: #666; text-align: center; font-style: italic;';
+    hop.appendChild(document.createTextNode('Không tìm thấy giáo án nào phù hợp với "'));
+    const tuKhoaEl = document.createElement('strong');
+    tuKhoaEl.textContent = tuKhoa;
+    hop.appendChild(tuKhoaEl);
+    hop.appendChild(document.createTextNode('"'));
+    return hop;
+}
+
 function khoiTaoTimKiemTucThoi() {
     const oNhap = document.getElementById('o-tim-kiem');
     if (!oNhap) return;
@@ -51,7 +129,7 @@ function khoiTaoTimKiemTucThoi() {
         tuKhoa = tuKhoa.trim();
         if (tuKhoa === '') {
             hopGoiY.style.display = 'none';
-            hopGoiY.innerHTML = '';
+            hopGoiY.replaceChildren();
             return;
         }
 
@@ -68,41 +146,13 @@ function khoiTaoTimKiemTucThoi() {
 
             if (!phanHoi.ok) throw new Error('Lỗi máy chủ khi tìm kiếm');
             const ketQua = await phanHoi.json();
-            const danhSach = ketQua.du_lieu || [];
+            const danhSach = Array.isArray(ketQua.du_lieu) ? ketQua.du_lieu : [];
 
             if (danhSach.length === 0) {
-                hopGoiY.innerHTML = `
-                    <div style="padding: 1rem; color: #666; text-align: center; font-style: italic;">
-                        Không tìm thấy giáo án nào phù hợp với "<strong>${tuKhoa}</strong>"
-                    </div>
-                `;
+                hopGoiY.replaceChildren(taoThongBaoRong(tuKhoa));
             } else {
-                hopGoiY.innerHTML = danhSach.map(ga => {
-                    const giaDinhDang = ga.gia == 0 ? 'Miễn phí' : Number(ga.gia).toLocaleString('vi-VN') + ' đ';
-                    return `
-                        <a href="chi-tiet-giao-an.php?id=${ga.id}" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 0.75rem;
-                            padding: 0.75rem 1rem;
-                            border-bottom: 1px solid #f0f0f0;
-                            text-decoration: none;
-                            color: inherit;
-                            transition: background 0.15s;
-                        " onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
-                            <img src="${ga.hinh_anh || 'images/banner-trang-chu.jpg'}" alt="${ga.ten}" 
-                                 style="width: 50px; height: 35px; object-fit: cover; border-radius: 4px; flex-shrink: 0;">
-                            <div style="flex: 1; min-width: 0;">
-                                <div style="font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    ${ga.ten}
-                                </div>
-                                <div style="font-size: 0.8rem; color: #888;">
-                                    ${ga.cap_hoc || ''} • <strong style="color: #007bff;">${giaDinhDang}</strong>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }).join('');
+                const phanTu = danhSach.map(taoMucGoiY);
+                hopGoiY.replaceChildren(...phanTu);
             }
             hopGoiY.style.display = 'block';
         } catch (loi) {

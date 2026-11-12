@@ -2,7 +2,7 @@
 // thanhvien/3120124027_tan/gioithieu.php — Trang cá nhân Nguyễn Cảnh Tấn (MSSV 3120124027)
 // Bài tập 6 - Phần B: Sổ lưu bút phân trang/phân quyền & Tra cứu dự án (Tìm, Lọc, Sắp xếp) + Thống kê lượt xem (MySQL PDO)
 // Cách thử: 1. Gửi lưu bút để trống (báo lỗi), gửi hợp lệ rồi F5 (không gửi lại do PRG, xem phân trang ?trang_lb=2).
-//           2. Đăng nhập chủ trang (dùng nút kiểm thử nhanh hoặc ?test_login=tan) để hiện nút Xóa; khách không xóa được.
+//           2. Đăng nhập tài khoản chủ trang (tan@ued.vn) tại dang-nhap.php để hiện nút Xóa; khách không xóa được.
 //           3. Tìm kiếm dự án theo từ khóa (LIKE), lọc theo công nghệ, sắp xếp; mỗi lần tải trang bộ đếm lượt xem tự tăng.
 
 require __DIR__ . '/../../inc/config.php';
@@ -16,19 +16,6 @@ $trang  = '';
 $stTv = db()->prepare('SELECT ho_ten, nguoi_dung_id FROM thanh_vien WHERE mssv = ?');
 $stTv->execute([MSSV]);
 $tv = $stTv->fetch();
-
-// Hỗ trợ kiểm thử nhanh quyền chủ trang (dành cho giảng viên / kiểm thử viên)
-if (isset($_GET['test_login'])) {
-    session_regenerate_id(true);
-    if ($_GET['test_login'] === 'tan') {
-        $_SESSION['uid'] = (int)($tv['nguoi_dung_id'] ?? 5);
-    } elseif ($_GET['test_login'] === 'khach') {
-        $_SESSION['uid'] = 2; // tài khoản học viên (không phải chủ trang)
-    } elseif ($_GET['test_login'] === 'logout') {
-        unset($_SESSION['uid'], $_SESSION['user'], $_SESSION['user_id']);
-    }
-    chuyen_trang('gioithieu.php');
-}
 
 $ndHienTai  = nguoiDung();
 $laChuTrang = ($ndHienTai !== null) && !empty($tv['nguoi_dung_id']) && ((int)($ndHienTai['id'] ?? 0) === (int)$tv['nguoi_dung_id']);
@@ -238,8 +225,8 @@ require __DIR__ . '/../../inc/header.php';
 
         <!-- CỘT PHẢI: NỘI DUNG CHÍNH -->
         <div class="cot-phai">
-            <!-- Thanh trạng thái kiểm thử quyền chủ trang (dành cho GV/chấm điểm) -->
-            <aside class="thanh-test-quyen" aria-label="Kiểm thử phân quyền chủ trang">
+            <!-- Thanh trạng thái phân quyền chủ trang -->
+            <aside class="thanh-test-quyen" aria-label="Trạng thái phân quyền chủ trang">
                 <div>
                     <strong>Trạng thái đăng nhập:</strong>
                     <?php if ($ndHienTai): ?>
@@ -254,11 +241,10 @@ require __DIR__ . '/../../inc/header.php';
                     <?php endif; ?>
                 </div>
                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <?php if ($laChuTrang): ?>
-                        <a href="gioithieu.php?test_login=logout" class="nut-cong-cu" style="text-decoration: none; font-size: 0.8rem;">Đăng xuất</a>
-                        <a href="gioithieu.php?test_login=khach" class="nut-cong-cu" style="text-decoration: none; font-size: 0.8rem;">Thử làm Khách</a>
+                    <?php if ($ndHienTai): ?>
+                        <a href="<?= $goc ?>dang-xuat.php" class="nut-cong-cu" style="text-decoration: none; font-size: 0.8rem;">Đăng xuất</a>
                     <?php else: ?>
-                        <a href="gioithieu.php?test_login=tan" class="nut-cong-cu" style="text-decoration: none; font-size: 0.8rem; background: #2b6cb0; color: #fff;">Đăng nhập Chủ trang (Tấn)</a>
+                        <a href="<?= $goc ?>dang-nhap.php" class="nut-cong-cu" style="text-decoration: none; font-size: 0.8rem; background: #2b6cb0; color: #fff;">Đăng nhập</a>
                     <?php endif; ?>
                 </div>
             </aside>

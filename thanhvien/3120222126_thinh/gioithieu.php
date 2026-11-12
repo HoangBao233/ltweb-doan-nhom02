@@ -17,8 +17,8 @@
  * 
  * --- CÁCH THỬ NGHIỆM TRANG CÁ NHÂN ---
  * 1. Nhập email hợp lệ (hoặc để trống/sai cú pháp để xem báo lỗi) tại form "Đăng Ký Nhận CV" -> bấm Gửi -> kiểm tra dữ liệu lưu vào MySQL bảng tv_yeu_cau_cv, F5 không bị gửi lại (PRG).
- * 2. Bấm "Đăng nhập Thịnh" trên thanh kiểm thử (hoặc đăng nhập tài khoản thinh@ued.vn / matkhau123) -> xuất hiện khối "Quản lý Yêu cầu CV" với danh sách có phân trang và nút Xóa.
- * 3. Bấm "Đăng nhập Khách" hoặc "Đăng xuất" -> khối quản lý biến mất hoàn toàn (bảo mật kiểm tra quyền máy chủ).
+ * 2. Đăng nhập tài khoản chủ trang (thinh@ued.vn / matkhau123) tại dang-nhap.php -> xuất hiện khối "Quản lý Yêu cầu CV" với danh sách có phân trang và nút Xóa.
+ * 3. Đăng xuất hoặc đăng nhập tài khoản khách khác (lan@ued.vn) -> khối quản lý biến mất hoàn toàn (bảo mật kiểm tra quyền máy chủ).
  */
 
 require_once __DIR__ . '/../../inc/config.php';
@@ -32,19 +32,6 @@ $trang  = '';
 $stTv = db()->prepare('SELECT ho_ten, nguoi_dung_id FROM thanh_vien WHERE mssv = ?');
 $stTv->execute([MSSV]);
 $tv = $stTv->fetch();
-
-// Tiện ích hỗ trợ kiểm thử nhanh quyền chủ trang (dành cho chấm bài)
-if (isset($_GET['test_login'])) {
-    session_regenerate_id(true);
-    if ($_GET['test_login'] === 'thinh') {
-        $_SESSION['uid'] = (int)($tv['nguoi_dung_id'] ?? 7);
-    } elseif ($_GET['test_login'] === 'khach') {
-        $_SESSION['uid'] = 2; // tài khoản học viên (không phải chủ trang)
-    } elseif ($_GET['test_login'] === 'logout') {
-        unset($_SESSION['uid'], $_SESSION['user'], $_SESSION['user_id']);
-    }
-    chuyen_trang('gioithieu.php');
-}
 
 // Kiểm tra quyền chủ trang ở máy chủ
 $ndHienTai  = nguoiDung();
@@ -239,10 +226,10 @@ require_once __DIR__ . '/../../inc/header.php';
 
     <main class="trang__chinh" style="max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem;">
         
-        <!-- THANH CÔNG CỤ KIỂM THỬ NHANH DÀNH CHO GIẢNG VIÊN -->
+        <!-- THANH TRẠNG THÁI QUYỀN CHỦ TRANG -->
         <div style="background: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 0.875rem;">
             <div>
-                <strong>Kiểm thử nhanh quyền chủ trang:</strong>
+                <strong>Trạng thái phân quyền:</strong>
                 <?php if ($laChuTrang): ?>
                     <span style="background: #dcfce7; color: #166534; font-weight: bold; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem;">Đang là Chủ trang (Thịnh)</span>
                 <?php elseif ($ndHienTai): ?>
@@ -252,9 +239,11 @@ require_once __DIR__ . '/../../inc/header.php';
                 <?php endif; ?>
             </div>
             <div style="display: flex; gap: 0.5rem;">
-                <a href="gioithieu.php?test_login=thinh" style="padding: 0.25rem 0.6rem; background: #004d40; color: white; border-radius: 4px; text-decoration: none; font-weight: 500;">Đăng nhập Thịnh</a>
-                <a href="gioithieu.php?test_login=khach" style="padding: 0.25rem 0.6rem; background: #0284c7; color: white; border-radius: 4px; text-decoration: none; font-weight: 500;">Đăng nhập Khách</a>
-                <a href="gioithieu.php?test_login=logout" style="padding: 0.25rem 0.6rem; background: #64748b; color: white; border-radius: 4px; text-decoration: none; font-weight: 500;">Đăng xuất</a>
+                <?php if ($ndHienTai): ?>
+                    <a href="<?= $goc ?>dang-xuat.php" style="padding: 0.25rem 0.6rem; background: #64748b; color: white; border-radius: 4px; text-decoration: none; font-weight: 500;">Đăng xuất</a>
+                <?php else: ?>
+                    <a href="<?= $goc ?>dang-nhap.php" style="padding: 0.25rem 0.6rem; background: #004d40; color: white; border-radius: 4px; text-decoration: none; font-weight: 500;">Đăng nhập</a>
+                <?php endif; ?>
             </div>
         </div>
 

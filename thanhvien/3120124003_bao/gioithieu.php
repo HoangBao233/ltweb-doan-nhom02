@@ -2,7 +2,9 @@
 /**
  * thanhvien/3120124003_bao/gioithieu.php — Hồ sơ cá nhân: Lê Hoàng Bảo (MSSV: 3120124003)
  * Học phần: Thiết kế và Lập trình Web — Bài tập nhóm số 6 (Phần B)
- * Bảng riêng CSDL MySQL: tv_luu_but (id, mssv, ten_khach, loi_nhan, thoi_gian)
+ * Bảng riêng CSDL MySQL:
+ *   1. tv_luu_but (id, mssv, ten_khach, loi_nhan, thoi_gian)
+ *   2. tv_binh_chon (id, mssv, lua_chon, so_phieu)
  * 
  * Cách kiểm thử các chức năng Phần B:
  * 1. Gửi lời nhắn trống hoặc quá ngắn (< 2 ký tự tên, < 5 ký tự lời nhắn) -> Báo lỗi validation.
@@ -13,6 +15,8 @@
  *    - Khách vãng lai / Tài khoản khác (ví dụ: lan@ued.vn): KHÔNG thấy nút Xóa.
  *    - Chủ trang đăng nhập (bao@ued.vn / mật khẩu matkhau123): Xuất hiện nút "Xóa".
  *    - Thao tác xóa bảo mật qua POST máy chủ: DELETE FROM tv_luu_but WHERE id = ? AND mssv = '3120124003'.
+ * 5. Khảo sát / Bình chọn công nghệ: Chọn ngôn ngữ -> Bấm Gửi -> Lưu trực tiếp vào MySQL bảng tv_binh_chon
+ *    bằng câu lệnh INSERT ... ON DUPLICATE KEY UPDATE so_phieu = so_phieu + 1 (PRG tránh cộng trùng khi F5).
  */
 
 require_once __DIR__ . '/../../inc/config.php';
@@ -89,22 +93,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // CHỨC NĂNG BÀI TẬP 5: KHẢO SÁT / BÌNH CHỌN CÔNG NGHỆ
+    // CHỨC NĂNG CSDL 2: KHẢO SÁT / BÌNH CHỌN CÔNG NGHỆ LƯU MYSQL (tv_binh_chon)
     if ($action === 'binh_chon') {
         $cacTuyChon = ['PHP', 'Python', 'JavaScript', 'C++'];
-        $luaChon    = $_POST['ngon_ngu'] ?? '';
-        $fileBC     = __DIR__ . '/../../storage/3120124003_binhchon.json';
+        $luaChon    = trim((string)($_POST['ngon_ngu'] ?? ''));
 
         if (in_array($luaChon, $cacTuyChon, true)) {
-            if (!is_dir(dirname($fileBC))) {
-                mkdir(dirname($fileBC), 0777, true);
-            }
-            $ketQua = file_exists($fileBC) ? json_decode((string)file_get_contents($fileBC), true) : [];
-            if (!is_array($ketQua)) $ketQua = [];
-            if (!isset($ketQua[$luaChon])) $ketQua[$luaChon] = 0;
-            $ketQua[$luaChon]++;
-
-            file_put_contents($fileBC, json_encode($ketQua, JSON_UNESCAPED_UNICODE));
+            $stBC = db()->prepare('
+                INSERT INTO tv_binh_chon (mssv, lua_chon, so_phieu)
+                VALUES (?, ?, 1)
+                ON DUPLICATE KEY UPDATE so_phieu = so_phieu + 1
+            ');
+            $stBC->execute([MSSV_BAO, $luaChon]);
             $_SESSION['flash_binhchon'] = 'Bình chọn công nghệ thành công!';
             chuyen_trang('gioithieu.php');
         } else {
@@ -149,12 +149,15 @@ unset($_SESSION['flash_luubut']);
 $flashLuuButLoi = $_SESSION['flash_luubut_loi'] ?? '';
 unset($_SESSION['flash_luubut_loi']);
 
-// Đọc kết quả khảo sát (Bài 5)
-$fileBinhChon   = __DIR__ . '/../../storage/3120124003_binhchon.json';
-$ketQuaBinhChon = file_exists($fileBinhChon) ? json_decode((string)file_get_contents($fileBinhChon), true) : [];
-if (!is_array($ketQuaBinhChon)) $ketQuaBinhChon = [];
-$tongPhieuBC    = array_sum($ketQuaBinhChon);
+// Đọc kết quả khảo sát từ bảng MySQL tv_binh_chon
 $cacTuyChonBC   = ['PHP', 'Python', 'JavaScript', 'C++'];
+$stDocBC        = db()->prepare('SELECT lua_chon, so_phieu FROM tv_binh_chon WHERE mssv = ?');
+$stDocBC->execute([MSSV_BAO]);
+$ketQuaBinhChon = [];
+foreach ($stDocBC->fetchAll() as $rowBC) {
+    $ketQuaBinhChon[(string)$rowBC['lua_chon']] = (int)$rowBC['so_phieu'];
+}
+$tongPhieuBC    = array_sum($ketQuaBinhChon);
 $flashBC        = $_SESSION['flash_binhchon'] ?? '';
 unset($_SESSION['flash_binhchon']);
 $flashBCLoi     = $_SESSION['flash_binhchon_loi'] ?? '';
@@ -353,11 +356,11 @@ require_once __DIR__ . '/../../inc/header.php';
       </section>
 
       <!-- ================================================================= -->
-      <!-- CHỨC NĂNG BÀI TẬP 5: KHẢO SÁT CÔNG NGHỆ (BẢO TỒN TÍNH NĂNG CŨ)     -->
+      <!-- CHỨC NĂNG CSDL 2: KHẢO SÁT CÔNG NGHỆ YÊU THÍCH (MYSQL tv_binh_chon) -->
       <!-- ================================================================= -->
       <section class="bieu-mau" style="background-color: #f0f8ff; border-color: #b8daff;">
         <h2 style="color: #004085; margin-bottom: 0.5rem;">Khảo sát Công Nghệ Yêu Thích</h2>
-        <p style="font-size: 0.9rem; color: #555; margin-bottom: 1rem;">Ngôn ngữ lập trình bạn yêu thích nhất trong các môn Tin học?</p>
+        <p style="font-size: 0.9rem; color: #555; margin-bottom: 1rem;">Ngôn ngữ lập trình bạn yêu thích nhất trong các môn Tin học? (Lưu vào bảng <code>tv_binh_chon</code>)</p>
 
         <?php if ($flashBC): ?>
             <div role="alert" style="padding: 10px; background: #d4edda; color: #155724; margin-bottom: 12px; border-radius: 4px;">

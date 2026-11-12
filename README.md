@@ -9,7 +9,7 @@
 
 | STT | Họ và tên | Mã sinh viên | Tài khoản GitHub | Vai trò & Nhiệm vụ chính Bài 6 | Tỷ lệ đóng góp |
 |:---:|:---|:---:|:---:|:---|:---:|
-| 1 | **Lê Hoàng Bảo** | `3120124003` | `HoangBao233` | **Nhóm trưởng**; Khởi tạo CSDL MySQL (`schema.sql`, `seed.sql`, `inc/db.php`); Chức năng 1 (Đọc dữ liệu DB, chống N+1); Đồng phụ trách Chức năng 5; Phần B (`tv_luu_but`); Câu C1 | **25%** |
+| 1 | **Lê Hoàng Bảo** | `3120124003` | `HoangBao233` | **Nhóm trưởng**; Khởi tạo CSDL MySQL (`schema.sql`, `seed.sql`, `inc/db.php`); Chức năng 1 (Đọc dữ liệu DB, chống N+1); Đồng phụ trách Chức năng 5; Phần B (`tv_luu_but`, `tv_binh_chon`); Câu C1 | **25%** |
 | 2 | **Nguyễn Cảnh Tấn** | `3120124027` | `beotan19-cpu` | Chức năng 2 (Kho học liệu: Tìm kiếm LIKE, Lọc, Sắp xếp, Phân trang); Chức năng 6 (REST API & Live Search Debounce); Phần B (`tv_luot_xem`, `tv_du_an_tan`); Câu C3 | **25%** |
 | 3 | **Lê Thị Xuân Châu** | `3120124006` | `XuanChau-06` | Chức năng 3 (Quản trị CRUD Thực thể chính, Bắt lỗi 1451, Xem liên hệ); Vẽ sơ đồ ERD (`database/erd.png`); Phần B (`tv_du_an`); Câu C2 | **25%** |
 | 4 | **Nguyễn Tiến Thịnh** | `3120222126` | `cowt1310` | Chức năng 4 (Đăng ký, Đăng nhập, Đăng xuất, Phân quyền Session); Chức năng 5 (Giao dịch Đặt hàng Transaction & Quản lý đơn); Phần B (`tv_yeu_cau_cv`); Câu C4 | **25%** |
@@ -83,8 +83,8 @@ Mọi mật khẩu đều được băm bằng thuật toán an toàn Bcrypt (`p
 | **2** | `kho-hoc-lieu.php` | Tìm theo từ khóa (có dấu, không dấu, chữ hoa/thường); lọc theo danh mục và giá tối đa; sắp xếp; phân trang; giữ bộ lọc khi đổi trang; báo khi không có kết quả. | `LIKE` + `addcslashes`; `WHERE` dựng từ mảng điều kiện & tham số; `ORDER BY` theo Whitelist an toàn; `COUNT(*)` + `LIMIT ? OFFSET ?`; `http_build_query`. | `kho-hoc-lieu.php`<br>`src/Data/KhoGiaoAn.php` | **Nguyễn Cảnh Tấn** |
 | **3** | `quan-tri.php`<br>`them-giao-an.php`<br>`sua-giao-an.php`<br>`xoa-giao-an.php` | Quản trị thực thể chính (Giáo án): danh sách có phân trang; thêm; sửa (điền sẵn dữ liệu cũ); xóa có hộp thoại xác nhận; xem các liên hệ đã nhận (mới nhất trước). | `yeuCauQuyen('quan_tri')`; hàm `kiemTraGiaoAn()` dùng chung; `INSERT` + `lastInsertId`, `UPDATE`, `DELETE` chỉ nhận POST; bắt lỗi khóa ngoại MySQL 1451; upload an toàn; PRG + Flash. | `quan-tri.php`<br>`them-giao-an.php`<br>`sua-giao-an.php`<br>`xoa-giao-an.php`<br>`inc/kiem-tra.php` | **Lê Thị Xuân Châu** |
 | **4** | `dang-ky.php`<br>`dang-nhap.php`<br>`dang-xuat.php` | Đăng ký, đăng nhập, đăng xuất với bảng `nguoi_dung`; header hiện tên người dùng và menu Quản trị đúng vai trò; bảo vệ chống tấn công leo thang quyền và Session Fixation. | `password_hash`, `password_verify`, `password_needs_rehash`; email UNIQUE + bắt lỗi 1062; không nhận `vai_tro` từ form; một thông báo lỗi chung; `session_regenerate_id(true)`; Session chỉ giữ `uid`. | `dang-ky.php`<br>`dang-nhap.php`<br>`dang-xuat.php`<br>`inc/xac-thuc.php` | **Nguyễn Tiến Thịnh** |
-| **5** | `dat-hang.php`<br>`don-hang.php` | Đặt hàng từ giỏ trong Giao dịch (MySQL Transaction); "Đơn hàng của tôi": danh sách đơn kèm tổng tiền, xem chi tiết; quản trị viên xem mọi đơn và đổi trạng thái. | `beginTransaction`, `commit`, `rollBack`; `UPDATE ... WHERE ton_kho >= ?` và `rowCount()`; `chi_tiet_don` lưu đơn giá lúc đặt; JOIN + GROUP BY; chỉ đơn của mình (`AND nguoi_dung_id = ?`); Whitelist trạng thái. | `inc/don-hang.php`<br>`dat-hang.php`<br>`don-hang.php` | **Nguyễn Tiến Thịnh & Lê Hoàng Bảo** |
-| **6** | `api/giao-an.php`<br>`api/gio-hang.php`<br>`js/tim-kiem.js`<br>`js/gio-hang.js` | REST API trả JSON: tìm kiếm, xem chi tiết, xem và thêm vào giỏ; tìm kiếm tức thời live search ở `kho-hoc-lieu.php`; thêm vào giỏ không tải lại trang, cập nhật badge ngay. | `Content-Type: application/json`; mã 200, 400, 404, 405, 422, 500; `php://input`; `fetch` + Debounce 300ms; `textContent`; tắt JavaScript form vẫn hoạt động bình thường. | `api/giao-an.php`<br>`api/gio-hang.php`<br>`js/tim-kiem.js`<br>`js/gio-hang.js`<br>`api.http` | **Nguyễn Cảnh Tấn & Lê Thị Xuân Châu** |
+| **5** | `dat-hang.php`<br>`don-hang.php` | Đặt hàng từ giỏ trong Giao dịch (MySQL Transaction); "Đơn hàng của tôi": danh sách đơn kèm tổng tiền, xem chi tiết; quản trị viên xem mọi đơn và đổi trạng thái. | `beginTransaction`, `commit`, `rollBack`; `UPDATE ... WHERE ton_kho >= ?` và `rowCount()`; `chi_tiet_don` lưu đơn giá lúc đặt; `JOIN + GROUP BY + SUM`; chỉ đơn của mình (`AND nguoi_dung_id = ?`); Whitelist trạng thái. | `inc/don-hang.php`<br>`dat-hang.php`<br>`don-hang.php` | **Nguyễn Tiến Thịnh & Lê Hoàng Bảo** |
+| **6** | `api/giao-an.php`<br>`api/gio-hang.php`<br>`js/tim-kiem.js`<br>`js/gio-hang.js` | REST API trả JSON: tìm kiếm, xem chi tiết, xem và thêm vào giỏ; tìm kiếm tức thời live search ở `kho-hoc-lieu.php`; thêm vào giỏ không tải lại trang, cập nhật badge ngay. | `traJson()`; `Content-Type: application/json`; mã 200, 400, 404, 405, 422, 500; `php://input`; `JsonSerializable`; `fetch` + Debounce 300ms; `textContent` chống XSS; tắt JavaScript form vẫn hoạt động bình thường. | `api/giao-an.php`<br>`api/gio-hang.php`<br>`js/tim-kiem.js`<br>`js/gio-hang.js`<br>`api.http` | **Nguyễn Cảnh Tấn & Lê Thị Xuân Châu** |
 
 ---
 
@@ -112,7 +112,13 @@ Kiểm thử toàn bộ các request bằng tệp `api.http` (dùng VS Code exte
 
 | Thành viên | MSSV | Đường dẫn trang cá nhân | Bảng MySQL riêng (`tv_...`) |
 |:---|:---:|:---|:---:|
-| **Lê Hoàng Bảo** | `3120124003` | `/thanhvien/3120124003_bao/gioithieu.php` | `tv_luu_but` (Sổ lưu bút phân trang, chỉ chủ trang xóa) |
+| **Lê Hoàng Bảo** | `3120124003` | `/thanhvien/3120124003_bao/gioithieu.php` | `tv_luu_but`, `tv_binh_chon` (Sổ lưu bút phân trang & xóa theo quyền chủ trang; Bình chọn công nghệ `ON DUPLICATE KEY UPDATE`) |
 | **Nguyễn Cảnh Tấn** | `3120124027` | `/thanhvien/3120124027_tan/gioithieu.php` | `tv_luot_xem`, `tv_du_an_tan` (Bộ đếm theo ngày `ON DUPLICATE KEY UPDATE`, tra cứu dự án) |
 | **Lê Thị Xuân Châu** | `3120124006` | `/thanhvien/3120124006_chau/gioithieu.php` | `tv_du_an` (Danh sách dự án, chủ trang thêm/xóa) |
 | **Nguyễn Tiến Thịnh** | `3120222126` | `/thanhvien/3120222126_thinh/gioithieu.php` | `tv_yeu_cau_cv` (Form gửi yêu cầu nhận CV lưu DB, phân trang danh sách) |
+
+---
+
+## 🤖 Ghi chú sử dụng công cụ AI có trách nhiệm
+
+Nhóm có sử dụng công cụ AI (LLM hỗ trợ lập trình) để tra cứu cú pháp PDO/SQL, gợi ý ca kiểm thử biên, rà soát quy chuẩn bảo mật/WCAG/W3C và hoàn thiện tài liệu; toàn bộ cấu trúc CSDL, mã nguồn PHP/JS và các bài kiểm thử đều được các thành viên trực tiếp kiểm tra, chạy thử và làm chủ.
