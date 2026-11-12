@@ -36,7 +36,7 @@ require_once 'inc/header.php';
 
         <!-- WIDGET THỜI TIẾT (Hiển thị API qua JS) -->
         <div class="bieu-mau" style="margin: 1.5rem auto; text-align: center; max-width: 350px; padding: 1rem; border-radius: 12px; background: var(--nen-phu, #f4f6f8);">
-            <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--mau-chinh, #004085);">⛅ Thời tiết Đà Nẵng hôm nay</h2>
+            <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--mau-chinh, #004085);">Thời tiết Đà Nẵng hôm nay</h2>
             <div id="khung-thoi-tiet" aria-live="polite" style="min-height: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <p id="loi-thoi-tiet" style="font-size: 0.95rem; font-weight: bold; color: var(--chu, #333);">Đang đồng bộ dữ liệu...</p>
                 <button type="button" id="nut-tai-lai-thoi-tiet" class="nut-thao-tac nut-thao-tac--xem" style="margin-top: 0.5rem; display: none; padding: 0.3rem 0.8rem; font-size: 0.85rem;">Thử lại</button>
@@ -71,7 +71,7 @@ require_once 'inc/header.php';
         <!-- KHU VỰC 8 GIÁO ÁN MỚI NHẤT TỪ MYSQL -->
         <section class="gioi-thieu-tinh-nang" style="margin-top: 3rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-                <h2 style="margin: 0;">📚 Giáo án &amp; Học liệu mới cập nhật</h2>
+                <h2 style="margin: 0;">Giáo án &amp; Học liệu mới cập nhật</h2>
                 <a href="kho-hoc-lieu.php" class="nut-thao-tac nut-thao-tac--xem" style="text-decoration: none;">Xem tất cả kho học liệu &rarr;</a>
             </div>
 
@@ -116,7 +116,7 @@ require_once 'inc/header.php';
         <!-- KHU VỰC ĐÃ XEM GẦN ĐÂY (TRUY VẤN 1 CÂU SQL DUY NHẤT) -->
         <?php if (!empty($dsDaXem)): ?>
             <section class="gioi-thieu-tinh-nang" style="margin-top: 3rem;">
-                <h2>🕒 Giáo án bạn đã xem gần đây</h2>
+                <h2>Giáo án bạn đã xem gần đây</h2>
                 <div class="danh-sach-the__luoi">
                     <?php foreach ($dsDaXem as $ga): ?>
                         <article class="the-hoc-lieu">

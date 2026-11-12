@@ -37,7 +37,7 @@
 //     
 //     btnLuu.style.backgroundColor = daLuu ? '#28a745' : '';
 //     btnLuu.style.color = daLuu ? '#fff' : '';
-//     btnLuu.textContent = daLuu ? '🔖 Đã lưu' : '🔖 Lưu bài học';
+//     btnLuu.textContent = daLuu ? 'Đã lưu' : 'Lưu bài học';
 // }
 
 // async function hienThiChiTiet() {

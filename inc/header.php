@@ -92,7 +92,7 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
 
     <nav class="trang__dieu-huong" aria-label="Menu chính">
         <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn trên Desktop) -->
-        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh" onclick="window.batTatMenuMobile && window.batTatMenuMobile();">☰ Menu</button>
+        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh" onclick="window.batTatMenuMobile && window.batTatMenuMobile();">Menu</button>
 
         <ul id="menu-chinh" class="menu-chinh menu" style="list-style: none;">
             <?php foreach ($menu as $tep => $ten): 
@@ -119,7 +119,7 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
         if (!menu || !nut) return;
         var dangMo = menu.classList.toggle('mo');
         nut.setAttribute('aria-expanded', dangMo ? 'true' : 'false');
-        nut.textContent = dangMo ? '✕ Đóng' : '☰ Menu';
+        nut.textContent = dangMo ? 'Đóng' : 'Menu';
     };
 
     var nutMenu = document.querySelector('.nut-menu');
@@ -134,7 +134,7 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
             menu.classList.remove('mo');
             if (nut) {
                 nut.setAttribute('aria-expanded', 'false');
-                nut.textContent = '☰ Menu';
+                nut.textContent = 'Menu';
                 nut.focus();
             }
         }

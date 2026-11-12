@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['flash'] = [
             'type'    => 'success',
-            'message' => '✅ Cảm ơn bạn! Tin nhắn của bạn đã được ghi nhận vào hệ thống.'
+            'message' => 'Cảm ơn bạn! Tin nhắn của bạn đã được ghi nhận vào hệ thống.'
         ];
 
         chuyen_trang('ve-chung-toi.php');

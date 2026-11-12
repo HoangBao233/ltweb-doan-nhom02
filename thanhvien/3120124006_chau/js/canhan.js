@@ -2,7 +2,7 @@
  * Tệp canhan.js - Kịch bản tương tác động cho trang cá nhân Lê Thị Xuân Châu.
  * 1. Thu gọn/mở rộng (Accordion) cho danh sách kỹ năng nổi bật bằng DOM.
  * 2. Nút tạo câu châm ngôn truyền cảm hứng ngẫu nhiên (Random Quote Generator).
- * Cách kiểm tra: Bấm vào tiêu đề "Danh sách kỹ năng..." để thu gọn/mở rộng. Nhấp vào nút "💡 Tặng bạn một câu nói hay" để xem châm ngôn.
+ * Cách kiểm tra: Bấm vào tiêu đề "Danh sách kỹ năng..." để thu gọn/mở rộng. Nhấp vào nút "Tặng bạn một câu nói hay" để xem châm ngôn.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,12 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             accordionBtn.setAttribute('aria-expanded', 'true');
             accordionBtn.setAttribute('title', 'Nhấn để thu gọn/mở rộng');
             
-            // Thêm icon mũi tên
-            const arrowIcon = document.createElement('span');
-            arrowIcon.textContent = '▼';
-            arrowIcon.style.fontSize = '0.7em';
-            arrowIcon.style.transition = 'transform 0.3s ease';
-            accordionBtn.appendChild(arrowIcon);
+
             
             // Đưa button vào lại trong thẻ h3
             skillHeading.appendChild(accordionBtn);
@@ -70,12 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isExpanded) {
                     skillList.style.maxHeight = '0px';
                     skillList.style.opacity = '0';
-                    arrowIcon.style.transform = 'rotate(-90deg)';
                     accordionBtn.setAttribute('aria-expanded', 'false');
                 } else {
                     skillList.style.maxHeight = '500px';
                     skillList.style.opacity = '1';
-                    arrowIcon.style.transform = 'rotate(0deg)';
                     accordionBtn.setAttribute('aria-expanded', 'true');
                 }
             });
@@ -110,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tạo nút bốc thăm
     const quoteBtn = document.createElement('button');
-    quoteBtn.textContent = '💡 Tặng bạn một câu nói hay';
+    quoteBtn.textContent = 'Tặng bạn một câu nói hay';
     quoteBtn.setAttribute('aria-label', 'Nhấn để tạo câu châm ngôn ngẫu nhiên');
     
     // Style cho nút

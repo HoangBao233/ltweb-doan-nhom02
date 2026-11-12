@@ -11,7 +11,7 @@
  *    bấm số trang "1", "2" để chuyển trang và quan sát dữ liệu phân trang.
  * 4. Kiểm tra phân quyền chủ trang xóa lời nhắn:
  *    - Khách vãng lai / Tài khoản khác (ví dụ: lan@ued.vn): KHÔNG thấy nút Xóa.
- *    - Chủ trang đăng nhập (bao@ued.vn / mật khẩu matkhau123): Xuất hiện nút "🗑️ Xóa".
+ *    - Chủ trang đăng nhập (bao@ued.vn / mật khẩu matkhau123): Xuất hiện nút "Xóa".
  *    - Thao tác xóa bảo mật qua POST máy chủ: DELETE FROM tv_luu_but WHERE id = ? AND mssv = '3120124003'.
  */
 
@@ -180,11 +180,11 @@ require_once __DIR__ . '/../../inc/header.php';
   <!-- Banner thông báo vai trò hiện tại -->
   <?php if ($laChuTrang): ?>
       <div role="status" style="max-width: 1000px; margin: 0 auto 1.5rem auto; padding: 12px 18px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 8px; font-size: 0.95rem;">
-          👑 <strong>Bạn đang đăng nhập với tư cách Chủ trang (Lê Hoàng Bảo)!</strong> Bạn có toàn quyền quản trị và thực hiện xóa các lời nhắn lưu bút.
+          <strong>Bạn đang đăng nhập với tư cách Chủ trang (Lê Hoàng Bảo)!</strong> Bạn có toàn quyền quản trị và thực hiện xóa các lời nhắn lưu bút.
       </div>
   <?php else: ?>
       <div style="max-width: 1000px; margin: 0 auto 1.5rem auto; padding: 12px 18px; background: #e8f4fd; color: #0c5460; border: 1px solid #bee5eb; border-radius: 8px; font-size: 0.9rem;">
-          ℹ️ <em>Bạn đang xem trang với tư cách Khách. Chỉ khi chủ trang (tài khoản Lê Hoàng Bảo: <code>bao@ued.vn</code>) đăng nhập thì mới có quyền xóa lời nhắn lưu bút.</em>
+          <em>Bạn đang xem trang với tư cách Khách. Chỉ khi chủ trang (tài khoản Lê Hoàng Bảo: <code>bao@ued.vn</code>) đăng nhập thì mới có quyền xóa lời nhắn lưu bút.</em>
       </div>
   <?php endif; ?>
 
@@ -225,7 +225,7 @@ require_once __DIR__ . '/../../inc/header.php';
       <!-- ================================================================= -->
       <section class="bieu-mau" style="background-color: #fffdf5; border-color: #ffeeba;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
-            <h2 style="color: #856404; margin: 0;">📝 Sổ Lưu Bút Khách Thăm</h2>
+            <h2 style="color: #856404; margin: 0;">Sổ Lưu Bút Khách Thăm</h2>
             <span style="font-size: 0.85rem; background: #fff3cd; color: #856404; padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid #ffeeba; font-weight: bold;">
                 Tổng: <?= $tongLoiNhan ?> lời nhắn
             </span>
@@ -279,7 +279,7 @@ require_once __DIR__ . '/../../inc/header.php';
             </div>
 
             <button type="submit" class="nut-thao-tac nut-thao-tac--sua" style="width: 100%; cursor: pointer;">
-                ✍️ Gửi lời nhắn lưu bút
+                Gửi lời nhắn lưu bút
             </button>
         </form>
 
@@ -310,7 +310,7 @@ require_once __DIR__ . '/../../inc/header.php';
                                     <input type="hidden" name="action" value="xoa_luu_but">
                                     <input type="hidden" name="id" value="<?= (int)$lb['id'] ?>">
                                     <button type="submit" style="background: #dc3545; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer;" title="Chủ trang xóa lời nhắn này">
-                                        🗑️ Xóa
+                                        Xóa
                                     </button>
                                 </form>
                             <?php endif; ?>
@@ -356,7 +356,7 @@ require_once __DIR__ . '/../../inc/header.php';
       <!-- CHỨC NĂNG BÀI TẬP 5: KHẢO SÁT CÔNG NGHỆ (BẢO TỒN TÍNH NĂNG CŨ)     -->
       <!-- ================================================================= -->
       <section class="bieu-mau" style="background-color: #f0f8ff; border-color: #b8daff;">
-        <h2 style="color: #004085; margin-bottom: 0.5rem;">📊 Khảo sát Công Nghệ Yêu Thích</h2>
+        <h2 style="color: #004085; margin-bottom: 0.5rem;">Khảo sát Công Nghệ Yêu Thích</h2>
         <p style="font-size: 0.9rem; color: #555; margin-bottom: 1rem;">Ngôn ngữ lập trình bạn yêu thích nhất trong các môn Tin học?</p>
 
         <?php if ($flashBC): ?>
@@ -380,7 +380,7 @@ require_once __DIR__ . '/../../inc/header.php';
                 <?php endforeach; ?>
             </div>
             <button type="submit" class="nut-thao-tac nut-thao-tac--xem" style="width: 100%; cursor: pointer;">
-                🗳️ Gửi bình chọn
+                Gửi bình chọn
             </button>
         </form>
 

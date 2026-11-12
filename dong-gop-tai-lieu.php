@@ -79,7 +79,7 @@ require_once 'inc/header.php';
 
         <?php if ($thongBaoThanhCong): ?>
             <div role="alert" style="background: #e8f5e9; color: #2e7d32; padding: 1rem; border-radius: 6px; text-align: center; margin-bottom: 1.5rem; max-width: 600px; margin-inline: auto;">
-                ✅ <?= e($thongBaoThanhCong) ?>
+                <?= e($thongBaoThanhCong) ?>
             </div>
         <?php endif; ?>
 

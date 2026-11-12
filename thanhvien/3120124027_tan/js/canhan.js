@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const khoangCach = ngayThi - bayGio;
 
             if (khoangCach < 0) {
-                dongHo.textContent = "🎉 Đã đến ngày thi! Chúc bạn thi tốt!";
+                dongHo.textContent = "Đã đến ngày thi! Chúc bạn thi tốt!";
                 return;
             }
 

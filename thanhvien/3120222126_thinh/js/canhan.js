@@ -43,14 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(emailContent)
                     .then(() => {
-                        hienThiToast(`✅ Đã sao chép email (${emailContent}) vào bộ nhớ tạm!`);
+                        hienThiToast(`Đã sao chép email (${emailContent}) vào bộ nhớ tạm!`);
                     })
                     .catch(() => {
-                        hienThiToast(`📧 Email của Thịnh: ${emailContent}`);
+                        hienThiToast(`Email của Thịnh: ${emailContent}`);
                     });
             } else {
                 // Phương án dự phòng cho trình duyệt không hỗ trợ Clipboard API
-                hienThiToast(`📧 Email của Thịnh: ${emailContent}`);
+                hienThiToast(`Email của Thịnh: ${emailContent}`);
             }
         };
 
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hàm cập nhật văn bản thông báo điểm đánh giá
         const capNhatThongBao = (ratingValue) => {
             if (ratingValue > 0) {
-                thongBaoDanhGia.textContent = `⭐ Bạn đã đánh giá ${ratingValue}/5 sao cho hồ sơ của Thịnh (Đã ghi nhận). Cảm ơn bạn!`;
+                thongBaoDanhGia.textContent = `Bạn đã đánh giá ${ratingValue}/5 sao cho hồ sơ của Thịnh (Đã ghi nhận). Cảm ơn bạn!`;
                 thongBaoDanhGia.classList.add('thong-bao-danh-gia--da-danh-gia');
             } else {
                 thongBaoDanhGia.textContent = 'Bạn chưa đánh giá. Hãy chọn số sao để gửi đánh giá nhé!';

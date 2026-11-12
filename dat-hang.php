@@ -69,18 +69,18 @@ require_once __DIR__ . '/inc/header.php';
 ?>
 
 <main class="trang__chinh" style="max-width: 800px; margin: 3rem auto; padding: 0 1rem;">
-    <h1 style="color: var(--mau-chinh, #004085); margin-bottom: 0.5rem; text-align: center;">🛍️ Xác nhận đặt giáo án</h1>
+    <h1 style="color: var(--mau-chinh, #004085); margin-bottom: 0.5rem; text-align: center;">Xác nhận đặt giáo án</h1>
     <p style="text-align: center; color: #666; margin-bottom: 2rem;">Vui lòng kiểm tra lại danh sách học liệu và thông tin người nhận</p>
 
     <?php if ($loiDatHang !== ''): ?>
         <div role="alert" aria-live="assertive" style="background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; color: #c0392b;">
-            <strong>⚠️ Không thể hoàn tất đơn hàng:</strong> <?= e($loiDatHang) ?>
+            <strong>Không thể hoàn tất đơn hàng:</strong> <?= e($loiDatHang) ?>
         </div>
     <?php endif; ?>
 
     <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 2rem;">
         <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; color: #333;">
-            👤 Thông tin người đặt
+            Thông tin người đặt
         </h2>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
             <div>
@@ -94,7 +94,7 @@ require_once __DIR__ . '/inc/header.php';
         </div>
 
         <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; color: #333;">
-            📚 Danh sách giáo án đăng ký tải
+            Danh sách giáo án đăng ký tải
         </h2>
         <div class="khung-cuon-bang" style="overflow-x: auto; margin-bottom: 1.5rem;">
             <table style="width: 100%; border-collapse: collapse;">
@@ -147,7 +147,7 @@ require_once __DIR__ . '/inc/header.php';
                 <a href="gio-hang.php" style="color: #666; text-decoration: none;">&larr; Quay lại giỏ hàng</a>
                 <button type="submit" class="nut-thao-tac nut-thao-tac--xem"
                         style="padding: 0.85rem 2rem; font-size: 1.05rem; font-weight: bold; border-radius: 6px; cursor: pointer;">
-                    🚀 Xác nhận đặt đơn hàng
+                    Xác nhận đặt đơn hàng
                 </button>
             </div>
         </form>

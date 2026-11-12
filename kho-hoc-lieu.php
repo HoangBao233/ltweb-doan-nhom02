@@ -151,7 +151,7 @@ require __DIR__ . '/inc/header.php';
                 </button>
 
                 <?php if ($loc['q'] !== '' || $loc['dm'] || $loc['giaToiDa'] || $loc['cap_hoc'] !== 'Tất cả' || $sx !== 'moi'): ?>
-                    <a href="kho-hoc-lieu.php" style="padding: 0.5rem 1rem; color: #666; text-decoration: none;">✕ Xoá bộ lọc</a>
+                    <a href="kho-hoc-lieu.php" style="padding: 0.5rem 1rem; color: #666; text-decoration: none;">Xoá bộ lọc</a>
                 <?php endif; ?>
             </form>
         </section>
@@ -183,9 +183,9 @@ require __DIR__ . '/inc/header.php';
                                         <?= e($ga->cap_hoc) ?>
                                     </span>
                                     <button type="button" class="nut-yeu-thich nut-luu-giao-an" data-id="<?= $ga->id ?>" title="Lưu giáo án"
-                                            style="background: none; border: none; cursor: pointer; font-size: 1.4rem; color: #ccc; transition: color 0.2s;"
-                                            onclick="this.classList.toggle('da-thich'); this.style.color = this.classList.contains('da-thich') ? '#e74c3c' : '#ccc';">
-                                        ♥
+                                            style="background: none; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.85rem; padding: 0.15rem 0.5rem; color: #64748b; transition: all 0.2s;"
+                                            onclick="this.classList.toggle('da-thich'); this.style.color = this.classList.contains('da-thich') ? '#e74c3c' : '#64748b';">
+                                        Lưu
                                     </button>
                                 </div>
                                 <h3 class="the-hoc-lieu__tieu-de"><?= e($ga->ten) ?></h3>

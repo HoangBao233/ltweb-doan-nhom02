@@ -78,17 +78,17 @@ require_once __DIR__ . '/inc/header.php';
 ?>
 
     <main class="trang__chinh" style="max-width: 480px; margin: 3rem auto; padding: 0 1rem;">
-        <h1 style="text-align: center; margin-bottom: 1.5rem; color: var(--mau-chinh, #004085);">🔐 Đăng nhập tài khoản</h1>
+        <h1 style="text-align: center; margin-bottom: 1.5rem; color: var(--mau-chinh, #004085);">Đăng nhập tài khoản</h1>
 
         <?php if ($thongBao !== ''): ?>
             <div role="status" style="background: #e8f5e9; border: 1px solid #4caf50; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #2e7d32;">
-                ✅ <?= e($thongBao) ?>
+                <?= e($thongBao) ?>
             </div>
         <?php endif; ?>
 
         <?php if ($loi !== ''): ?>
             <div role="alert" aria-live="assertive" style="background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #c0392b;">
-                ⚠️ <?= e($loi) ?>
+                <?= e($loi) ?>
             </div>
         <?php endif; ?>
 

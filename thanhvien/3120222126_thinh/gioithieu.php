@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $ipGui
             ]);
 
-            $_SESSION['flash_cv_thinh'] = '✅ Cảm ơn bạn! Yêu cầu nhận CV của bạn đã được ghi nhận vào hệ thống CSDL thành công.';
+            $_SESSION['flash_cv_thinh'] = 'Cảm ơn bạn! Yêu cầu nhận CV của bạn đã được ghi nhận vào hệ thống CSDL thành công.';
             chuyen_trang('gioithieu.php#khu-vuc-cv');
         } catch (Throwable $e) {
             error_log('Lỗi lưu tv_yeu_cau_cv: ' . $e->getMessage());
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // ============================================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'xoa_cv') {
     if (!$laChuTrang) {
-        $_SESSION['flash_cv_loi'] = '❌ Bạn không có quyền xóa yêu cầu này.';
+        $_SESSION['flash_cv_loi'] = 'Bạn không có quyền xóa yêu cầu này.';
         chuyen_trang('gioithieu.php#khu-vuc-cv');
     }
 
@@ -188,10 +188,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             // Ràng buộc AND mssv = MSSV để không xóa nhầm dữ liệu thành viên khác
             $stDel = db()->prepare('DELETE FROM tv_yeu_cau_cv WHERE id = ? AND mssv = ?');
             $stDel->execute([$idXoa, MSSV]);
-            $_SESSION['flash_cv_thinh'] = "✅ Đã xóa yêu cầu CV #{$idXoa} thành công.";
+            $_SESSION['flash_cv_thinh'] = "Đã xóa yêu cầu CV #{$idXoa} thành công.";
         } catch (Throwable $e) {
             error_log('Lỗi xóa tv_yeu_cau_cv: ' . $e->getMessage());
-            $_SESSION['flash_cv_loi'] = '❌ Không thể xóa yêu cầu vào lúc này.';
+            $_SESSION['flash_cv_loi'] = 'Không thể xóa yêu cầu vào lúc này.';
         }
     }
     chuyen_trang('gioithieu.php#khu-vuc-cv');
@@ -242,7 +242,7 @@ require_once __DIR__ . '/../../inc/header.php';
         <!-- THANH CÔNG CỤ KIỂM THỬ NHANH DÀNH CHO GIẢNG VIÊN -->
         <div style="background: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 0.875rem;">
             <div>
-                <strong>🧪 Kiểm thử nhanh quyền chủ trang:</strong>
+                <strong>Kiểm thử nhanh quyền chủ trang:</strong>
                 <?php if ($laChuTrang): ?>
                     <span style="background: #dcfce7; color: #166534; font-weight: bold; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem;">Đang là Chủ trang (Thịnh)</span>
                 <?php elseif ($ndHienTai): ?>
@@ -284,19 +284,19 @@ require_once __DIR__ . '/../../inc/header.php';
                     <button type="button" id="btn-saochep-email" class="nut-thao-tac nut-thao-tac--xem"
                             aria-label="Sao chép địa chỉ Email của Thịnh"
                             style="padding: 0.5rem 1rem; background: #004d40; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
-                        📋 Sao chép Email liên hệ
+                        Sao chép Email liên hệ
                     </button>
                 </div>
 
                 <!-- TÍNH NĂNG TĨNH CŨ 2: Đánh giá hồ sơ 5 sao (JS client-side) -->
                 <div class="khoi-danh-gia-ca-nhan" style="background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px dashed #ccc; margin-top: 1rem;">
                     <h3 style="margin-top: 0; font-size: 1.05rem;">Đánh giá hồ sơ cá nhân</h3>
-                    <div id="khung-danh-gia-sao" class="danh-sach-sao" role="radiogroup" aria-label="Đánh giá chất lượng hồ sơ" style="display: flex; gap: 0.3rem; font-size: 1.5rem; color: #ffb300; margin-bottom: 0.5rem;">
-                        <button type="button" class="nut-danh-gia-sao" data-val="1" aria-label="Đánh giá 1 sao" role="radio" aria-checked="false" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #ffb300;">★</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="2" aria-label="Đánh giá 2 sao" role="radio" aria-checked="false" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #ffb300;">★</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="3" aria-label="Đánh giá 3 sao" role="radio" aria-checked="false" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #ffb300;">★</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="4" aria-label="Đánh giá 4 sao" role="radio" aria-checked="false" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #ffb300;">★</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="5" aria-label="Đánh giá 5 sao" role="radio" aria-checked="false" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #ffb300;">★</button>
+                    <div id="khung-danh-gia-sao" class="danh-sach-sao" role="radiogroup" aria-label="Đánh giá chất lượng hồ sơ" style="display: flex; gap: 0.4rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                        <button type="button" class="nut-danh-gia-sao" data-val="1" aria-label="Đánh giá 1 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">1 sao</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="2" aria-label="Đánh giá 2 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">2 sao</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="3" aria-label="Đánh giá 3 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">3 sao</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="4" aria-label="Đánh giá 4 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">4 sao</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="5" aria-label="Đánh giá 5 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">5 sao</button>
                     </div>
                     <p id="thong-bao-danh-gia" class="thong-bao-danh-gia" aria-live="polite" style="margin: 0; font-size: 0.9rem; color: #666;">Bạn chưa đánh giá. Hãy chọn số sao để gửi đánh giá nhé!</p>
                 </div>
@@ -308,7 +308,7 @@ require_once __DIR__ . '/../../inc/header.php';
         <!-- ============================================================================ -->
         <section class="khoi-tinh-diem" style="margin-bottom: 2rem; padding: 1.75rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             <h2 style="margin-top: 0; color: #004d40; display: flex; align-items: center; gap: 0.5rem; font-size: 1.35rem;">
-                <span>🧮</span> Máy Tính Điểm Học Phần &amp; GPA (BTN5)
+                Máy Tính Điểm Học Phần &amp; GPA (BTN5)
             </h2>
             <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.5;">Nhập điểm các cột đánh giá (từ 0.0 đến 10.0) để tính điểm tổng kết môn học theo trọng số: <strong>Chuyên cần (20%)</strong>, <strong>Giữa kỳ (30%)</strong>, <strong>Cuối kỳ (50%)</strong>.</p>
 
@@ -348,13 +348,13 @@ require_once __DIR__ . '/../../inc/header.php';
                 </div>
 
                 <button type="submit" style="margin-top: 1.25rem; padding: 0.7rem 1.75rem; background: #004d40; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: background 0.2s ease;">
-                    🧮 Tính Điểm Tổng Kết
+                    Tính Điểm Tổng Kết
                 </button>
             </form>
 
             <?php if ($ketQuaDiem): ?>
                 <div style="margin-top: 1.5rem; padding: 1.25rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid <?= e($ketQuaDiem['mau']) ?>; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
-                    <h3 style="margin-top: 0; color: #166534; font-size: 1.1rem; margin-bottom: 0.75rem;">🎯 Kết quả tính điểm môn học:</h3>
+                    <h3 style="margin-top: 0; color: #166534; font-size: 1.1rem; margin-bottom: 0.75rem;">Kết quả tính điểm môn học:</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
                         <div style="background: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
                             <span style="display: block; font-size: 0.85rem; color: #64748b; font-weight: 500;">Điểm Hệ 10</span>
@@ -383,7 +383,7 @@ require_once __DIR__ . '/../../inc/header.php';
         <section id="khu-vuc-cv" class="khoi-yeu-cau-cv" style="margin-bottom: 2rem; padding: 1.75rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
                 <h2 style="margin: 0; color: #0f172a; display: flex; align-items: center; gap: 0.5rem; font-size: 1.35rem;">
-                    <span>📩</span> Đăng Ký Nhận CV Cá Nhân (MySQL)
+                    Đăng Ký Nhận CV Cá Nhân (MySQL)
                 </h2>
                 <span style="font-size: 0.85rem; color: #64748b; background: #f1f5f9; padding: 0.3rem 0.75rem; border-radius: 20px;">
                     Đã nhận: <strong><?= $tongYeuCauCV ?></strong> yêu cầu
@@ -433,7 +433,7 @@ require_once __DIR__ . '/../../inc/header.php';
                 </div>
 
                 <button type="submit" style="padding: 0.75rem 1.75rem; background: #004d40; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: background 0.2s ease;">
-                    🚀 Gửi Yêu Cầu Nhận CV
+                    Gửi Yêu Cầu Nhận CV
                 </button>
             </form>
 
@@ -442,7 +442,7 @@ require_once __DIR__ . '/../../inc/header.php';
                 <div style="border-top: 2px dashed #cbd5e1; padding-top: 1.5rem; margin-top: 1.5rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
                         <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">
-                            <span>👑</span> Quản lý Yêu cầu CV
+                            Quản lý Yêu cầu CV
                             <span style="font-size: 0.75rem; background: #fef3c7; color: #92400e; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold;">Chủ trang</span>
                         </h3>
                         <span style="font-size: 0.85rem; color: #64748b;">Trang <?= $trangHienTaiCV ?> / <?= $tongSoTrangCV ?></span>
@@ -509,7 +509,7 @@ require_once __DIR__ . '/../../inc/header.php';
                 </div>
             <?php else: ?>
                 <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem; text-align: center; font-size: 0.9rem; color: #64748b; margin-top: 1.5rem;">
-                    🔒 Khu vực quản trị danh sách yêu cầu chỉ hiển thị khi <strong>Nguyễn Tiến Thịnh (chủ trang)</strong> đăng nhập vào hệ thống.
+                    Khu vực quản trị danh sách yêu cầu chỉ hiển thị khi <strong>Nguyễn Tiến Thịnh (chủ trang)</strong> đăng nhập vào hệ thống.
                 </div>
             <?php endif; ?>
         </section>

@@ -53,6 +53,6 @@ export function capNhatSoDemYeuThich() {
     
     // Cập nhật nội dung số đếm
     if (theDem) {
-        theDem.textContent = `❤️ Đã lưu: ${danhSach.length}`;
+        theDem.textContent = `Đã lưu: ${danhSach.length}`;
     }
 }

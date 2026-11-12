@@ -87,12 +87,12 @@ require_once __DIR__ . '/inc/header.php';
 ?>
 
     <main class="trang__chinh" style="max-width: 520px; margin: 3rem auto; padding: 0 1rem;">
-        <h1 style="text-align: center; margin-bottom: 0.5rem; color: var(--mau-chinh, #004085);">📝 Đăng ký tài khoản</h1>
+        <h1 style="text-align: center; margin-bottom: 0.5rem; color: var(--mau-chinh, #004085);">Đăng ký tài khoản</h1>
         <p style="text-align: center; color: #555; margin-bottom: 2rem;">Tạo tài khoản để tham gia tải giáo án và lưu bài giảng yêu thích</p>
 
         <?php if ($loiChung !== ''): ?>
             <div role="alert" aria-live="assertive" style="background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #c0392b;">
-                ⚠️ <?= e($loiChung) ?>
+                <?= e($loiChung) ?>
             </div>
         <?php endif; ?>
 
@@ -112,7 +112,7 @@ require_once __DIR__ . '/inc/header.php';
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['ho_ten']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['ho_ten'])): ?>
                     <p id="loi-ho-ten" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
-                        ⚠️ <?= e($loi['ho_ten']) ?>
+                        <?= e($loi['ho_ten']) ?>
                     </p>
                 <?php endif; ?>
             </div>
@@ -130,7 +130,7 @@ require_once __DIR__ . '/inc/header.php';
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['email']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['email'])): ?>
                     <p id="loi-email" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
-                        ⚠️ <?= e($loi['email']) ?>
+                        <?= e($loi['email']) ?>
                     </p>
                 <?php endif; ?>
             </div>
@@ -147,7 +147,7 @@ require_once __DIR__ . '/inc/header.php';
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['mat_khau']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['mat_khau'])): ?>
                     <p id="loi-mat-khau" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
-                        ⚠️ <?= e($loi['mat_khau']) ?>
+                        <?= e($loi['mat_khau']) ?>
                     </p>
                 <?php endif; ?>
             </div>
@@ -164,7 +164,7 @@ require_once __DIR__ . '/inc/header.php';
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['xac_nhan_mat_khau']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['xac_nhan_mat_khau'])): ?>
                     <p id="loi-xac-nhan" role="alert" style="color: #c0392b; font-size: 0.875rem; margin-top: 0.35rem; margin-bottom: 0;">
-                        ⚠️ <?= e($loi['xac_nhan_mat_khau']) ?>
+                        <?= e($loi['xac_nhan_mat_khau']) ?>
                     </p>
                 <?php endif; ?>
             </div>

@@ -101,7 +101,7 @@
 //         btnLuu.dataset.id = item.id;
 //         btnLuu.style.backgroundColor = daLuu ? '#28a745' : '';
 //         btnLuu.style.color = daLuu ? '#fff' : '';
-//         btnLuu.textContent = daLuu ? '🔖 Đã lưu' : '🔖 Lưu';
+//         btnLuu.textContent = daLuu ? 'Đã lưu' : 'Lưu';
 //         divNut.appendChild(btnLuu);
 
 //         divNoiDung.appendChild(divNut);
@@ -161,7 +161,7 @@
 //     locCapHoc.addEventListener('change', xuLyDuLieu);
 //     sapXep.addEventListener('change', xuLyDuLieu);
 
-//     // ỦY QUYỀN SỰ KIỆN (Event Delegation) cho nút Lưu 🔖
+//     // ỦY QUYỀN SỰ KIỆN (Event Delegation) cho nút Lưu
 //     vungDanhSach.addEventListener('click', (e) => {
 //         if (e.target.classList.contains('btn-luu')) {
 //             const id = e.target.dataset.id;

@@ -171,8 +171,8 @@ require __DIR__ . '/../../inc/header.php';
     <!-- Nút Quay về -->
     <nav class="thanh-dieu-huong" aria-label="Điều hướng phụ" style="background: var(--nen-phu, #f4f6f8); padding: 0.75rem 1rem;">
         <ul style="display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0; flex-wrap: wrap;">
-            <li><a href="<?= $goc ?>index.php" class="menu-chinh__lien-ket">⬅ Quay về Trang chủ</a></li>
-            <li><a href="<?= $goc ?>ve-chung-toi.php" class="menu-chinh__lien-ket">⬅ Quay về Giới thiệu Nhóm</a></li>
+            <li><a href="<?= $goc ?>index.php" class="menu-chinh__lien-ket">Quay về Trang chủ</a></li>
+            <li><a href="<?= $goc ?>ve-chung-toi.php" class="menu-chinh__lien-ket">Quay về Giới thiệu Nhóm</a></li>
         </ul>
     </nav>
 
@@ -189,7 +189,7 @@ require __DIR__ . '/../../inc/header.php';
             <!-- Bộ đếm lượt xem trang theo ngày và tổng lượt xem -->
             <div class="cong-cu-doc" style="margin-top: 1.5rem; padding: 1rem;
                  background: #f0f8ff; border: 1px solid #bee3f8; border-radius: 8px;">
-                <h2 style="font-size: 1rem; margin-bottom: 0.5rem;">📊 Lượt xem hôm nay</h2>
+                <h2 style="font-size: 1rem; margin-bottom: 0.5rem;">Lượt xem hôm nay</h2>
                 <p style="font-size: 2rem; font-weight: bold; color: #2b6cb0; margin: 0;">
                     <?= number_format($luotXemHomNay) ?>
                 </p>
@@ -200,7 +200,7 @@ require __DIR__ . '/../../inc/header.php';
 
             <!-- Bảng thống kê lượt xem 7 ngày gần nhất -->
             <div class="khung-thong-ke-xem">
-                <h2 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: #2d3748;">📅 Lượt xem 7 ngày gần nhất</h2>
+                <h2 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: #2d3748;">Lượt xem 7 ngày gần nhất</h2>
                 <div class="bang-cuon-ngang" style="min-width: 0;">
                     <table class="bang-mini">
                         <thead>
@@ -241,7 +241,7 @@ require __DIR__ . '/../../inc/header.php';
             <!-- Thanh trạng thái kiểm thử quyền chủ trang (dành cho GV/chấm điểm) -->
             <aside class="thanh-test-quyen" aria-label="Kiểm thử phân quyền chủ trang">
                 <div>
-                    <strong>👤 Trạng thái đăng nhập:</strong>
+                    <strong>Trạng thái đăng nhập:</strong>
                     <?php if ($ndHienTai): ?>
                         <?= e($ndHienTai['ho_ten']) ?> (<?= e($ndHienTai['email']) ?>)
                         <?php if ($laChuTrang): ?>
@@ -266,19 +266,19 @@ require __DIR__ . '/../../inc/header.php';
             <!-- Thông báo Flash (PRG) -->
             <?php if ($thongBaoFlash !== ''): ?>
                 <div class="thong-bao-flash" role="alert">
-                    ✅ <?= e($thongBaoFlash) ?>
+                    <?= e($thongBaoFlash) ?>
                 </div>
             <?php endif; ?>
 
             <?php if (isset($loi['quyen'])): ?>
                 <div class="thong-bao-loi" role="alert">
-                    ⚠️ <?= e($loi['quyen']) ?>
+                    <?= e($loi['quyen']) ?>
                 </div>
             <?php endif; ?>
 
             <!-- Đồng hồ đếm ngược (giữ từ bài 4) -->
             <div class="khung-dem-nguoc">
-                <h2>⏳ Đếm ngược đến ngày báo cáo Thiết kế lập trình Web</h2>
+                <h2>Đếm ngược đến ngày báo cáo Thiết kế lập trình Web</h2>
                 <div id="dong-ho-thi" class="dong-ho" aria-live="polite" aria-atomic="true">
                     Đang tải thời gian...
                 </div>
@@ -289,7 +289,7 @@ require __DIR__ . '/../../inc/header.php';
             <!-- (Tìm kiếm LIKE + Lọc công nghệ + Sắp xếp match)       -->
             <!-- ===================================================== -->
             <section aria-labelledby="tieu-de-du-an">
-                <h2 id="tieu-de-du-an">📂 Danh sách Dự án &amp; Học liệu tiêu biểu</h2>
+                <h2 id="tieu-de-du-an">Danh sách Dự án &amp; Học liệu tiêu biểu</h2>
                 <p style="color: #718096; margin-top: -0.5rem; margin-bottom: 1rem;">
                     Tra cứu và tải về các sản phẩm phần mềm giáo dục do Nguyễn Cảnh Tấn phát triển.
                 </p>
@@ -329,7 +329,7 @@ require __DIR__ . '/../../inc/header.php';
 
                         <div>
                             <button type="submit" class="nut-cong-cu" style="background: #2b6cb0; color: #fff; width: 100%; padding: 0.65rem 1rem;">
-                                🔍 Lọc &amp; Tìm
+                                Lọc &amp; Tìm
                             </button>
                         </div>
                     </form>
@@ -353,7 +353,7 @@ require __DIR__ . '/../../inc/header.php';
                                     <p class="du-an-mo-ta"><?= e($da['mo_ta']) ?></p>
                                 </div>
                                 <div class="du-an-footer">
-                                    <span>📥 <strong><?= number_format((int)$da['luot_tai']) ?></strong> lượt tải</span>
+                                    <span><strong><?= number_format((int)$da['luot_tai']) ?></strong> lượt tải</span>
                                     <span style="color: #38a169; font-weight: 600;">Miễn phí</span>
                                 </div>
                             </article>
@@ -366,7 +366,7 @@ require __DIR__ . '/../../inc/header.php';
             <!-- CHỨC NĂNG 1 — SỔ LƯU BÚT (PHÂN TRANG & XÓA CHỦ TRANG) -->
             <!-- ===================================================== -->
             <section aria-labelledby="tieu-de-luu-but" style="margin-top: 2rem;">
-                <h2 id="tieu-de-luu-but">✍️ Sổ lưu bút &amp; Nhận xét của khách</h2>
+                <h2 id="tieu-de-luu-but">Sổ lưu bút &amp; Nhận xét của khách</h2>
                 <p style="color: #718096; margin-top: -0.5rem; margin-bottom: 1rem;">
                     Để lại lời nhắn đóng góp, nhận xét hoặc câu hỏi trao đổi với Tấn nhé!
                 </p>
@@ -398,7 +398,7 @@ require __DIR__ . '/../../inc/header.php';
                         <div>
                             <button type="submit" name="gui_luu_but" value="1" class="nut-cong-cu"
                                     style="background: #2b6cb0; color: #fff; padding: 0.65rem 1.5rem; font-size: 0.95rem;">
-                                ✉️ Gửi lời nhắn
+                                Gửi lời nhắn
                             </button>
                         </div>
                     </form>
@@ -427,7 +427,7 @@ require __DIR__ . '/../../inc/header.php';
                                                   style="display: inline; margin: 0; padding: 0;">
                                                 <input type="hidden" name="xoa" value="<?= (int)$lb['id'] ?>">
                                                 <button type="submit" class="nut-xoa-lb" aria-label="Xóa lời nhắn của <?= e($lb['ten_khach']) ?>">
-                                                    🗑️ Xóa
+                                                    Xóa
                                                 </button>
                                             </form>
                                         <?php endif; ?>

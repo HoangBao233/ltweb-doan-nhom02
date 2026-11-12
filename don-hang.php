@@ -91,19 +91,19 @@ if (isset($_GET['id'])) {
 
     <main class="trang__chinh" style="max-width: 900px; margin: 3rem auto; padding: 0 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-            <h1 style="margin: 0; color: var(--mau-chinh, #004085);">📦 Chi tiết đơn hàng #<?= (int)$donHang['id'] ?></h1>
+            <h1 style="margin: 0; color: var(--mau-chinh, #004085);">Chi tiết đơn hàng #<?= (int)$donHang['id'] ?></h1>
             <a href="don-hang.php" style="text-decoration: none; color: var(--mau-chinh, #007bff); font-weight: bold;">&larr; Về danh sách đơn hàng</a>
         </div>
 
         <?php if ($thongBao !== ''): ?>
             <div role="status" style="background: #e8f5e9; border: 1px solid #4caf50; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #2e7d32;">
-                ✅ <?= e($thongBao) ?>
+                <?= e($thongBao) ?>
             </div>
         <?php endif; ?>
 
         <?php if ($loi !== ''): ?>
             <div role="alert" style="background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #c0392b;">
-                ⚠️ <?= e($loi) ?>
+                <?= e($loi) ?>
             </div>
         <?php endif; ?>
 
@@ -121,11 +121,11 @@ if (isset($_GET['id'])) {
                     <span style="color: #666; font-size: 0.85rem;">Trạng thái đơn:</span>
                     <p style="margin: 0.25rem 0 0 0;">
                         <?php if ($donHang['trang_thai'] === 'da_giao'): ?>
-                            <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">✅ Đã giao / Hoàn tất</span>
+                            <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">Đã giao / Hoàn tất</span>
                         <?php elseif ($donHang['trang_thai'] === 'da_huy'): ?>
-                            <span style="background: #f8d7da; color: #721c24; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">❌ Đã hủy</span>
+                            <span style="background: #f8d7da; color: #721c24; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">Đã hủy</span>
                         <?php else: ?>
-                            <span style="background: #fff3cd; color: #856404; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">⏳ Chờ duyệt</span>
+                            <span style="background: #fff3cd; color: #856404; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">Chờ duyệt</span>
                         <?php endif; ?>
                     </p>
                 </div>
@@ -186,11 +186,11 @@ if (isset($_GET['id'])) {
                     <form method="POST" action="don-hang.php?id=<?= (int)$donHang['id'] ?>" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
                         <input type="hidden" name="cap_nhat_trang_thai" value="1">
                         <input type="hidden" name="don_hang_id" value="<?= (int)$donHang['id'] ?>">
-                        <label for="trang_thai" style="font-weight: bold; color: #333;">🛠️ Cập nhật trạng thái đơn:</label>
+                        <label for="trang_thai" style="font-weight: bold; color: #333;">Cập nhật trạng thái đơn:</label>
                         <select id="trang_thai" name="trang_thai" style="padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid #ccc; font-size: 0.95rem;">
-                            <option value="cho_duyet" <?= $donHang['trang_thai'] === 'cho_duyet' ? 'selected' : '' ?>>⏳ Chờ duyệt</option>
-                            <option value="da_giao" <?= $donHang['trang_thai'] === 'da_giao' ? 'selected' : '' ?>>✅ Đã giao / Hoàn tất</option>
-                            <option value="da_huy" <?= $donHang['trang_thai'] === 'da_huy' ? 'selected' : '' ?>>❌ Đã hủy</option>
+                            <option value="cho_duyet" <?= $donHang['trang_thai'] === 'cho_duyet' ? 'selected' : '' ?>>Chờ duyệt</option>
+                            <option value="da_giao" <?= $donHang['trang_thai'] === 'da_giao' ? 'selected' : '' ?>>Đã giao / Hoàn tất</option>
+                            <option value="da_huy" <?= $donHang['trang_thai'] === 'da_huy' ? 'selected' : '' ?>>Đã hủy</option>
                         </select>
                         <button type="submit" class="nut-thao-tac nut-thao-tac--xem" style="padding: 0.5rem 1.25rem;">
                             Lưu trạng thái
@@ -242,7 +242,7 @@ require_once __DIR__ . '/inc/header.php';
 
 <main class="trang__chinh" style="max-width: 1000px; margin: 3rem auto; padding: 0 1rem;">
     <h1 style="color: var(--mau-chinh, #004085); margin-bottom: 0.5rem;">
-        <?= $isAdmin ? '🛠️ Quản lý đơn hàng (Toàn hệ thống)' : '📦 Đơn hàng của tôi' ?>
+        <?= $isAdmin ? 'Quản lý đơn hàng (Toàn hệ thống)' : 'Đơn hàng của tôi' ?>
     </h1>
     <p style="color: #666; margin-bottom: 2rem;">
         <?= $isAdmin ? 'Xem và phê duyệt các yêu cầu đặt mua / tải giáo án của giáo viên và khách hàng' : 'Xem lại lịch sử các giáo án bạn đã đăng ký tải và mua trên hệ thống' ?>
@@ -250,13 +250,13 @@ require_once __DIR__ . '/inc/header.php';
 
     <?php if ($thongBao !== ''): ?>
         <div role="status" style="background: #e8f5e9; border: 1px solid #4caf50; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #2e7d32;">
-            ✅ <?= e($thongBao) ?>
+            <?= e($thongBao) ?>
         </div>
     <?php endif; ?>
 
     <?php if ($loi !== ''): ?>
         <div role="alert" style="background: #fff3f3; border: 1px solid #e74c3c; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: #c0392b;">
-            ⚠️ <?= e($loi) ?>
+            <?= e($loi) ?>
         </div>
     <?php endif; ?>
 
@@ -304,11 +304,11 @@ require_once __DIR__ . '/inc/header.php';
                             </td>
                             <td style="padding: 1rem; text-align: center;">
                                 <?php if ($don['trang_thai'] === 'da_giao'): ?>
-                                    <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">✅ Đã giao</span>
+                                    <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">Đã giao</span>
                                 <?php elseif ($don['trang_thai'] === 'da_huy'): ?>
-                                    <span style="background: #f8d7da; color: #721c24; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">❌ Đã hủy</span>
+                                    <span style="background: #f8d7da; color: #721c24; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">Đã hủy</span>
                                 <?php else: ?>
-                                    <span style="background: #fff3cd; color: #856404; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">⏳ Chờ duyệt</span>
+                                    <span style="background: #fff3cd; color: #856404; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">Chờ duyệt</span>
                                 <?php endif; ?>
                             </td>
                             <td style="padding: 1rem; text-align: center;">

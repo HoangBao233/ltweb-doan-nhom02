@@ -28,7 +28,7 @@ if (!headers_sent()) {
 <body style="background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1e293b;">
     <header style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
         <div style="font-weight: 700; font-size: 1.25rem; color: #004085;">
-            📚 ITeduShare
+            ITeduShare
         </div>
         <a href="index.php" style="color: #0284c7; text-decoration: none; font-size: 0.95rem; font-weight: 500;">
             ← Về Trang chủ
@@ -51,7 +51,7 @@ if (!headers_sent()) {
                 Quay về Trang chủ
             </a>
             <button type="button" onclick="window.location.reload();" style="padding: 0.65rem 1.5rem; background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; font-size: 0.95rem; cursor: pointer;">
-                🔄 Thử tải lại
+                Thử tải lại
             </button>
         </div>
     </main>
