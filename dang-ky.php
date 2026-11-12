@@ -107,7 +107,7 @@ require_once __DIR__ . '/inc/header.php';
                 <input type="text" id="ho-ten" name="ho_ten"
                        value="<?= e($hoTenNhap) ?>"
                        required autocomplete="name"
-                       placeholder="Ví dụ: Nguyễn Văn An"
+                       placeholder="Họ và tên"
                        <?= isset($loi['ho_ten']) ? 'aria-invalid="true" aria-describedby="loi-ho-ten"' : '' ?>
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['ho_ten']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['ho_ten'])): ?>
@@ -125,7 +125,7 @@ require_once __DIR__ . '/inc/header.php';
                 <input type="email" id="email" name="email"
                        value="<?= e($emailNhap) ?>"
                        required autocomplete="email"
-                       placeholder="user@example.com"
+                       placeholder="Địa chỉ email"
                        <?= isset($loi['email']) ? 'aria-invalid="true" aria-describedby="loi-email"' : '' ?>
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['email']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['email'])): ?>
@@ -142,7 +142,7 @@ require_once __DIR__ . '/inc/header.php';
                 </label>
                 <input type="password" id="mat-khau" name="mat_khau"
                        required autocomplete="new-password"
-                       placeholder="Nhập tối thiểu 8 ký tự"
+                       placeholder="Mật khẩu"
                        <?= isset($loi['mat_khau']) ? 'aria-invalid="true" aria-describedby="loi-mat-khau"' : '' ?>
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['mat_khau']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['mat_khau'])): ?>
@@ -159,7 +159,7 @@ require_once __DIR__ . '/inc/header.php';
                 </label>
                 <input type="password" id="xac-nhan-mat-khau" name="xac_nhan_mat_khau"
                        required autocomplete="new-password"
-                       placeholder="Nhập lại mật khẩu ở trên"
+                       placeholder="Xác nhận lại mật khẩu"
                        <?= isset($loi['xac_nhan_mat_khau']) ? 'aria-invalid="true" aria-describedby="loi-xac-nhan"' : '' ?>
                        style="width: 100%; padding: 0.75rem; border: 1px solid <?= isset($loi['xac_nhan_mat_khau']) ? '#e74c3c' : '#ccc' ?>; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
                 <?php if (isset($loi['xac_nhan_mat_khau'])): ?>

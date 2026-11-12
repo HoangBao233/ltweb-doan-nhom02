@@ -16,7 +16,7 @@ function khoiTaoMain() {
         if (!menu || !nut) return;
         const dangMo = menu.classList.toggle('mo');
         nut.setAttribute('aria-expanded', dangMo ? 'true' : 'false');
-        nut.textContent = dangMo ? 'Đóng' : 'Menu';
+        nut.textContent = dangMo ? '✕ Đóng' : '☰ Menu';
     };
 
     const nutMenu = document.querySelector('.nut-menu');
@@ -31,7 +31,7 @@ function khoiTaoMain() {
             menuChinh.classList.remove('mo');
             if (nut) {
                 nut.setAttribute('aria-expanded', 'false');
-                nut.textContent = 'Menu';
+                nut.textContent = '☰ Menu';
                 nut.focus();
             }
         }
