@@ -170,10 +170,10 @@ require_once __DIR__ . '/../../inc/header.php';
 <link rel="stylesheet" href="css/canhan-bao.css">
 
 <!-- Thanh điều hướng liên kết nhanh -->
-<nav class="thanh-dieu-huong" aria-label="Menu cá nhân" style="margin-bottom: 1.5rem;">
-  <ul class="menu-chinh" style="display: flex; gap: 1rem; list-style: none; background: #f4f6f8; padding: 0.8rem 1.2rem; border-radius: 8px; flex-wrap: wrap;">
-    <li><a href="../../index.php" style="text-decoration: none; font-weight: bold; color: var(--mau-chinh, #004085);">&larr; Về Trang chủ</a></li>
-    <li><a href="../../ve-chung-toi.php" style="text-decoration: none; font-weight: bold; color: var(--mau-chinh, #004085);">&larr; Danh sách thành viên nhóm</a></li>
+<nav class="thanh-dieu-huong bao-dieu-huong" aria-label="Menu cá nhân">
+  <ul class="menu-chinh bao-menu-phu">
+    <li><a href="../../index.php" class="bao-menu-phu__link">&larr; Về Trang chủ</a></li>
+    <li><a href="../../ve-chung-toi.php" class="bao-menu-phu__link">&larr; Danh sách thành viên nhóm</a></li>
   </ul>
 </nav>
 
@@ -182,22 +182,22 @@ require_once __DIR__ . '/../../inc/header.php';
 
   <!-- Banner thông báo vai trò hiện tại -->
   <?php if ($laChuTrang): ?>
-      <div role="status" style="max-width: 1000px; margin: 0 auto 1.5rem auto; padding: 12px 18px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 8px; font-size: 0.95rem;">
+      <div role="status" class="bao-banner-vai-tro bao-banner-vai-tro--chu">
           <strong>Bạn đang đăng nhập với tư cách Chủ trang (Lê Hoàng Bảo)!</strong> Bạn có toàn quyền quản trị và thực hiện xóa các lời nhắn lưu bút.
       </div>
   <?php else: ?>
-      <div style="max-width: 1000px; margin: 0 auto 1.5rem auto; padding: 12px 18px; background: #e8f4fd; color: #0c5460; border: 1px solid #bee5eb; border-radius: 8px; font-size: 0.9rem;">
+      <div class="bao-banner-vai-tro bao-banner-vai-tro--khach">
           <em>Bạn đang xem trang với tư cách Khách. Chỉ khi chủ trang (tài khoản Lê Hoàng Bảo: <code>bao@ued.vn</code>) đăng nhập thì mới có quyền xóa lời nhắn lưu bút.</em>
       </div>
   <?php endif; ?>
 
-  <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem;">
+  <div class="bao-luoi-hai-cot">
     <!-- CỘT TRÁI: GIỚI THIỆU BẢN THÂN -->
-    <section class="bieu-mau" style="flex: 1; min-width: 320px;">
+    <section class="bieu-mau bao-cot">
       <h2>Giới thiệu bản thân</h2>
       <div class="gioi-thieu-grid">
           <div class="anh-dai-dien">
-             <img src="avatar-bao.jpg" alt="Ảnh chân dung của Lê Hoàng Bảo" class="anh-chan-dung" style="width: 200px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+             <img src="avatar-bao.jpg" alt="Ảnh chân dung của Lê Hoàng Bảo" class="anh-chan-dung anh-chan-dung--bao">
           </div>
           <div class="noi-dung-gioi-thieu">
              <p>Xin chào, tôi là <strong>Lê Hoàng Bảo</strong> (MSSV: 3120124003), sinh viên Khoa Toán - Tin, Trường Đại học Sư phạm - Đại học Đà Nẵng. Tôi đảm nhận vai trò <strong>Trưởng nhóm 02</strong> trong dự án ITeduShare.</p>
@@ -213,7 +213,7 @@ require_once __DIR__ . '/../../inc/header.php';
           </div>
       </div>
 
-      <article style="margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem;">
+      <article class="bao-vai-tro-box">
         <h3>Vai trò trong dự án ITeduShare</h3>
         <p>Phụ trách khởi tạo CSDL, thiết kế cấu trúc bảng và dữ liệu mẫu, xây dựng hàm kết nối Singleton PDO, đảm nhiệm Chức năng 1 (Trang chủ, Chi tiết giáo án, Giỏ hàng chống N+1, Lưu liên hệ) và quản lý tiến độ chung của nhóm.</p>
         <button type="button" class="nut-thao-tac nut-thao-tac--xem nut-lien-he-ca-nhan">Kết nối với tôi</button>
@@ -221,30 +221,30 @@ require_once __DIR__ . '/../../inc/header.php';
     </section>
 
     <!-- CỘT PHẢI: 2 CHỨC NĂNG ĐỘNG (SỔ LƯU BÚT MYSQL + KHẢO SÁT) -->
-    <div style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 2rem;">
+    <div class="bao-cot bao-cot--phai">
       
       <!-- ================================================================= -->
       <!-- CHỨC NĂNG CSDL 1 & 2: SỔ LƯU BÚT PHÂN TRANG & PHÂN QUYỀN CHỦ TRANG -->
       <!-- ================================================================= -->
-      <section class="bieu-mau" style="background-color: #fffdf5; border-color: #ffeeba;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
-            <h2 style="color: #856404; margin: 0;">Sổ Lưu Bút Khách Thăm</h2>
-            <span style="font-size: 0.85rem; background: #fff3cd; color: #856404; padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid #ffeeba; font-weight: bold;">
+      <section class="bieu-mau bao-the-luu-but">
+        <div class="bao-the-luu-but__dau">
+            <h2 class="bao-the-luu-but__tieu-de">Sổ Lưu Bút Khách Thăm</h2>
+            <span class="bao-huy-hieu-tong">
                 Tổng: <?= $tongLoiNhan ?> lời nhắn
             </span>
         </div>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+        <p class="bao-chu-thich-nho">
             Dữ liệu lưu trữ trực tiếp vào CSDL MySQL (bảng <code>tv_luu_but</code>).
         </p>
 
         <!-- Thông báo Flash Sổ lưu bút -->
         <?php if ($flashLuuBut): ?>
-            <div role="alert" style="padding: 10px; background: #d4edda; color: #155724; margin-bottom: 12px; border-radius: 4px; border: 1px solid #c3e6cb;">
+            <div role="alert" class="bao-flash bao-flash--ok">
                 <?= e($flashLuuBut) ?>
             </div>
         <?php endif; ?>
         <?php if ($flashLuuButLoi): ?>
-            <div role="alert" style="padding: 10px; background: #f8d7da; color: #721c24; margin-bottom: 12px; border-radius: 4px; border: 1px solid #f5c6cb;">
+            <div role="alert" class="bao-flash bao-flash--loi">
                 <?= e($flashLuuButLoi) ?>
             </div>
         <?php endif; ?>
@@ -253,72 +253,72 @@ require_once __DIR__ . '/../../inc/header.php';
         <form method="POST" action="gioithieu.php" novalidate>
             <input type="hidden" name="action" value="luu_but">
             
-            <div style="margin-bottom: 10px;">
-                <label for="ten_luubut" style="font-weight: bold; display: block; margin-bottom: 4px;">
-                    Họ và tên của bạn: <span style="color: red;">*</span>
+            <div class="bao-nhom-o">
+                <label for="ten_luubut" class="bao-nhan">
+                    Họ và tên của bạn: <span class="bao-dau-sao">*</span>
                 </label>
                 <input type="text" id="ten_luubut" name="ten" 
-                       style="width: 100%; padding: 8px; border: 1px solid <?= isset($loiLuuBut['ten']) ? '#dc3545' : '#ccc' ?>; border-radius: 4px;" 
+                       class="bao-o-nhap <?= isset($loiLuuBut['ten']) ? 'bao-o-nhap--loi' : '' ?>" 
                        value="<?= e($duLuuBut['ten']) ?>" required maxlength="50">
                 <?php if (isset($loiLuuBut['ten'])): ?>
-                    <span style="color: #dc3545; font-size: 0.85rem; margin-top: 3px; display: block;">
+                    <span class="bao-loi-o">
                         <?= e($loiLuuBut['ten']) ?>
                     </span>
                 <?php endif; ?>
             </div>
 
-            <div style="margin-bottom: 12px;">
-                <label for="loi_nhan_luubut" style="font-weight: bold; display: block; margin-bottom: 4px;">
-                    Lời nhắn lưu bút: <span style="color: red;">*</span>
+            <div class="bao-nhom-o--cuoi">
+                <label for="loi_nhan_luubut" class="bao-nhan">
+                    Lời nhắn lưu bút: <span class="bao-dau-sao">*</span>
                 </label>
                 <textarea id="loi_nhan_luubut" name="loi_nhan" rows="3" 
-                          style="width: 100%; padding: 8px; border: 1px solid <?= isset($loiLuuBut['loi_nhan']) ? '#dc3545' : '#ccc' ?>; border-radius: 4px;" 
+                          class="bao-o-nhap <?= isset($loiLuuBut['loi_nhan']) ? 'bao-o-nhap--loi' : '' ?>" 
                           required maxlength="500"><?= e($duLuuBut['loi_nhan']) ?></textarea>
                 <?php if (isset($loiLuuBut['loi_nhan'])): ?>
-                    <span style="color: #dc3545; font-size: 0.85rem; margin-top: 3px; display: block;">
+                    <span class="bao-loi-o">
                         <?= e($loiLuuBut['loi_nhan']) ?>
                     </span>
                 <?php endif; ?>
             </div>
 
-            <button type="submit" class="nut-thao-tac nut-thao-tac--sua" style="width: 100%; cursor: pointer;">
+            <button type="submit" class="nut-thao-tac nut-thao-tac--sua bao-nut-day">
                 Gửi lời nhắn lưu bút
             </button>
         </form>
 
-        <hr style="margin: 18px 0; border: 0; border-top: 1px solid #e0d0a8;">
+        <hr class="bao-vach-ngan">
 
         <!-- Danh sách lời nhắn phân trang -->
-        <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: #493910;">
+        <h3 class="bao-tieu-de-phu">
             Danh sách lời nhắn (Trang <?= $trangHienTaiLB ?> / <?= $soTrang ?>):
         </h3>
 
         <?php if (empty($danhSachLuuBut)): ?>
-            <p style="color: #666; font-style: italic; text-align: center; padding: 1rem;">Chưa có lời nhắn nào.</p>
+            <p class="bao-trong-luu-but">Chưa có lời nhắn nào.</p>
         <?php else: ?>
-            <ul style="list-style: none; padding: 0; margin: 0;">
+            <ul class="bao-ds-luu-but">
                 <?php foreach ($danhSachLuuBut as $lb): ?>
-                    <li style="background: #ffffff; padding: 12px 14px; border: 1px solid #ebd9b0; border-radius: 6px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 0.5rem;">
+                    <li class="bao-muc-luu-but">
+                        <div class="bao-muc-luu-but__dau">
                             <div>
-                                <strong style="color: #004085; font-size: 0.95rem;"><?= e($lb['ten_khach']) ?></strong>
-                                <span style="font-size: 0.8rem; color: #888; margin-left: 0.4rem;">
+                                <strong class="bao-muc-luu-but__ten"><?= e($lb['ten_khach']) ?></strong>
+                                <span class="bao-muc-luu-but__gio">
                                     (<?= date('d/m/Y H:i', strtotime($lb['thoi_gian'])) ?>)
                                 </span>
                             </div>
 
                             <!-- CHỨC NĂNG 2: NÚT XÓA CHỈ HIỆN KHI LÀ CHỦ TRANG -->
                             <?php if ($laChuTrang): ?>
-                                <form method="POST" action="gioithieu.php" onsubmit="return confirm('Bạn có chắc chắn muốn xóa lời nhắn này của khách?');" style="margin: 0;">
+                                <form method="POST" action="gioithieu.php" data-confirm="Bạn có chắc chắn muốn xóa lời nhắn này của khách?" class="bao-form-xoa">
                                     <input type="hidden" name="action" value="xoa_luu_but">
                                     <input type="hidden" name="id" value="<?= (int)$lb['id'] ?>">
-                                    <button type="submit" style="background: #dc3545; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer;" title="Chủ trang xóa lời nhắn này">
+                                    <button type="submit" class="bao-nut-xoa" title="Chủ trang xóa lời nhắn này">
                                         Xóa
                                     </button>
                                 </form>
                             <?php endif; ?>
                         </div>
-                        <p style="margin: 0; color: #333; line-height: 1.45; font-size: 0.95rem;">
+                        <p class="bao-muc-luu-but__noi-dung">
                             <?= nl2br(e($lb['loi_nhan'])) ?>
                         </p>
                     </li>
@@ -327,26 +327,24 @@ require_once __DIR__ . '/../../inc/header.php';
 
             <!-- ĐIỀU HƯỚNG PHÂN TRANG (PAGINATION) -->
             <?php if ($soTrang > 1): ?>
-                <nav aria-label="Phân trang lưu bút" style="display: flex; justify-content: center; gap: 0.4rem; margin-top: 15px; align-items: center; flex-wrap: wrap;">
+                <nav aria-label="Phân trang lưu bút" class="bao-phan-trang">
                     <?php if ($trangHienTaiLB > 1): ?>
                         <a href="gioithieu.php?trang=<?= $trangHienTaiLB - 1 ?>" 
-                           class="nut-thao-tac" 
-                           style="text-decoration: none; padding: 0.25rem 0.6rem; border-radius: 4px; border: 1px solid #ccc; background: #fff; color: #333; font-size: 0.85rem;">
+                           class="nut-thao-tac bao-phan-trang__nut">
                             &laquo; Trước
                         </a>
                     <?php endif; ?>
 
                     <?php for ($i = 1; $i <= $soTrang; $i++): ?>
                         <a href="gioithieu.php?trang=<?= $i ?>" 
-                           style="text-decoration: none; padding: 0.25rem 0.65rem; border-radius: 4px; border: 1px solid <?= $i === $trangHienTaiLB ? '#004085' : '#ccc' ?>; <?= $i === $trangHienTaiLB ? 'font-weight: bold; background: #004085; color: white;' : 'background: #fff; color: #333;' ?> font-size: 0.85rem;">
+                           class="bao-phan-trang__nut <?= $i === $trangHienTaiLB ? 'bao-phan-trang__nut--hien-tai' : '' ?>">
                             <?= $i ?>
                         </a>
                     <?php endfor; ?>
 
                     <?php if ($trangHienTaiLB < $soTrang): ?>
                         <a href="gioithieu.php?trang=<?= $trangHienTaiLB + 1 ?>" 
-                           class="nut-thao-tac" 
-                           style="text-decoration: none; padding: 0.25rem 0.6rem; border-radius: 4px; border: 1px solid #ccc; background: #fff; color: #333; font-size: 0.85rem;">
+                           class="nut-thao-tac bao-phan-trang__nut">
                             Sau &raquo;
                         </a>
                     <?php endif; ?>
@@ -358,59 +356,57 @@ require_once __DIR__ . '/../../inc/header.php';
       <!-- ================================================================= -->
       <!-- CHỨC NĂNG CSDL 2: KHẢO SÁT CÔNG NGHỆ YÊU THÍCH (MYSQL tv_binh_chon) -->
       <!-- ================================================================= -->
-      <section class="bieu-mau" style="background-color: #f0f8ff; border-color: #b8daff;">
-        <h2 style="color: #004085; margin-bottom: 0.5rem;">Khảo sát Công Nghệ Yêu Thích</h2>
-        <p style="font-size: 0.9rem; color: #555; margin-bottom: 1rem;">Ngôn ngữ lập trình bạn yêu thích nhất trong các môn Tin học? (Lưu vào bảng <code>tv_binh_chon</code>)</p>
+      <section class="bieu-mau bao-the-binh-chon">
+        <h2 class="bao-the-binh-chon__tieu-de">Khảo sát Công Nghệ Yêu Thích</h2>
+        <p class="bao-the-binh-chon__mo-ta">Ngôn ngữ lập trình bạn yêu thích nhất trong các môn Tin học? (Lưu vào bảng <code>tv_binh_chon</code>)</p>
 
         <?php if ($flashBC): ?>
-            <div role="alert" style="padding: 10px; background: #d4edda; color: #155724; margin-bottom: 12px; border-radius: 4px;">
+            <div role="alert" class="bao-flash bao-flash--ok">
                 <?= e($flashBC) ?>
             </div>
         <?php endif; ?>
         <?php if ($flashBCLoi): ?>
-            <div role="alert" style="padding: 10px; background: #f8d7da; color: #721c24; margin-bottom: 12px; border-radius: 4px;">
+            <div role="alert" class="bao-flash bao-flash--loi">
                 <?= e($flashBCLoi) ?>
             </div>
         <?php endif; ?>
 
         <form method="POST" action="gioithieu.php">
             <input type="hidden" name="action" value="binh_chon">
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+            <div class="bao-danh-sach-tuy-chon">
                 <?php foreach ($cacTuyChonBC as $tc): ?>
-                    <label style="background: #fff; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
+                    <label class="bao-tuy-chon-radio">
                         <input type="radio" name="ngon_ngu" value="<?= e($tc) ?>" required> <?= e($tc) ?>
                     </label>
                 <?php endforeach; ?>
             </div>
-            <button type="submit" class="nut-thao-tac nut-thao-tac--xem" style="width: 100%; cursor: pointer;">
+            <button type="submit" class="nut-thao-tac nut-thao-tac--xem bao-nut-day">
                 Gửi bình chọn
             </button>
         </form>
 
-        <hr style="margin: 18px 0; border: 0; border-top: 1px solid #cfe2ff;">
+        <hr class="bao-vach-ngan bao-vach-ngan--xanh">
 
-        <h3 style="font-size: 1.05rem; margin-bottom: 10px; color: #004085;">
+        <h3 class="bao-tieu-de-ket-qua">
             Kết quả bình chọn (<?= $tongPhieuBC ?> phiếu):
         </h3>
         <?php if ($tongPhieuBC > 0): ?>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="bao-ds-ket-qua">
                 <?php foreach ($cacTuyChonBC as $tc): 
                     $soPhieu  = $ketQuaBinhChon[$tc] ?? 0;
                     $phanTram = $tongPhieuBC > 0 ? round(($soPhieu / $tongPhieuBC) * 100) : 0;
                 ?>
                 <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                    <div class="bao-hang-ket-qua">
                         <strong><?= e($tc) ?></strong>
                         <span><?= $phanTram ?>% (<?= $soPhieu ?> phiếu)</span>
                     </div>
-                    <div style="background: #e9ecef; height: 10px; border-radius: 5px; overflow: hidden;">
-                        <div style="background: #28a745; height: 100%; width: <?= $phanTram ?>%;"></div>
-                    </div>
+                    <progress class="khung-tien-do-bc__thanh" value="<?= $phanTram ?>" max="100"><?= $phanTram ?>%</progress>
                 </div>
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <p style="color: #666; font-style: italic; text-align: center; font-size: 0.9rem;">Chưa có lượt bình chọn nào.</p>
+            <p class="bao-trong-binh-chon">Chưa có lượt bình chọn nào.</p>
         <?php endif; ?>
       </section>
 
@@ -421,34 +417,34 @@ require_once __DIR__ . '/../../inc/header.php';
   <section class="thong-tin">
     <h2>Thời khóa biểu cá nhân</h2>
     <div class="khung-cuon-bang">
-      <table class="bang-hoc-lieu" style="width: 100%; border-collapse: collapse; text-align: left;">
+      <table class="bang-hoc-lieu bao-bang-tkb">
         <caption class="bang-hoc-lieu__chu-thich">Kế hoạch học tập và làm việc trong tuần của Lê Hoàng Bảo</caption>
         <thead>
           <tr>
-            <th scope="col" style="padding: 0.75rem; border: 1px solid #ddd; background: #004085; color: white;">Thứ</th>
-            <th scope="col" style="padding: 0.75rem; border: 1px solid #ddd; background: #004085; color: white;">Sáng</th>
-            <th scope="col" style="padding: 0.75rem; border: 1px solid #ddd; background: #004085; color: white;">Chiều</th>
-            <th scope="col" style="padding: 0.75rem; border: 1px solid #ddd; background: #004085; color: white;">Tối</th>
+            <th scope="col">Thứ</th>
+            <th scope="col">Sáng</th>
+            <th scope="col">Chiều</th>
+            <th scope="col">Tối</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row" style="padding: 0.75rem; border: 1px solid #ddd; background: #f9f9f9;">Thứ Hai</th>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Học Thiết kế Web trên trường</td>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Tự học PHP &amp; MySQL PDO</td>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Dạy kèm tin học THPT</td>
+            <th scope="row">Thứ Hai</th>
+            <td>Học Thiết kế Web trên trường</td>
+            <td>Tự học PHP &amp; MySQL PDO</td>
+            <td>Dạy kèm tin học THPT</td>
           </tr>
           <tr>
-            <th scope="row" style="padding: 0.75rem; border: 1px solid #ddd; background: #f9f9f9;">Thứ Ba</th>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Nghiên cứu tài liệu GDPT 2018</td>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Học Phương pháp giảng dạy Tin học</td>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Họp tiến độ Nhóm 02</td>
+            <th scope="row">Thứ Ba</th>
+            <td>Nghiên cứu tài liệu GDPT 2018</td>
+            <td>Học Phương pháp giảng dạy Tin học</td>
+            <td>Họp tiến độ Nhóm 02</td>
           </tr>
           <tr>
-            <th scope="row" style="padding: 0.75rem; border: 1px solid #ddd; background: #f9f9f9;">Thứ Tư</th>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Học CSDL nâng cao trên trường</td>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Review code và kiểm thử W3C</td>
-            <td style="padding: 0.75rem; border: 1px solid #ddd;">Lập trình hoàn thiện hệ thống</td>
+            <th scope="row">Thứ Tư</th>
+            <td>Học CSDL nâng cao trên trường</td>
+            <td>Review code và kiểm thử W3C</td>
+            <td>Lập trình hoàn thiện hệ thống</td>
           </tr>
         </tbody>
       </table>
