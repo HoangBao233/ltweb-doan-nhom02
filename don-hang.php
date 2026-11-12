@@ -121,7 +121,7 @@ if (isset($_GET['id'])) {
                     <span style="color: #666; font-size: 0.85rem;">Trạng thái đơn:</span>
                     <p style="margin: 0.25rem 0 0 0;">
                         <?php if ($donHang['trang_thai'] === 'da_giao'): ?>
-                            <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">Đã giao / Hoàn tất</span>
+                            <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">Hoàn tất</span>
                         <?php elseif ($donHang['trang_thai'] === 'da_huy'): ?>
                             <span style="background: #f8d7da; color: #721c24; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem;">Đã hủy</span>
                         <?php else: ?>
@@ -189,7 +189,7 @@ if (isset($_GET['id'])) {
                         <label for="trang_thai" style="font-weight: bold; color: #333;">Cập nhật trạng thái đơn:</label>
                         <select id="trang_thai" name="trang_thai" style="padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid #ccc; font-size: 0.95rem;">
                             <option value="cho_duyet" <?= $donHang['trang_thai'] === 'cho_duyet' ? 'selected' : '' ?>>Chờ duyệt</option>
-                            <option value="da_giao" <?= $donHang['trang_thai'] === 'da_giao' ? 'selected' : '' ?>>Đã giao / Hoàn tất</option>
+                            <option value="da_giao" <?= $donHang['trang_thai'] === 'da_giao' ? 'selected' : '' ?>>Hoàn tất</option>
                             <option value="da_huy" <?= $donHang['trang_thai'] === 'da_huy' ? 'selected' : '' ?>>Đã hủy</option>
                         </select>
                         <button type="submit" class="nut-thao-tac nut-thao-tac--xem" style="padding: 0.5rem 1.25rem;">
@@ -320,7 +320,7 @@ require_once __DIR__ . '/inc/header.php';
                             </td>
                             <td style="padding: 1rem; text-align: center;">
                                 <?php if ($don['trang_thai'] === 'da_giao'): ?>
-                                    <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">Đã giao</span>
+                                    <span style="background: #d4edda; color: #155724; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">Hoàn tất</span>
                                 <?php elseif ($don['trang_thai'] === 'da_huy'): ?>
                                     <span style="background: #f8d7da; color: #721c24; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">Đã hủy</span>
                                 <?php else: ?>
