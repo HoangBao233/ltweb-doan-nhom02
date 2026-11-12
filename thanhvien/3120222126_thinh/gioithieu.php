@@ -11,21 +11,18 @@
  *   + Hiển thị danh sách yêu cầu CV có phân trang (5 dòng/trang) và thống kê tổng số lượng yêu cầu.
  *   + Quyền xóa yêu cầu CV có điều kiện ràng buộc `AND mssv = '3120222126'`.
  * 
- * --- CHỨC NĂNG BÀI TẬP 5 (BẢO TỒN NGUYÊN VẸN) ---
- * - Chức năng PHP máy chủ 1: Máy tính điểm tổng kết môn học & quy đổi GPA (20% - 30% - 50%).
- * - Chức năng JS Client-side: Sao chép Email vào clipboard & Đánh giá hồ sơ 5 sao.
- * 
- * --- CÁCH THỬ NGHIỆM TRANG CÁ NHÂN ---
- * 1. Nhập email hợp lệ (hoặc để trống/sai cú pháp để xem báo lỗi) tại form "Đăng Ký Nhận CV" -> bấm Gửi -> kiểm tra dữ liệu lưu vào MySQL bảng tv_yeu_cau_cv, F5 không bị gửi lại (PRG).
- * 2. Đăng nhập tài khoản chủ trang (thinh@ued.vn / matkhau123) tại dang-nhap.php -> xuất hiện khối "Quản lý Yêu cầu CV" với danh sách có phân trang và nút Xóa.
- * 3. Đăng xuất hoặc đăng nhập tài khoản khách khác (lan@ued.vn) -> khối quản lý biến mất hoàn toàn (bảo mật kiểm tra quyền máy chủ).
+ * --- GIA CỐ BẢO MẬT (BÀI TẬP NHÓM 7 - CHƯƠNG 7) ---
+ * - Gắn mã CSRF (csrfField) vào toàn bộ biểu mẫu POST (chống CSRF theo Biện pháp 1).
+ * - Loại bỏ toàn bộ CSS/JS nội tuyến (chuyển sang canhan-thinh.css và canhan.js) phục vụ CSP (Biện pháp 3).
+ * - Chuyển onsubmit nội tuyến sang thuộc tính data-confirm được xử lý an toàn trong tệp script ngoài.
  */
 
 require_once __DIR__ . '/../../inc/config.php';
+require_once __DIR__ . '/../../inc/csrf.php';
 
 const MSSV = '3120222126';
 $goc    = '../../';
-$tieuDe = 'Nguyễn Tiến Thịnh | ITeduShare';
+$tieuDe = 'Hồ sơ cá nhân: Nguyễn Tiến Thịnh';
 $trang  = '';
 
 // 1. Lấy thông tin thành viên từ bảng thanh_vien
@@ -224,25 +221,33 @@ require_once __DIR__ . '/../../inc/header.php';
 
     <link rel="stylesheet" href="css/canhan-thinh.css">
 
-    <main class="trang__chinh" style="max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem;">
+    <main class="trang__chinh trang-ca-nhan-thinh">
         
+        <!-- THANH ĐIỀU HƯỚNG LIÊN KẾT NHANH (BREADCRUMB) -->
+        <nav class="thanh-dieu-huong-ca-nhan" aria-label="Menu cá nhân">
+            <ul class="menu-ca-nhan">
+                <li><a href="../../index.php">&larr; Về Trang chủ</a></li>
+                <li><a href="../../ve-chung-toi.php">&larr; Danh sách thành viên nhóm</a></li>
+            </ul>
+        </nav>
+
         <!-- THANH TRẠNG THÁI QUYỀN CHỦ TRANG -->
-        <div style="background: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 0.875rem;">
-            <div>
+        <div class="thanh-kiem-thu">
+            <div class="thanh-kiem-thu__trang-thai">
                 <strong>Trạng thái phân quyền:</strong>
                 <?php if ($laChuTrang): ?>
-                    <span style="background: #dcfce7; color: #166534; font-weight: bold; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem;">Đang là Chủ trang (Thịnh)</span>
+                    <span class="nhan-chu-trang">Đang là Chủ trang (Thịnh)</span>
                 <?php elseif ($ndHienTai): ?>
-                    <span style="background: #e0f2fe; color: #0369a1; font-weight: bold; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem;">Đang là Khách: <?= e($ndHienTai['ho_ten']) ?></span>
+                    <span class="nhan-khach">Đang là Khách: <?= e($ndHienTai['ho_ten']) ?></span>
                 <?php else: ?>
-                    <span style="background: #f3f4f6; color: #4b5563; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem;">Chưa đăng nhập (Khách vãng lai)</span>
+                    <span class="nhan-chua-dang-nhap">Chưa đăng nhập (Khách vãng lai)</span>
                 <?php endif; ?>
             </div>
-            <div style="display: flex; gap: 0.5rem;">
+            <div class="thanh-kiem-thu__nut">
                 <?php if ($ndHienTai): ?>
-                    <a href="<?= $goc ?>dang-xuat.php" style="padding: 0.25rem 0.6rem; background: #64748b; color: white; border-radius: 4px; text-decoration: none; font-weight: 500;">Đăng xuất</a>
+                    <a href="<?= $goc ?>dang-xuat.php" class="nut-kiem-thu nut-kiem-thu--dang-xuat">Đăng xuất</a>
                 <?php else: ?>
-                    <a href="<?= $goc ?>dang-nhap.php" style="padding: 0.25rem 0.6rem; background: #004d40; color: white; border-radius: 4px; text-decoration: none; font-weight: 500;">Đăng nhập</a>
+                    <a href="<?= $goc ?>dang-nhap.php" class="nut-kiem-thu nut-kiem-thu--dang-nhap">Đăng nhập</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -250,44 +255,42 @@ require_once __DIR__ . '/../../inc/header.php';
         <h1 class="can-giua-chu">Hồ sơ thành viên: Nguyễn Tiến Thịnh</h1>
 
         <!-- SECTION 1: Hồ sơ cá nhân + Các khối tĩnh cũ (Sao chép email + Đánh giá 5 sao) -->
-        <section class="ho-so-ca-nhan" style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #ddd;">
-            <div style="flex: 0 0 200px; text-align: center;">
-                <img src="avatar.jpg" alt="Ảnh chân dung Nguyễn Tiến Thịnh" class="anh-chan-dung" width="200" height="200"
-                     style="width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--mau-chinh, #004d40); object-fit: cover;" loading="lazy">
+        <section class="ho-so-ca-nhan">
+            <div class="ho-so-ca-nhan__avatar-wrap">
+                <img src="avatar.jpg" alt="Ảnh chân dung Nguyễn Tiến Thịnh" class="anh-chan-dung" width="200" height="200" loading="lazy">
             </div>
 
-            <div class="thong-tin-ca-nhan" style="flex: 1; min-width: 280px;">
-                <h2 style="margin-top: 0; color: var(--mau-chinh, #004d40);">Giới thiệu bản thân</h2>
+            <div class="thong-tin-ca-nhan">
+                <h2>Giới thiệu bản thân</h2>
                 <p>Xin chào! Tôi là <strong>Nguyễn Tiến Thịnh</strong> (MSSV: 3120222126), sinh viên ngành Sư phạm Tin học / Công nghệ thông tin. Trong đồ án <strong>ITeduShare</strong>, tôi đảm nhiệm phụ trách chính <strong>Chức năng 4 (Xác thực, Đăng ký, Đăng nhập, Phân quyền)</strong> và <strong>Chức năng 5 (Giao dịch Đặt hàng / Đơn hàng trong Transaction)</strong>.</p>
 
                 <h3>Danh sách kỹ năng nổi bật</h3>
-                <ul class="danh-sach-ky-nang" style="line-height: 1.6;">
+                <ul class="danh-sach-ky-nang">
                     <li>PHP 8 thuần &amp; Cơ sở dữ liệu MySQL (PDO Prepared Statements)</li>
-                    <li>Bảo mật ứng dụng Web (XSS, PRG, Bcrypt Hash, Session Fixation, MySQL Transactions)</li>
+                    <li>Bảo mật ứng dụng Web (CSRF, XSS, PRG, Bcrypt Hash, Session Fixation, MySQL Transactions)</li>
                     <li>HTML5 Semantic, CSS3 Responsive &amp; Khả năng tiếp cận Accessibility (A11y ≥ 90)</li>
                     <li>Quản lý mã nguồn với Git / GitHub workflow</li>
                 </ul>
 
                 <!-- TÍNH NĂNG TĨNH CŨ 1: Nút sao chép email -->
-                <div class="khoi-saochep-email" style="margin-top: 1rem; margin-bottom: 1rem;">
+                <div class="khoi-saochep-email">
                     <button type="button" id="btn-saochep-email" class="nut-thao-tac nut-thao-tac--xem"
-                            aria-label="Sao chép địa chỉ Email của Thịnh"
-                            style="padding: 0.5rem 1rem; background: #004d40; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                            aria-label="Sao chép địa chỉ Email của Thịnh">
                         Sao chép Email liên hệ
                     </button>
                 </div>
 
                 <!-- TÍNH NĂNG TĨNH CŨ 2: Đánh giá hồ sơ 5 sao (JS client-side) -->
-                <div class="khoi-danh-gia-ca-nhan" style="background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px dashed #ccc; margin-top: 1rem;">
-                    <h3 style="margin-top: 0; font-size: 1.05rem;">Đánh giá hồ sơ cá nhân</h3>
-                    <div id="khung-danh-gia-sao" class="danh-sach-sao" role="radiogroup" aria-label="Đánh giá chất lượng hồ sơ" style="display: flex; gap: 0.4rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
-                        <button type="button" class="nut-danh-gia-sao" data-val="1" aria-label="Đánh giá 1 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">1 sao</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="2" aria-label="Đánh giá 2 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">2 sao</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="3" aria-label="Đánh giá 3 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">3 sao</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="4" aria-label="Đánh giá 4 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">4 sao</button>
-                        <button type="button" class="nut-danh-gia-sao" data-val="5" aria-label="Đánh giá 5 sao" role="radio" aria-checked="false" style="background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.9rem; padding: 0.25rem 0.6rem; color: #334155;">5 sao</button>
+                <div class="khoi-danh-gia-ca-nhan">
+                    <h3>Đánh giá hồ sơ cá nhân</h3>
+                    <div id="khung-danh-gia-sao" class="danh-sach-sao" role="radiogroup" aria-label="Đánh giá chất lượng hồ sơ">
+                        <button type="button" class="nut-danh-gia-sao" data-val="1" aria-label="Đánh giá 1 sao" role="radio" aria-checked="false">★</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="2" aria-label="Đánh giá 2 sao" role="radio" aria-checked="false">★</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="3" aria-label="Đánh giá 3 sao" role="radio" aria-checked="false">★</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="4" aria-label="Đánh giá 4 sao" role="radio" aria-checked="false">★</button>
+                        <button type="button" class="nut-danh-gia-sao" data-val="5" aria-label="Đánh giá 5 sao" role="radio" aria-checked="false">★</button>
                     </div>
-                    <p id="thong-bao-danh-gia" class="thong-bao-danh-gia" aria-live="polite" style="margin: 0; font-size: 0.9rem; color: #666;">Bạn chưa đánh giá. Hãy chọn số sao để gửi đánh giá nhé!</p>
+                    <p id="thong-bao-danh-gia" class="thong-bao-danh-gia" aria-live="polite">Bạn chưa đánh giá. Hãy chọn số sao để gửi đánh giá nhé!</p>
                 </div>
             </div>
         </section>
@@ -295,71 +298,70 @@ require_once __DIR__ . '/../../inc/header.php';
         <!-- ============================================================================ -->
         <!-- MÁY TÍNH ĐIỂM TỔNG KẾT MÔN HỌC & GPA (PHP SERVER-SIDE FEATURE 1 - BTN5)     -->
         <!-- ============================================================================ -->
-        <section class="khoi-tinh-diem" style="margin-bottom: 2rem; padding: 1.75rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-            <h2 style="margin-top: 0; color: #004d40; display: flex; align-items: center; gap: 0.5rem; font-size: 1.35rem;">
-                Máy Tính Điểm Học Phần &amp; GPA (BTN5)
-            </h2>
-            <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.5;">Nhập điểm các cột đánh giá (từ 0.0 đến 10.0) để tính điểm tổng kết môn học theo trọng số: <strong>Chuyên cần (20%)</strong>, <strong>Giữa kỳ (30%)</strong>, <strong>Cuối kỳ (50%)</strong>.</p>
+        <section class="khoi-tinh-diem">
+            <h2>Máy Tính Điểm Học Phần &amp; GPA (BTN5)</h2>
+            <p class="khoi-tinh-diem__mo-ta">Nhập điểm các cột đánh giá (từ 0.0 đến 10.0) để tính điểm tổng kết môn học theo trọng số: <strong>Chuyên cần (20%)</strong>, <strong>Giữa kỳ (30%)</strong>, <strong>Cuối kỳ (50%)</strong>.</p>
 
             <form method="POST" action="gioithieu.php" novalidate>
                 <input type="hidden" name="action" value="tinh_diem">
+                <?= csrfField() ?>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
-                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #f1f5f9;">
-                        <label for="a1" style="font-weight: 600; display: block; margin-bottom: 0.4rem; color: #334155;">Điểm Chuyên cần (20%):</label>
+                <div class="luoi-nhap-diem">
+                    <div class="o-nhap-diem">
+                        <label for="a1">Điểm Chuyên cần (20%):</label>
                         <input type="number" step="0.1" min="0" max="10" id="a1" name="a1"
-                               style="width: 100%; padding: 0.6rem 0.75rem; border: 1.5px solid <?= isset($loiDiem['a1']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; outline: none;"
+                               class="<?= isset($loiDiem['a1']) ? 'o-nhap-diem--loi' : '' ?>"
                                value="<?= e($diem['a1']) ?>" required placeholder="VD: 9.0">
                         <?php if (isset($loiDiem['a1'])): ?>
-                            <span style="color: #ef4444; font-size: 0.85rem; margin-top: 0.3rem; display: block; font-weight: 500;"><?= e($loiDiem['a1']) ?></span>
+                            <span class="bao-loi-nhap-diem"><?= e($loiDiem['a1']) ?></span>
                         <?php endif; ?>
                     </div>
 
-                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #f1f5f9;">
-                        <label for="a2" style="font-weight: 600; display: block; margin-bottom: 0.4rem; color: #334155;">Điểm Giữa kỳ (30%):</label>
+                    <div class="o-nhap-diem">
+                        <label for="a2">Điểm Giữa kỳ (30%):</label>
                         <input type="number" step="0.1" min="0" max="10" id="a2" name="a2"
-                               style="width: 100%; padding: 0.6rem 0.75rem; border: 1.5px solid <?= isset($loiDiem['a2']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; outline: none;"
+                               class="<?= isset($loiDiem['a2']) ? 'o-nhap-diem--loi' : '' ?>"
                                value="<?= e($diem['a2']) ?>" required placeholder="VD: 8.5">
                         <?php if (isset($loiDiem['a2'])): ?>
-                            <span style="color: #ef4444; font-size: 0.85rem; margin-top: 0.3rem; display: block; font-weight: 500;"><?= e($loiDiem['a2']) ?></span>
+                            <span class="bao-loi-nhap-diem"><?= e($loiDiem['a2']) ?></span>
                         <?php endif; ?>
                     </div>
 
-                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #f1f5f9;">
-                        <label for="a3" style="font-weight: 600; display: block; margin-bottom: 0.4rem; color: #334155;">Điểm Cuối kỳ (50%):</label>
+                    <div class="o-nhap-diem">
+                        <label for="a3">Điểm Cuối kỳ (50%):</label>
                         <input type="number" step="0.1" min="0" max="10" id="a3" name="a3"
-                               style="width: 100%; padding: 0.6rem 0.75rem; border: 1.5px solid <?= isset($loiDiem['a3']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; outline: none;"
+                               class="<?= isset($loiDiem['a3']) ? 'o-nhap-diem--loi' : '' ?>"
                                value="<?= e($diem['a3']) ?>" required placeholder="VD: 8.0">
                         <?php if (isset($loiDiem['a3'])): ?>
-                            <span style="color: #ef4444; font-size: 0.85rem; margin-top: 0.3rem; display: block; font-weight: 500;"><?= e($loiDiem['a3']) ?></span>
+                            <span class="bao-loi-nhap-diem"><?= e($loiDiem['a3']) ?></span>
                         <?php endif; ?>
                     </div>
                 </div>
 
-                <button type="submit" style="margin-top: 1.25rem; padding: 0.7rem 1.75rem; background: #004d40; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: background 0.2s ease;">
+                <button type="submit" class="nut-tinh-diem">
                     Tính Điểm Tổng Kết
                 </button>
             </form>
 
             <?php if ($ketQuaDiem): ?>
-                <div style="margin-top: 1.5rem; padding: 1.25rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid <?= e($ketQuaDiem['mau']) ?>; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
-                    <h3 style="margin-top: 0; color: #166534; font-size: 1.1rem; margin-bottom: 0.75rem;">Kết quả tính điểm môn học:</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
-                        <div style="background: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
-                            <span style="display: block; font-size: 0.85rem; color: #64748b; font-weight: 500;">Điểm Hệ 10</span>
-                            <span style="font-size: 1.5rem; color: #004d40; font-weight: 700;"><?= number_format($ketQuaDiem['he10'], 2) ?></span>
+                <div class="ket-qua-diem">
+                    <h3>Kết quả tính điểm môn học:</h3>
+                    <div class="luoi-ket-qua-diem">
+                        <div class="the-ket-qua">
+                            <span class="the-ket-qua__tieu-de">Điểm Hệ 10</span>
+                            <span class="the-ket-qua__gia-tri"><?= number_format($ketQuaDiem['he10'], 2) ?></span>
                         </div>
-                        <div style="background: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
-                            <span style="display: block; font-size: 0.85rem; color: #64748b; font-weight: 500;">Điểm Chữ</span>
-                            <span style="font-size: 1.5rem; color: #004d40; font-weight: 700;"><?= e($ketQuaDiem['diemChu']) ?></span>
+                        <div class="the-ket-qua">
+                            <span class="the-ket-qua__tieu-de">Điểm Chữ</span>
+                            <span class="the-ket-qua__gia-tri"><?= e($ketQuaDiem['diemChu']) ?></span>
                         </div>
-                        <div style="background: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
-                            <span style="display: block; font-size: 0.85rem; color: #64748b; font-weight: 500;">Điểm Hệ 4</span>
-                            <span style="font-size: 1.5rem; color: #004d40; font-weight: 700;"><?= number_format($ketQuaDiem['he4'], 1) ?></span>
+                        <div class="the-ket-qua">
+                            <span class="the-ket-qua__tieu-de">Điểm Hệ 4</span>
+                            <span class="the-ket-qua__gia-tri"><?= number_format($ketQuaDiem['he4'], 1) ?></span>
                         </div>
-                        <div style="background: #ffffff; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                            <span style="display: block; font-size: 0.85rem; color: #64748b; font-weight: 500; margin-bottom: 0.3rem;">Xếp Loại</span>
-                            <span style="display: inline-block; padding: 0.3rem 0.8rem; background: <?= e($ketQuaDiem['mau']) ?>; color: white; border-radius: 20px; font-weight: 700; font-size: 0.85rem;"><?= e($ketQuaDiem['xepLoai']) ?></span>
+                        <div class="the-ket-qua">
+                            <span class="the-ket-qua__tieu-de">Xếp Loại</span>
+                            <span class="the-ket-qua__xep-loai the-ket-qua__xep-loai--<?= strtolower(str_replace('+', '-plus', $ketQuaDiem['diemChu'])) ?>"><?= e($ketQuaDiem['xepLoai']) ?></span>
                         </div>
                     </div>
                 </div>
@@ -369,102 +371,102 @@ require_once __DIR__ . '/../../inc/header.php';
         <!-- ============================================================================ -->
         <!-- CHỨC NĂNG CSDL MYSQL: BIỂU MẪU ĐĂNG KÝ NHẬN CV & QUẢN LÝ (BÀI 6 - PHẦN B)     -->
         <!-- ============================================================================ -->
-        <section id="khu-vuc-cv" class="khoi-yeu-cau-cv" style="margin-bottom: 2rem; padding: 1.75rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-                <h2 style="margin: 0; color: #0f172a; display: flex; align-items: center; gap: 0.5rem; font-size: 1.35rem;">
-                    Đăng Ký Nhận CV Cá Nhân (MySQL)
-                </h2>
-                <span style="font-size: 0.85rem; color: #64748b; background: #f1f5f9; padding: 0.3rem 0.75rem; border-radius: 20px;">
+        <section id="khu-vuc-cv" class="khoi-yeu-cau-cv">
+            <div class="tieu-de-cv-box">
+                <h2>Đăng Ký Nhận CV Cá Nhân (MySQL)</h2>
+                <span class="thong-ke-cv-badge">
                     Đã nhận: <strong><?= $tongYeuCauCV ?></strong> yêu cầu
                 </span>
             </div>
 
-            <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.5;">
+            <p class="khoi-yeu-cau-cv__mo-ta">
                 Quý nhà tuyển dụng hoặc thầy cô có nhu cầu xem bản CV chi tiết, vui lòng nhập Email và lời nhắn bên dưới. Dữ liệu được lưu trữ an toàn trong bảng <code>tv_yeu_cau_cv</code> (MySQL).
             </p>
 
             <?php if (!empty($flashCV)): ?>
-                <div role="status" style="background: #f0fdf4; color: #166534; padding: 0.9rem 1.25rem; border-radius: 8px; margin-bottom: 1.25rem; font-weight: 600; border: 1px solid #bbf7d0;">
+                <div role="status" class="thong-bao-cv--thanh-cong">
                     <?= e($flashCV) ?>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($flashCVLoi)): ?>
-                <div role="alert" style="background: #fef2f2; color: #991b1b; padding: 0.9rem 1.25rem; border-radius: 8px; margin-bottom: 1.25rem; font-weight: 600; border: 1px solid #fecaca;">
+                <div role="alert" class="thong-bao-cv--loi">
                     <?= e($flashCVLoi) ?>
                 </div>
             <?php endif; ?>
 
             <!-- FORM GỬI YÊU CẦU CV (DÀNH CHO KHÁCH & MỌI NGƯỜI) -->
-            <form method="POST" action="gioithieu.php#khu-vuc-cv" novalidate style="background: #f8fafc; padding: 1.25rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 2rem;">
+            <form method="POST" action="gioithieu.php#khu-vuc-cv" novalidate class="form-gui-cv">
                 <input type="hidden" name="action" value="yeu_cau_cv">
+                <?= csrfField() ?>
                 
-                <div style="margin-bottom: 1rem;">
-                    <label for="email_cv" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: #334155;">
-                        Địa chỉ Email nhận CV <span style="color: #ef4444;">*</span>
+                <div class="form-gui-cv__hang">
+                    <label for="email_cv">
+                        Địa chỉ Email nhận CV <span class="dau-sao-do">*</span>
                     </label>
-                    <input type="email" id="email_cv" name="email_cv"
-                           style="width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid <?= !empty($loiCV) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; outline: none; background: #ffffff; box-sizing: border-box;"
+                    <input type="email" id="email_cv" name="email_cv" maxlength="191"
+                           class="<?= !empty($loiCV) ? 'o-nhap--loi' : '' ?>"
                            placeholder="Nhập email của bạn (VD: hr@fpt.com, tuyendung@viettel.vn)"
                            value="<?= e($emailCV) ?>" required>
                     <?php if (!empty($loiCV)): ?>
-                        <span style="color: #ef4444; font-size: 0.85rem; margin-top: 0.3rem; display: block; font-weight: 500;"><?= e($loiCV) ?></span>
+                        <span class="bao-loi-nhap-diem"><?= e($loiCV) ?></span>
                     <?php endif; ?>
                 </div>
 
-                <div style="margin-bottom: 1.25rem;">
-                    <label for="loi_nhan" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: #334155;">
+                <div class="form-gui-cv__hang">
+                    <label for="loi_nhan">
                         Lời nhắn kèm theo (tùy chọn)
                     </label>
-                    <textarea id="loi_nhan" name="loi_nhan" rows="2"
-                              style="width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; outline: none; background: #ffffff; box-sizing: border-box; font-family: inherit;"
+                    <textarea id="loi_nhan" name="loi_nhan" rows="2" maxlength="500"
                               placeholder="Ví dụ: Mời bạn gửi CV ứng tuyển vị trí Thực tập sinh Lập trình Web..."><?= e($loiNhanCV) ?></textarea>
                 </div>
 
-                <button type="submit" style="padding: 0.75rem 1.75rem; background: #004d40; color: #fff; border: none; border-radius: 6px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: background 0.2s ease;">
+                <button type="submit" class="nut-gui-cv">
                     Gửi Yêu Cầu Nhận CV
                 </button>
             </form>
 
             <!-- KHỐI QUẢN LÝ DÀNH RIÊNG CHO CHỦ TRANG THỊNH (MSSV: 3120222126) -->
             <?php if ($laChuTrang): ?>
-                <div style="border-top: 2px dashed #cbd5e1; padding-top: 1.5rem; margin-top: 1.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-                        <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">
+                <div class="khu-vuc-quan-ly-cv">
+                    <div class="tieu-de-quan-ly">
+                        <h3>
                             Quản lý Yêu cầu CV
-                            <span style="font-size: 0.75rem; background: #fef3c7; color: #92400e; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold;">Chủ trang</span>
+                            <span class="huy-hieu-chu-trang">Chủ trang</span>
                         </h3>
-                        <span style="font-size: 0.85rem; color: #64748b;">Trang <?= $trangHienTaiCV ?> / <?= $tongSoTrangCV ?></span>
+                        <span class="thong-ke-cv-badge">Trang <?= $trangHienTaiCV ?> / <?= $tongSoTrangCV ?></span>
                     </div>
 
                     <?php if (empty($dsYeuCauCV)): ?>
-                        <p style="color: #64748b; font-style: italic; text-align: center; padding: 1.5rem 0;">Chưa có yêu cầu nhận CV nào gửi đến.</p>
+                        <p class="thong-bao-danh-gia">Chưa có yêu cầu nhận CV nào gửi đến.</p>
                     <?php else: ?>
-                        <div class="khung-cuon-bang-ca-nhan" style="overflow-x: auto; background: #fff; border-radius: 8px; border: 1px solid #e2e8f0;">
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <div class="khung-cuon-bang-ca-nhan">
+                            <table class="bang-quan-ly-cv">
+                                <caption class="can-giua-chu">Danh sách yêu cầu nhận CV gửi tới Nguyễn Tiến Thịnh</caption>
                                 <thead>
-                                    <tr style="background: #f8fafc; border-bottom: 1.5px solid #e2e8f0; color: #475569;">
-                                        <th style="padding: 0.75rem; text-align: center; width: 50px;">#</th>
-                                        <th style="padding: 0.75rem; text-align: left;">Email người gửi</th>
-                                        <th style="padding: 0.75rem; text-align: left;">Lời nhắn</th>
-                                        <th style="padding: 0.75rem; text-align: center; width: 110px;">Địa chỉ IP</th>
-                                        <th style="padding: 0.75rem; text-align: center; width: 140px;">Thời gian gửi</th>
-                                        <th style="padding: 0.75rem; text-align: center; width: 80px;">Thao tác</th>
+                                    <tr>
+                                        <th scope="col" class="can-giua">#</th>
+                                        <th scope="col">Email người gửi</th>
+                                        <th scope="col">Lời nhắn</th>
+                                        <th scope="col" class="can-giua">Địa chỉ IP</th>
+                                        <th scope="col" class="can-giua">Thời gian gửi</th>
+                                        <th scope="col" class="can-giua">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($dsYeuCauCV as $yc): ?>
-                                        <tr style="border-bottom: 1px solid #f1f5f9;">
-                                            <td style="padding: 0.75rem; text-align: center; font-weight: bold; color: #64748b;"><?= (int)$yc['id'] ?></td>
-                                            <td style="padding: 0.75rem; font-weight: 600; color: #0f172a;"><?= e($yc['email']) ?></td>
-                                            <td style="padding: 0.75rem; color: #475569;"><?= e($yc['loi_nhan'] ?: '—') ?></td>
-                                            <td style="padding: 0.75rem; text-align: center; font-family: monospace; font-size: 0.85rem; color: #64748b;"><?= e($yc['ip_gui'] ?: '—') ?></td>
-                                            <td style="padding: 0.75rem; text-align: center; color: #64748b; font-size: 0.85rem;"><?= e($yc['ngay_tao']) ?></td>
-                                            <td style="padding: 0.75rem; text-align: center;">
-                                                <form method="POST" action="gioithieu.php#khu-vuc-cv" style="margin: 0;" onsubmit="return confirm('Bạn có chắc muốn xóa yêu cầu CV này?');">
+                                        <tr>
+                                            <td class="can-giua"><?= (int)$yc['id'] ?></td>
+                                            <td class="email-gui"><?= e($yc['email']) ?></td>
+                                            <td><?= e($yc['loi_nhan'] ?: '—') ?></td>
+                                            <td class="ip-gui"><?= e($yc['ip_gui'] ?: '—') ?></td>
+                                            <td class="thoi-gian"><?= e($yc['ngay_tao']) ?></td>
+                                            <td class="can-giua">
+                                                <form method="POST" action="gioithieu.php#khu-vuc-cv" data-confirm="Bạn có chắc chắn muốn xóa yêu cầu CV này?">
                                                     <input type="hidden" name="action" value="xoa_cv">
                                                     <input type="hidden" name="id_cv" value="<?= (int)$yc['id'] ?>">
-                                                    <button type="submit" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; border-radius: 4px; padding: 0.25rem 0.5rem; font-size: 0.8rem; cursor: pointer; font-weight: 600;">
+                                                    <?= csrfField() ?>
+                                                    <button type="submit" class="nut-xoa-cv">
                                                         Xóa
                                                     </button>
                                                 </form>
@@ -477,69 +479,68 @@ require_once __DIR__ . '/../../inc/header.php';
 
                         <!-- THANH PHÂN TRANG CHO DANH SÁCH YÊU CẦU CV -->
                         <?php if ($tongSoTrangCV > 1): ?>
-                            <div style="display: flex; justify-content: center; align-items: center; gap: 0.4rem; margin-top: 1rem;">
+                            <nav class="phan-trang-cv" aria-label="Phân trang danh sách yêu cầu CV">
                                 <?php if ($trangHienTaiCV > 1): ?>
-                                    <a href="gioithieu.php?trang_cv=<?= $trangHienTaiCV - 1 ?>#khu-vuc-cv" style="padding: 0.35rem 0.75rem; background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; text-decoration: none; color: #0f172a; font-size: 0.85rem;">&larr; Trước</a>
+                                    <a href="gioithieu.php?trang_cv=<?= $trangHienTaiCV - 1 ?>#khu-vuc-cv">&larr; Trước</a>
                                 <?php endif; ?>
 
                                 <?php for ($p = 1; $p <= $tongSoTrangCV; $p++): ?>
-                                    <a href="gioithieu.php?trang_cv=<?= $p ?>#khu-vuc-cv" 
-                                       style="padding: 0.35rem 0.75rem; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 600; <?= $p === $trangHienTaiCV ? 'background: #004d40; color: #fff; border: 1px solid #004d40;' : 'background: #fff; border: 1px solid #cbd5e1; color: #0f172a;' ?>">
+                                    <a href="gioithieu.php?trang_cv=<?= $p ?>#khu-vuc-cv" class="<?= $p === $trangHienTaiCV ? 'active' : '' ?>">
                                         <?= $p ?>
                                     </a>
                                 <?php endfor; ?>
 
                                 <?php if ($trangHienTaiCV < $tongSoTrangCV): ?>
-                                    <a href="gioithieu.php?trang_cv=<?= $trangHienTaiCV + 1 ?>#khu-vuc-cv" style="padding: 0.35rem 0.75rem; background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; text-decoration: none; color: #0f172a; font-size: 0.85rem;">Sau &rarr;</a>
+                                    <a href="gioithieu.php?trang_cv=<?= $trangHienTaiCV + 1 ?>#khu-vuc-cv">Sau &rarr;</a>
                                 <?php endif; ?>
-                            </div>
+                            </nav>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
             <?php else: ?>
-                <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem; text-align: center; font-size: 0.9rem; color: #64748b; margin-top: 1.5rem;">
+                <div class="hop-thong-bao-khoa">
                     Khu vực quản trị danh sách yêu cầu chỉ hiển thị khi <strong>Nguyễn Tiến Thịnh (chủ trang)</strong> đăng nhập vào hệ thống.
                 </div>
             <?php endif; ?>
         </section>
 
         <!-- SECTION 3: Vai trò & Thời khóa biểu -->
-        <section class="khoi-thoi-khoa-bieu" style="margin-bottom: 2rem;">
+        <section class="khoi-thoi-khoa-bieu">
             <h2>Vai trò trong dự án ITeduShare &amp; Sở thích</h2>
             <p class="doan-van-dai">Trong đồ án ITeduShare, tôi đảm nhận phụ trách chính <strong>Chức năng 4 (Xác thực tài khoản, Đăng ký, Đăng nhập, Middleware phân quyền)</strong> và <strong>Chức năng 5 (Giao dịch Đặt hàng / Quản lý đơn hàng trong MySQL Transaction)</strong>, hỗ trợ đồng đội hoàn thiện bảng CSDL chung. Khi rảnh rỗi, tôi thích tìm hiểu các công nghệ bảo mật ứng dụng Web và chơi thể thao cùng bạn bè.</p>
         </section>
 
         <section class="khoi-thoi-khoa-bieu">
             <h2>Thời khóa biểu cá nhân</h2>
-            <div class="khung-cuon-bang-ca-nhan" style="overflow-x: auto;">
-                <table class="bang-thoi-khoa-bieu" style="width: 100%; border-collapse: collapse; margin-top: 0.5rem;">
-                    <caption style="caption-side: top; text-align: left; font-style: italic; margin-bottom: 0.5rem;">Kế hoạch học tập và làm việc trong tuần</caption>
+            <div class="khung-cuon-bang-ca-nhan">
+                <table class="bang-thoi-khoa-bieu">
+                    <caption>Kế hoạch học tập và làm việc trong tuần</caption>
                     <thead>
-                        <tr style="background: var(--mau-chinh, #004d40); color: white;">
-                            <th scope="col" style="padding: 0.6rem; border: 1px solid #ccc;">Thứ</th>
-                            <th scope="col" style="padding: 0.6rem; border: 1px solid #ccc;">Buổi Sáng</th>
-                            <th scope="col" style="padding: 0.6rem; border: 1px solid #ccc;">Buổi Chiều</th>
-                            <th scope="col" style="padding: 0.6rem; border: 1px solid #ccc;">Buổi Tối</th>
+                        <tr>
+                            <th scope="col">Thứ</th>
+                            <th scope="col">Buổi Sáng</th>
+                            <th scope="col">Buổi Chiều</th>
+                            <th scope="col">Buổi Tối</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row" style="padding: 0.6rem; border: 1px solid #ccc; background: #f9f9f9;">Thứ Hai</th>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Lập trình Web (PHP &amp; MySQL)</td>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Tự học Git / CSS BEM</td>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Làm bài tập nhóm ITeduShare</td>
+                            <th scope="row">Thứ Hai</th>
+                            <td>Lập trình Web (PHP &amp; MySQL)</td>
+                            <td>Tự học Git / CSS BEM</td>
+                            <td>Làm bài tập nhóm ITeduShare</td>
                         </tr>
                         <tr>
-                            <th scope="row" style="padding: 0.6rem; border: 1px solid #ccc; background: #f9f9f9;">Thứ Tư</th>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Cơ sở dữ liệu</td>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Làm bài tập nhóm ITeduShare</td>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Tự học nâng cao</td>
+                            <th scope="row">Thứ Tư</th>
+                            <td>Cơ sở dữ liệu</td>
+                            <td>Làm bài tập nhóm ITeduShare</td>
+                            <td>Tự học nâng cao</td>
                         </tr>
                         <tr>
-                            <th scope="row" style="padding: 0.6rem; border: 1px solid #ccc; background: #f9f9f9;">Thứ Sáu</th>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Mạng máy tính</td>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Sinh hoạt CLB Tin học</td>
-                            <td style="padding: 0.6rem; border: 1px solid #ccc;">Giải trí cá nhân</td>
+                            <th scope="row">Thứ Sáu</th>
+                            <td>Mạng máy tính</td>
+                            <td>Sinh hoạt CLB Tin học</td>
+                            <td>Giải trí cá nhân</td>
                         </tr>
                     </tbody>
                 </table>
