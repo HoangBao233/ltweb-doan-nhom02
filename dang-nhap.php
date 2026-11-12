@@ -101,7 +101,7 @@ require_once __DIR__ . '/inc/header.php';
                 <input type="text" id="email" name="email"
                        value="<?= e($emailNhap) ?>"
                        required autocomplete="email"
-                       placeholder="Ví dụ: admin@ued.vn hoặc lan@ued.vn"
+                       placeholder="Địa chỉ email"
                        style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
             </div>
 
@@ -111,7 +111,7 @@ require_once __DIR__ . '/inc/header.php';
                 </label>
                 <input type="password" id="mat-khau" name="mat_khau"
                        required autocomplete="current-password"
-                       placeholder="Nhập mật khẩu của bạn"
+                       placeholder="Mật khẩu"
                        style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
             </div>
 
