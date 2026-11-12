@@ -29,12 +29,13 @@ if ($ga === null) {
     exit;
 }
 
-// 3. Lưu lịch sử xem vào Cookie (tối đa 4 ID mới nhất)
-$cu  = array_values(array_filter(array_map('intval', explode(',', $_COOKIE['da_xem'] ?? '')), fn($v) => $v > 0));
+// 3. Lưu lịch sử xem vào Cookie (tối đa 4 ID mới nhất - Biện pháp 2)
+$cu  = array_values(array_filter(array_map('intval', explode(',', chuoi($_COOKIE['da_xem'] ?? ''))), fn($v) => $v > 0));
 $moi = array_unique([$ga->id, ...$cu]);
 setcookie('da_xem', implode(',', array_slice($moi, 0, 4)), [
     'expires'  => time() + 30 * 24 * 3600,
     'path'     => '/',
+    'secure'   => !empty($_SERVER['HTTPS']),
     'httponly' => true,
     'samesite' => 'Lax',
 ]);

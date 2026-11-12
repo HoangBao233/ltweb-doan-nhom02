@@ -28,10 +28,27 @@ ini_set('display_errors', MOI_TRUONG === 'dev' ? '1' : '0');
 ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ . '/../logs/php-error.log');
 
+// Cấu hình phiên an toàn trước khi khởi tạo phiên (Biện pháp 2)
+ini_set('session.use_strict_mode', '1');
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => '/',
+    'secure'   => !empty($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Lax',
+]);
+
 // Khởi tạo phiên làm việc
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Hết hạn sau 30 phút không hoạt động (Biện pháp 2)
+if (time() - ($_SESSION['hoat_dong'] ?? time()) > 30 * 60) {
+    $_SESSION = [];
+    session_regenerate_id(true);
+}
+$_SESSION['hoat_dong'] = time();
 
 // Bắt lỗi toàn cục và hiện trang 500 khi ở môi trường prod
 set_exception_handler(function (Throwable $e) {
