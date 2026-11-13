@@ -1443,3 +1443,74 @@ button:focus-visible {
   color: #666;
   margin-bottom: 2rem;
 }
+
+/* ==============================================================
+   ĐỊNH DẠNG TRANG CHỦ (index.php — Dọn sạch Inline Style cho CSP)
+   ============================================================== */
+.hop-thoi-tiet {
+  margin: 1.5rem auto;
+  text-align: center;
+  max-width: 350px;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--nen-phu, #f4f6f8);
+}
+
+.hop-thoi-tiet__tieu-de {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--mau-chinh, #004085);
+}
+
+.hop-thoi-tiet__khung {
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hop-thoi-tiet__thong-bao {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--chu, #333);
+}
+
+.hop-thoi-tiet__nut-thu-lai {
+  margin-top: 0.5rem;
+  display: none;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.gioi-thieu-tinh-nang--cach-tren {
+  margin-top: 3rem;
+}
+
+.thanh-tieu-de-trang-chu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tieu-de-muc-trang-chu {
+  margin: 0;
+}
+
+.nhan-ton-kho {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.chu-het-hang {
+  color: red;
+}
+
+.thong-bao-trong-trang-chu {
+  text-align: center;
+  color: #666;
+}
+
