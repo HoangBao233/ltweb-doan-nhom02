@@ -1,0 +1,153 @@
+# tests/bao-mat.http — Bộ kiểm thử hồi quy bảo mật Chương 7 (14 ca phủ định Bảng 3)
+# Dùng với VS Code REST Client extension (không lưu PHPSESSID hay CSRF thật vào tệp này!)
+#
+# Chọn URL gốc phù hợp với môi trường chạy:
+# - PHP built-in server:
+@goc = http://localhost:8000
+# - XAMPP Apache (bỏ # dòng dưới và thêm # dòng trên để kiểm thử .htaccess - Ca 10):
+# @goc = http://localhost/ltweb-doan-nhom02
+
+# Bước chuẩn bị: chạy mục ### 0 để lấy Set-Cookie (PHPSESSID) và thẻ <meta name="csrf-token">
+@phpsessid = THAY_BANG_PHPSESSID_SAU_KHI_CHAY_MUC_0
+@csrf = THAY_BANG_MA_CSRF_TRONG_META_TOKEN
+
+### 0. Chuẩn bị — Lấy cookie PHPSESSID và CSRF token từ trang chủ (hoặc dang-nhap.php)
+GET {{goc}}/dang-nhap.php
+
+### Ca 1: Kiểm tra Header bảo mật & Cookie phiên
+# Mong đợi: Có Content-Security-Policy, X-Content-Type-Options: nosniff, Referrer-Policy;
+#           Không có X-Powered-By; Set-Cookie có HttpOnly; SameSite=Lax
+HEAD {{goc}}/index.php
+
+### Ca 2a: POST form đăng nhập thiếu ô csrf → 403 + ghi logs/bao-mat.log (csrf_sai)
+POST {{goc}}/dang-nhap.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+email=admin@ued.vn&mat_khau=matkhau123
+
+### Ca 2b: POST form giỏ hàng sai csrf (`csrf=abc`) → 403
+POST {{goc}}/gio-hang.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf=abc&action=xoa_het
+
+### Ca 2c: POST gửi csrf dạng mảng (`csrf[]=abc`) → 403 (không TypeError / 500)
+POST {{goc}}/dang-nhap.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf[]=abc&email=admin@ued.vn&mat_khau=matkhau123
+
+### Ca 3a: API JSON POST thiếu header X-CSRF-Token → 403 JSON {"loi": "..."}
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+
+{"id": 1, "sl": 1}
+
+### Ca 3b: API JSON POST có header X-CSRF-Token đúng → 200 JSON {"thanh_cong": true, ...}
+POST {{goc}}/api/gio-hang.php
+Content-Type: application/json
+Cookie: PHPSESSID={{phpsessid}}
+X-CSRF-Token: {{csrf}}
+
+{"id": 1, "sl": 1}
+
+### Ca 4a: GET trực tiếp dang-xuat.php → 405 Method Not Allowed (Allow: POST)
+GET {{goc}}/dang-xuat.php
+Cookie: PHPSESSID={{phpsessid}}
+
+### Ca 4b: GET trực tiếp xoa-giao-an.php (khi đã đăng nhập admin) → 405 hoặc (chưa phải admin) → 403
+GET {{goc}}/xoa-giao-an.php?id=1
+Cookie: PHPSESSID={{phpsessid}}
+
+### Ca 4c: Tài khoản khách (sau khi đăng nhập lan@ued.vn) có CSRF đúng gửi POST xóa giáo án → 403 + cam_truy_cap
+POST {{goc}}/xoa-giao-an.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf={{csrf}}&id=1
+
+### Ca 5: Cố định phiên (Session Fixation — use_strict_mode)
+# Mong đợi: Máy chủ từ chối PHPSESSID tự đặt, Set-Cookie cấp lại PHPSESSID ngẫu nhiên mới
+HEAD {{goc}}/index.php
+Cookie: PHPSESSID=sessiongiamao123456
+
+### Ca 6: Hết hạn phiên (30 phút không hoạt động)
+# Thử bằng cách tạm đổi 30*60 thành 60 trong inc/config.php, chờ > 60s rồi gửi POST:
+POST {{goc}}/gio-hang.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf={{csrf}}&action=xoa_het
+
+### Ca 7: XSS & Escape đầu ra — Tìm kiếm và Liên hệ chứa thẻ HTML / ký tự đặc biệt
+GET {{goc}}/kho-hoc-lieu.php?q=%3Cb%3Epython%3C%2Fb%3E
+
+### Ca 7b: Gửi form liên hệ chứa <b>Bình</b> và " ' & kèm CSRF đúng → lưu nguyên văn, xuất ra &lt;b&gt;...
+POST {{goc}}/ve-chung-toi.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf={{csrf}}&hoten=%3Cb%3EB%C3%ACnh%3C%2Fb%3E&email=binh%40example.com&sdt=0901234567&noidung=Kiem%20thu%20%22%20'%20%26
+
+### Ca 8a: Tham số GET dạng mảng (`?q[]=ao`, `?sx[]=x`) → 200 không Warning/TypeError
+GET {{goc}}/kho-hoc-lieu.php?q[]=ao&sx[]=x
+
+### Ca 8b: Tham số GET chi tiết dạng mảng (`?id[]=1`) → 404 sạch không TypeError
+GET {{goc}}/chi-tiet-giao-an.php?id[]=1
+
+### Ca 8c: Form liên hệ POST kèm CSRF đúng với ô nhập dạng mảng (`hoten[]=abc`) → 200 xử lý như chuỗi rỗng
+POST {{goc}}/ve-chung-toi.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf={{csrf}}&hoten[]=abc&email[]=x&noidung[]=y
+
+### Ca 9: Chế độ gỡ lỗi APP_DEBUG=false khi sai cấu hình DB
+# Đặt APP_DEBUG=false và sai DB_PASSWORD trong .env rồi chạy:
+# Mong đợi: API trả 500 JSON chung, trang web trả 500 thân thiện, chi tiết vào logs/php-error.log
+GET {{goc}}/api/giao-an.php?q=python
+
+### Ca 10a: Chặn .htaccess (Chỉ hiệu lực trên XAMPP Apache! Đổi @goc ở đầu tệp sang Apache URL)
+# Mong đợi: .env, .git/config, inc/db.php, vendor/autoload.php → 404
+GET {{goc}}/.env
+
+### Ca 10b: .htaccess chặn .git/config → 404 trên Apache
+GET {{goc}}/.git/config
+
+### Ca 10c: .htaccess chặn inc/db.php → 404 trên Apache
+GET {{goc}}/inc/db.php
+
+### Ca 10d: .htaccess chặn database/schema.sql & logs/bao-mat.log & composer.json → 403 trên Apache
+GET {{goc}}/database/schema.sql
+
+### Ca 10e: .htaccess chặn xem log → 403 trên Apache
+GET {{goc}}/logs/bao-mat.log
+
+### Ca 10f: uploads/ cấm liệt kê thư mục → 403 trên Apache
+GET {{goc}}/uploads/
+
+### Ca 11: Tài khoản DB quyền tối thiểu (nhom02_app)
+# Sau khi chạy database/tai-khoan.sql và đổi .env sang nhom02_app, mọi trang vẫn 200 bình thường:
+GET {{goc}}/index.php
+
+### Ca 12: Chống đoán mật khẩu Brute-force (5 lần sai / 15 phút → lần 6 trả 429)
+# Gửi request này 5 lần với sai mật khẩu, lần 6 kể cả đúng mật khẩu vẫn nhận 429:
+POST {{goc}}/dang-nhap.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf={{csrf}}&email=lan@ued.vn&mat_khau=matkhau_sai_123
+
+### Ca 13 (Ca riêng đề tài #1): Form bình chọn trang cá nhân Bảo thiếu CSRF hoặc gửi ngon_ngu[]=PHP
+POST {{goc}}/thanhvien/3120124003_bao/gioithieu.php
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID={{phpsessid}}
+
+csrf={{csrf}}&action=binh_chon&ngon_ngu[]=PHP
+
+### Ca 14 (Ca riêng đề tài #2): Kiểm thử truy cập trực tiếp tệp cấu hình composer.json trên Apache → 403
+GET {{goc}}/composer.json
