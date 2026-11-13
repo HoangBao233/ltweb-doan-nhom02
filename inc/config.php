@@ -11,6 +11,7 @@ require_once __DIR__ . '/ham.php';
 // Nạp kết nối CSDL (PDO Singleton)
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/xac-thuc.php';
+require_once __DIR__ . '/csrf.php';
 
 // Các hằng số thư mục (đã có)
 define('ROOT_DIR', __DIR__ . '/../');
@@ -27,6 +28,23 @@ error_reporting(E_ALL);
 ini_set('display_errors', MOI_TRUONG === 'dev' ? '1' : '0');
 ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ . '/../logs/php-error.log');
+
+// Header bảo mật & Content Security Policy (Biện pháp 3 — Phụ trách: Nguyễn Cảnh Tấn)
+if (!headers_sent()) {
+    header(
+        "Content-Security-Policy: default-src 'self'; "
+        . "img-src 'self' data:; "
+        . "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; "
+        . "connect-src 'self' https://api.open-meteo.com; "
+        . "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    );
+    header('X-Content-Type-Options: nosniff');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+    header_remove('X-Powered-By');
+    if (!empty($_SERVER['HTTPS'])) {
+        header('Strict-Transport-Security: max-age=31536000');
+    }
+}
 
 // Cấu hình phiên an toàn trước khi khởi tạo phiên (Biện pháp 2)
 ini_set('session.use_strict_mode', '1');

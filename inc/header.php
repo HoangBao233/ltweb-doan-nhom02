@@ -57,9 +57,7 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= e($metaMoTa) ?>">
     <title><?= e($tieuDeTrang) ?> | ITeduShare</title>
-    
-    <!-- Đánh dấu hỗ trợ JS ngay từ đầu để kích hoạt Menu Mobile mượt mà -->
-    <script>document.documentElement.classList.add('js');</script>
+    <meta name="csrf-token" content="<?= csrfToken() ?>">
 
     <!-- CSS dùng chung của nhóm -->
     <link rel="stylesheet" href="<?= $goc ?>css/01-bien.css">
@@ -73,29 +71,32 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
 </head>
 <body class="trang">
 
-    <header class="trang__dau can-giua-chu" style="display:flex; align-items:center; justify-content:space-between; padding:0.5rem 1rem;">
-        <p class="trang__khieu-giao" style="margin:0;">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
+    <header class="trang__dau can-giua-chu thanh-header-tren">
+        <p class="trang__khieu-giao">ITeduShare - Cùng giáo viên Tin học kiến tạo tương lai</p>
         
-        <div class="dang-nhap-goc" style="display:flex; align-items:center; gap:0.5rem; white-space:nowrap; flex-wrap:wrap;">
+        <div class="dang-nhap-goc">
             <?php if ($daDangNhap): ?>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; color:var(--mau-chinh, #004085);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085);"><?= (($uHienTai['vai_tro'] ?? '') === 'quan_tri') ? 'Quản trị viên' : e($uHienTai['ho_ten'] ?? '') ?></span>
-                <span style="color:#cbd5e1; margin:0 0.15rem;">|</span>
-                <a href="<?= $goc ?>dang-xuat.php" style="font-size:0.9rem; color:#e11d48; text-decoration:none; font-weight:500;">Đăng xuất</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-tai-khoan"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span class="chu-tai-khoan"><?= (($uHienTai['vai_tro'] ?? '') === 'quan_tri') ? 'Quản trị viên' : e($uHienTai['ho_ten'] ?? '') ?></span>
+                <span class="vach-ngan-tai-khoan">|</span>
+                <form method="post" action="<?= $goc ?>dang-xuat.php" class="form-dang-xuat">
+                    <?= csrfField() ?>
+                    <button type="submit" class="nut-dang-xuat-header">Đăng xuất</button>
+                </form>
             <?php else: ?>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; color:var(--mau-chinh, #004085);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <a href="<?= $goc ?>dang-nhap.php" style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085); text-decoration:none;">Đăng nhập</a>
-                <span style="color:#cbd5e1; margin:0 0.15rem;">|</span>
-                <a href="<?= $goc ?>dang-ky.php" style="font-weight:600; font-size:0.9rem; color:var(--mau-chinh, #004085); text-decoration:none;">Đăng ký</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-tai-khoan"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <a href="<?= $goc ?>dang-nhap.php" class="link-tai-khoan">Đăng nhập</a>
+                <span class="vach-ngan-tai-khoan">|</span>
+                <a href="<?= $goc ?>dang-ky.php" class="link-tai-khoan">Đăng ký</a>
             <?php endif; ?>
         </div>
     </header>
 
     <nav class="trang__dieu-huong" aria-label="Menu chính">
         <!-- Nút Menu hiển thị trên Mobile (Mặc định ẩn trên Desktop) -->
-        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh" onclick="window.batTatMenuMobile && window.batTatMenuMobile();">☰ Menu</button>
+        <button type="button" class="nut-menu" aria-expanded="false" aria-controls="menu-chinh">☰ Menu</button>
 
-        <ul id="menu-chinh" class="menu-chinh menu" style="list-style: none;">
+        <ul id="menu-chinh" class="menu-chinh menu">
             <?php foreach ($menu as $tep => $ten): 
                 $tepKhongDuoi = str_replace('.php', '', $tep);
                 $isCurrent = ($trangHienTai === $tep || $trangHienTai === $tepKhongDuoi);
@@ -106,38 +107,10 @@ if ($trangHienTai === 'index' || $trangHienTai === 'trang-chu') {
                        <?= $isCurrent ? 'aria-current="page"' : '' ?>>
                         <?= e($ten) ?>
                         <?php if ($tep === 'gio-hang.php'): ?>
-                            <span class="huy-hieu-so-luong" style="background: var(--mau-nhan, #e74c3c); color: #fff; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.75rem; font-weight: bold; margin-left: 0.35rem; display: inline-block; vertical-align: middle;"><?= $soLuongLuu ?></span>
+                            <span class="huy-hieu-so-luong"><?= $soLuongLuu ?></span>
                         <?php endif; ?>
                     </a>
                 </li>
             <?php endforeach; ?>
         </ul>
     </nav>
-    <script>
-    window.batTatMenuMobile = function() {
-        var menu = document.getElementById('menu-chinh');
-        var nut = document.querySelector('.nut-menu');
-        if (!menu || !nut) return;
-        var dangMo = menu.classList.toggle('mo');
-        nut.setAttribute('aria-expanded', dangMo ? 'true' : 'false');
-        nut.textContent = dangMo ? '✕ Đóng' : '☰ Menu';
-    };
-
-    var nutMenu = document.querySelector('.nut-menu');
-    if (nutMenu) {
-        nutMenu.onclick = window.batTatMenuMobile;
-    }
-
-    document.addEventListener('keydown', function(e) {
-        var menu = document.getElementById('menu-chinh');
-        var nut = document.querySelector('.nut-menu');
-        if (e.key === 'Escape' && menu && menu.classList.contains('mo')) {
-            menu.classList.remove('mo');
-            if (nut) {
-                nut.setAttribute('aria-expanded', 'false');
-                nut.textContent = '☰ Menu';
-                nut.focus();
-            }
-        }
-    });
-    </script>

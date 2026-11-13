@@ -53,6 +53,15 @@ function khoiTaoMain() {
     // Lắng nghe sự kiện để cập nhật con số theo thời gian thực 
     // khi người dùng bấm nút Thêm/Xóa ở các trang khác
     window.addEventListener('capNhatYeuThich', capNhatHienThiYeuThich);
+
+    // === 3. XỬ LÝ XÁC NHẬN SUBMIT FORM QUA data-confirm (THAY THẾ onsubmit="return confirm(...)") ===
+    document.addEventListener('submit', (e) => {
+        const form = e.target;
+        const msg = form?.getAttribute?.('data-confirm');
+        if (msg && !window.confirm(msg)) {
+            e.preventDefault();
+        }
+    });
 }
 
 if (document.readyState === 'loading') {

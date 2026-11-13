@@ -103,7 +103,7 @@ require_once 'inc/header.php';
         <div class="gio-hang__khung">
             <div class="gio-hang__thanh-cong-cu">
                 <a href="kho-hoc-lieu.php" class="gio-hang__tiep-tuc">&larr; Tiếp tục chọn thêm giáo án</a>
-                <form action="gio-hang.php" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xoá tất cả giáo án khỏi giỏ hàng?');">
+                <form action="gio-hang.php" method="POST" data-confirm="Bạn có chắc chắn muốn xoá tất cả giáo án khỏi giỏ hàng?">
                     <input type="hidden" name="action" value="xoa_het">
                     <button type="submit" class="gio-hang__nut-xoa-het">
                         Xoá tất cả

@@ -1081,3 +1081,365 @@ button:focus-visible {
   flex-wrap: wrap;
   gap: 1rem;
 }
+
+/* ==============================================================
+   ĐỊNH DẠNG HEADER & TRANG DÙNG CHUNG (Dọn sạch Inline Style cho CSP)
+   Phụ trách: Nguyễn Cảnh Tấn (Biện pháp 3 BTN7)
+   ============================================================== */
+.thanh-header-tren {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.trang__khieu-giao {
+  margin: 0;
+}
+
+.dang-nhap-goc {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+
+.icon-tai-khoan {
+  vertical-align: middle;
+  color: var(--mau-chinh, #004085);
+}
+
+.chu-tai-khoan {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--mau-chinh, #004085);
+}
+
+.vach-ngan-tai-khoan {
+  color: #cbd5e1;
+  margin: 0 0.15rem;
+}
+
+.link-tai-khoan {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--mau-chinh, #004085);
+  text-decoration: none;
+}
+
+.form-dang-xuat {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.nut-dang-xuat-header {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+  color: #e11d48;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.menu-chinh {
+  list-style: none;
+}
+
+.huy-hieu-so-luong {
+  background: var(--mau-nhan, #e74c3c);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-left: 0.35rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ==============================================================
+   ĐỊNH DẠNG KHO HỌC LIỆU & BỘ LỌC (Dọn sạch Inline Style cho CSP)
+   Phụ trách: Nguyễn Cảnh Tấn (Biện pháp 3 BTN7)
+   ============================================================== */
+.bo-loc-hoc-lieu {
+  background: var(--nen-phu, #f8f9fa);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.form-bo-loc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.nhom-loc-tim-kiem {
+  flex: 1;
+  min-width: 220px;
+}
+
+.nhan-loc {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.o-nhap-tim-kiem {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.o-chon-loc {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.o-nhap-gia {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 130px;
+}
+
+.nut-tim-kiem-kho {
+  padding: 0.5rem 1.5rem;
+}
+
+.link-xoa-bo-loc {
+  padding: 0.5rem 1rem;
+  color: #666;
+  text-decoration: none;
+}
+
+.chu-dem-ket-qua {
+  font-size: 0.75em;
+  color: #666;
+}
+
+.thong-bao-khong-tim-thay {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+}
+
+.link-xem-tat-ca {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--mau-chinh, #007bff);
+}
+
+.hang-cap-hoc-va-luu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nut-luu-giao-an {
+  background: none;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.15rem 0.5rem;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.nut-luu-giao-an.da-thich {
+  color: #e74c3c !important;
+  border-color: #e74c3c !important;
+}
+
+.phan-duoi-the {
+  margin-top: auto;
+  text-align: center;
+}
+
+.gia-the-hoc-lieu {
+  font-weight: bold;
+  color: var(--mau-chinh, #007bff);
+  margin-bottom: 0.75rem;
+}
+
+.nut-xem-chi-tiet-kho {
+  display: block;
+  text-align: center;
+}
+
+/* ==============================================================
+   ĐỊNH DẠNG TRANG LỖI 500 (Dọn sạch Inline Style cho CSP)
+   Phụ trách: Nguyễn Cảnh Tấn (Biện pháp 3 BTN7)
+   ============================================================== */
+.than-trang-500 {
+  background: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #1e293b;
+}
+
+.dau-trang-500 {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-trang-500 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #004085;
+}
+
+.link-ve-trang-chu-500 {
+  color: #0284c7;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.hop-loi-500 {
+  max-width: 600px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.ma-loi-500 {
+  font-size: 4rem;
+  line-height: 1;
+  color: #e11d48;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.tieu-de-loi-500 {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+
+.mo-ta-loi-500 {
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  font-size: 1rem;
+}
+
+.nhom-nut-500 {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nut-ve-trang-chu-500 {
+  display: inline-block;
+  padding: 0.65rem 1.5rem;
+  background: #0284c7;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.nut-tai-lai-500 {
+  display: inline-block;
+  padding: 0.65rem 1.5rem;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.chan-trang-500 {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  padding: 2rem 1rem;
+}
+
+/* ==============================================================
+   ĐỊNH DẠNG TRANG LỖI 403 & 404 (Dọn sạch Inline Style cho CSP)
+   Phụ trách: Nguyễn Cảnh Tấn (Biện pháp 3 BTN7)
+   ============================================================== */
+.hop-loi-403 {
+  max-width: 600px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.ma-loi-403 {
+  font-size: 4rem;
+  color: #e53e3e;
+  margin-bottom: 1rem;
+}
+
+.tieu-de-loi-403 {
+  margin-bottom: 1rem;
+}
+
+.mo-ta-loi-403 {
+  color: #4a5568;
+  margin-bottom: 2rem;
+}
+
+.nhom-nut-403 {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nut-dang-nhap-403 {
+  text-decoration: none;
+  background: #4a5568;
+  color: #ffffff;
+}
+
+.link-khong-gach {
+  text-decoration: none;
+}
+
+.hop-loi-404 {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.ma-loi-404 {
+  font-size: 4rem;
+  color: var(--mau-chinh, #2196f3);
+  margin: 0;
+}
+
+.tieu-de-loi-404 {
+  margin-top: 0.5rem;
+}
+
+.mo-ta-loi-404 {
+  color: #666;
+  margin-bottom: 2rem;
+}
