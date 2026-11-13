@@ -68,6 +68,17 @@ if (time() - ($_SESSION['hoat_dong'] ?? time()) > 30 * 60) {
 }
 $_SESSION['hoat_dong'] = time();
 
+// Kiểm tra mã CSRF tập trung cho mọi yêu cầu POST (Biện pháp 1 — Phụ trách: Lê Hoàng Bảo)
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && !csrfHopLe()) {
+    ghiLogBaoMat('csrf_sai', ['trang' => $_SERVER['REQUEST_URI'] ?? '-']);
+    $loiCsrf = 'Trang đã hết hạn, hãy tải lại trang rồi gửi lại';
+    if (str_contains($_SERVER['CONTENT_TYPE'] ?? '', 'json')) {
+        traJson(['loi' => $loiCsrf], 403);
+    }
+    http_response_code(403);
+    exit($loiCsrf);
+}
+
 // Bắt lỗi toàn cục và hiện trang 500 khi ở môi trường prod
 set_exception_handler(function (Throwable $e) {
     error_log($e->getMessage()); // Luôn ghi log

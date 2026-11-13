@@ -67,6 +67,7 @@ require_once 'inc/header.php';
                 $daLuu = $dsLuu->daLuu($ga->id);
                 ?>
                 <form action="gio-hang.php" method="POST" class="form-luu-giao-an form-noi-tuyen">
+                    <?= csrfField() ?>
                     <input type="hidden" name="action" value="<?= $daLuu ? 'xoa' : 'them' ?>">
                     <input type="hidden" name="id" value="<?= $ga->id ?>">
                     <input type="hidden" name="sl" value="1">

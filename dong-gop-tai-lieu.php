@@ -11,9 +11,9 @@ $sdt    = '';
 
 // Xử lý POST
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
-    $ho_ten = trim($_POST['hoten'] ?? '');
-    $email  = trim($_POST['email'] ?? '');
-    $sdt    = trim($_POST['sdt']   ?? '');
+    $ho_ten = trim(chuoi($_POST['hoten'] ?? ''));
+    $email  = trim(chuoi($_POST['email'] ?? ''));
+    $sdt    = trim(chuoi($_POST['sdt']   ?? ''));
 
     // Validate các trường text
     if (mb_strlen($ho_ten, 'UTF-8') < 5) {
@@ -95,6 +95,7 @@ require_once 'inc/header.php';
 
         <form class="bieu-mau" action="dong-gop-tai-lieu.php" method="POST"
               enctype="multipart/form-data">
+            <?= csrfField() ?>
             <fieldset class="bieu-mau__nhom">
                 <legend class="bieu-mau__tieu-de">Thông tin người gửi tài liệu</legend>
 

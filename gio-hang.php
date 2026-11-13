@@ -15,8 +15,8 @@ $kho   = new KhoGiaoAn();
 
 // Xử lý các action POST (them, cap_nhat, xoa, xoa_het)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
-    $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+    $action = chuoi($_POST['action'] ?? '');
+    $id = filter_var($_POST['id'] ?? 0, FILTER_VALIDATE_INT) ?: 0;
 
     if ($action === 'them' && $id > 0) {
         $sl = filter_var($_POST['sl'] ?? 1, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?: 1;
@@ -104,6 +104,7 @@ require_once 'inc/header.php';
             <div class="gio-hang__thanh-cong-cu">
                 <a href="kho-hoc-lieu.php" class="gio-hang__tiep-tuc">&larr; Tiếp tục chọn thêm giáo án</a>
                 <form action="gio-hang.php" method="POST" data-confirm="Bạn có chắc chắn muốn xoá tất cả giáo án khỏi giỏ hàng?">
+                    <?= csrfField() ?>
                     <input type="hidden" name="action" value="xoa_het">
                     <button type="submit" class="gio-hang__nut-xoa-het">
                         Xoá tất cả
@@ -148,6 +149,7 @@ require_once 'inc/header.php';
                                 </td>
                                 <td class="gio-hang__o-giua">
                                     <form action="gio-hang.php" method="POST" class="gio-hang__form-sl">
+                                        <?= csrfField() ?>
                                         <input type="hidden" name="action" value="cap_nhat">
                                         <input type="hidden" name="id" value="<?= $ga->id ?>">
                                         <input type="number" name="sl" value="<?= $sl ?>" min="1" max="<?= max(1, $ga->ton_kho) ?>"
@@ -163,6 +165,7 @@ require_once 'inc/header.php';
                                 </td>
                                 <td class="gio-hang__o-giua">
                                     <form action="gio-hang.php" method="POST" class="gio-hang__form-xoa">
+                                        <?= csrfField() ?>
                                         <input type="hidden" name="action" value="xoa">
                                         <input type="hidden" name="id" value="<?= $ga->id ?>">
                                         <button type="submit" class="gio-hang__nut-xoa" title="Xoá mục này">

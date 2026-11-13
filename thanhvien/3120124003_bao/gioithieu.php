@@ -47,7 +47,7 @@ $duLuuBut  = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
+    $action = chuoi($_POST['action'] ?? '');
 
     // CHỨC NĂNG CSDL 2: CHỦ TRANG XÓA LỜI NHẮN
     if ($action === 'xoa_luu_but') {
@@ -66,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // CHỨC NĂNG CSDL 1: THÊM LỜI NHẮN VÀO MYSQL (tv_luu_but)
     if ($action === 'luu_but') {
-        $ten  = trim($_POST['ten'] ?? '');
-        $nhan = trim($_POST['loi_nhan'] ?? '');
+        $ten  = trim(chuoi($_POST['ten'] ?? ''));
+        $nhan = trim(chuoi($_POST['loi_nhan'] ?? ''));
 
         $duLuuBut['ten']      = $ten;
         $duLuuBut['loi_nhan'] = $nhan;
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // CHỨC NĂNG CSDL 2: KHẢO SÁT / BÌNH CHỌN CÔNG NGHỆ LƯU MYSQL (tv_binh_chon)
     if ($action === 'binh_chon') {
         $cacTuyChon = ['PHP', 'Python', 'JavaScript', 'C++'];
-        $luaChon    = trim((string)($_POST['ngon_ngu'] ?? ''));
+        $luaChon    = trim(chuoi($_POST['ngon_ngu'] ?? ''));
 
         if (in_array($luaChon, $cacTuyChon, true)) {
             $stBC = db()->prepare('
@@ -251,6 +251,7 @@ require_once __DIR__ . '/../../inc/header.php';
 
         <!-- Form gửi lời nhắn lưu bút -->
         <form method="POST" action="gioithieu.php" novalidate>
+            <?= csrfField() ?>
             <input type="hidden" name="action" value="luu_but">
             
             <div class="bao-nhom-o">
@@ -310,6 +311,7 @@ require_once __DIR__ . '/../../inc/header.php';
                             <!-- CHỨC NĂNG 2: NÚT XÓA CHỈ HIỆN KHI LÀ CHỦ TRANG -->
                             <?php if ($laChuTrang): ?>
                                 <form method="POST" action="gioithieu.php" data-confirm="Bạn có chắc chắn muốn xóa lời nhắn này của khách?" class="bao-form-xoa">
+                                    <?= csrfField() ?>
                                     <input type="hidden" name="action" value="xoa_luu_but">
                                     <input type="hidden" name="id" value="<?= (int)$lb['id'] ?>">
                                     <button type="submit" class="bao-nut-xoa" title="Chủ trang xóa lời nhắn này">
@@ -372,6 +374,7 @@ require_once __DIR__ . '/../../inc/header.php';
         <?php endif; ?>
 
         <form method="POST" action="gioithieu.php">
+            <?= csrfField() ?>
             <input type="hidden" name="action" value="binh_chon">
             <div class="bao-danh-sach-tuy-chon">
                 <?php foreach ($cacTuyChonBC as $tc): ?>

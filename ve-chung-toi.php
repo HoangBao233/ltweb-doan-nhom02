@@ -17,10 +17,12 @@ $loi = [];
 
 // 2. Kiểm tra REQUEST_METHOD === 'POST'
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $du['hoten']   = trim($_POST['hoten']   ?? $_POST['ho-ten']   ?? '');
-    $du['email']   = trim($_POST['email']   ?? '');
-    $du['sdt']     = trim($_POST['sdt']     ?? '');
-    $du['noidung'] = trim($_POST['noidung'] ?? $_POST['tin-nhan'] ?? '');
+    $hoTenRaw  = chuoi($_POST['hoten']   ?? $_POST['ho-ten']   ?? '');
+    $noiDungRaw = chuoi($_POST['noidung'] ?? $_POST['tin-nhan'] ?? '');
+    $du['hoten']   = trim($hoTenRaw);
+    $du['email']   = trim(chuoi($_POST['email']   ?? ''));
+    $du['sdt']     = trim(chuoi($_POST['sdt']     ?? ''));
+    $du['noidung'] = trim($noiDungRaw);
 
     // 3. Validate từng ô
     if (mb_strlen($du['hoten'], 'UTF-8') < 2) {
@@ -139,6 +141,7 @@ require_once 'inc/header.php';
 
             <form id="form-lien-he" class="bieu-mau"
                   action="ve-chung-toi.php" method="POST" enctype="multipart/form-data" novalidate>
+                <?= csrfField() ?>
 
                 <div class="bieu-mau__nhom">
                     <label for="hoten">Họ và tên <span class="bat-buoc">*</span></label>
