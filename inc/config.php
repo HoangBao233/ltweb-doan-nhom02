@@ -2,8 +2,14 @@
 /**
  * config.php — Cấu hình chung của website
  */
-// Nạp autoload của Composer (để dùng được các lớp trong src/)
+// Nạp autoload của Composer (để dùng được các lớp trong src/ và vlucas/phpdotenv)
 require_once __DIR__ . '/../vendor/autoload.php';
+
+// Nạp biến môi trường từ tệp .env (Biện pháp 4)
+$env = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$env->load();
+$env->required(['DB_HOST', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD']);
+define('DEBUG', ($_ENV['APP_DEBUG'] ?? '') === 'true');
 
 // Nạp các hàm tiện ích
 require_once __DIR__ . '/ham.php';
@@ -19,13 +25,9 @@ define('DATA_DIR', ROOT_DIR . 'data/');
 define('STORAGE_DIR', ROOT_DIR . 'storage/');
 define('UPLOADS_DIR', ROOT_DIR . 'uploads/');
 
-// Môi trường ('dev' để hiện lỗi, đổi thành 'prod' khi nộp bài)
-// Nop bai voi MOI_TRUONG = 'dev' theo dung yeu cau de bai BTN6
-const MOI_TRUONG = 'dev';
-
-// Bật tắt báo lỗi theo môi trường
+// Bật tắt báo lỗi theo biến APP_DEBUG trong .env (thiếu APP_DEBUG thì tắt gỡ lỗi)
 error_reporting(E_ALL);
-ini_set('display_errors', MOI_TRUONG === 'dev' ? '1' : '0');
+ini_set('display_errors', DEBUG ? '1' : '0');
 ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ . '/../logs/php-error.log');
 
@@ -79,15 +81,15 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && !csrfHopLe()) {
     exit($loiCsrf);
 }
 
-// Bắt lỗi toàn cục và hiện trang 500 khi ở môi trường prod
+// Bắt lỗi toàn cục: hiện chi tiết khi DEBUG=true, hiện trang 500 thân thiện khi DEBUG=false
 set_exception_handler(function (Throwable $e) {
-    error_log($e->getMessage()); // Luôn ghi log
-    if (MOI_TRUONG === 'prod') {
-        http_response_code(500);
-        require __DIR__ . '/../500.php';
+    error_log((string) $e); // Luôn ghi chi tiết lỗi vào logs/php-error.log
+    http_response_code(500);
+    if (DEBUG) {
+        echo '<pre>' . e((string) $e) . '</pre>';
         exit;
     }
-    // Nếu đang dev, ném lỗi ra màn hình để dễ sửa
-    throw $e;
+    require __DIR__ . '/../500.php';
+    exit;
 });
 
