@@ -474,3 +474,168 @@ body.che-do-doc-sach .cot-trai, body.che-do-doc-sach tr:nth-child(even) { backgr
     align-items: flex-start;
   }
 }
+
+/* ==============================================================
+   14. CÁC LỚP BẢO MẬT & DỌN SẠCH INLINE STYLE (CSP BTN7)
+   Phụ trách: Nguyễn Cảnh Tấn (MSSV 3120124027)
+   ============================================================== */
+.dieu-huong-phu-tan {
+  background: var(--nen-phu, #f4f6f8);
+  padding: 0.75rem 1rem;
+}
+
+.danh-sach-dieu-huong-phu {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.hop-luot-xem-hom-nay {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f0f8ff;
+  border: 1px solid #bee3f8;
+  border-radius: 8px;
+}
+
+.tieu-de-hop-xem {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.so-luot-xem-lon {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2b6cb0;
+  margin: 0;
+}
+
+.chu-tong-luot-xem {
+  font-size: 0.85rem;
+  color: #4a5568;
+  margin-top: 0.25rem;
+}
+
+.tieu-de-7-ngay {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+}
+
+.hop-bang-cuon {
+  min-width: 0;
+}
+
+.o-chua-co-du-lieu {
+  color: #718096;
+  font-style: italic;
+}
+
+.hop-ho-tro-doc {
+  margin-top: 1.5rem;
+}
+
+.nhan-chu-trang {
+  color: #2b6cb0;
+  font-weight: bold;
+}
+
+.nhan-khach-vang-lai {
+  color: #c53030;
+}
+
+.nhan-chua-dang-nhap {
+  color: #718096;
+}
+
+.nhom-nut-tai-khoan-tan {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.form-dang-xuat-tan {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.nut-dang-xuat-tan {
+  text-decoration: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.nut-dang-nhap-tan {
+  text-decoration: none;
+  font-size: 0.8rem;
+  background: #2b6cb0;
+  color: #fff;
+}
+
+.mo-ta-phu-tan {
+  color: #718096;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.nut-loc-du-an-tan {
+  background: #2b6cb0;
+  color: #fff;
+  width: 100%;
+  padding: 0.65rem 1rem;
+}
+
+.hop-khong-co-du-an {
+  color: #718096;
+  font-style: italic;
+  padding: 1.5rem;
+  background: #f7fafc;
+  border: 1px dashed #cbd5e0;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.nhan-mien-phi-tan {
+  color: #38a169;
+  font-weight: 600;
+}
+
+.phan-luu-but-tan {
+  margin-top: 2rem;
+}
+
+.dau-sao-bat-buoc {
+  color: #e53e3e;
+}
+
+.nut-gui-luu-but-tan {
+  background: #2b6cb0;
+  color: #fff;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.tieu-de-ds-luu-but {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.chu-chua-co-luu-but {
+  color: #718096;
+  font-style: italic;
+}
+
+.form-xoa-luu-but-tan {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.phan-tkb-tan {
+  margin-top: 2rem;
+}

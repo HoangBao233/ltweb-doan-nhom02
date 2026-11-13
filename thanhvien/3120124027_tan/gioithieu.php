@@ -61,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($xoa && !$laChuTrang) {
         $loi['quyen'] = 'Chỉ chủ trang (Nguyễn Cảnh Tấn) mới có quyền xóa lời nhắn!';
     } elseif (isset($_POST['gui_luu_but'])) {
-        $tenKhach = trim($_POST['ten_khach'] ?? '');
-        $loiNhan  = trim($_POST['loi_nhan'] ?? '');
+        $tenKhach = trim(chuoi($_POST['ten_khach'] ?? ''));
+        $loiNhan  = trim(chuoi($_POST['loi_nhan'] ?? ''));
         $du['ten_khach'] = $tenKhach;
         $du['loi_nhan']  = $loiNhan;
 
@@ -91,7 +91,7 @@ $stDemLB->execute([MSSV]);
 $tongSoLuuBut   = (int)$stDemLB->fetchColumn();
 $soDongMoiTrang = 5;
 $soTrangLB      = max(1, (int)ceil($tongSoLuuBut / $soDongMoiTrang));
-$trangHienTaiLB = filter_var($_GET['trang_lb'] ?? 1, FILTER_VALIDATE_INT, [
+$trangHienTaiLB = filter_var(chuoi($_GET['trang_lb'] ?? '1'), FILTER_VALIDATE_INT, [
     'options' => ['min_range' => 1, 'default' => 1]
 ]);
 $trangHienTaiLB = min($trangHienTaiLB, $soTrangLB);
@@ -111,9 +111,9 @@ $stCN = db()->prepare('SELECT DISTINCT cong_nghe FROM tv_du_an_tan WHERE mssv = 
 $stCN->execute([MSSV]);
 $dsCongNghe = $stCN->fetchAll(PDO::FETCH_COLUMN);
 
-$tuKhoa   = trim($_GET['q'] ?? '');
-$congNghe = trim($_GET['cong_nghe'] ?? 'tat-ca');
-$sapXep   = trim($_GET['sx'] ?? 'moi_nhat');
+$tuKhoa   = trim(chuoi($_GET['q'] ?? ''));
+$congNghe = trim(chuoi($_GET['cong_nghe'] ?? 'tat-ca'));
+$sapXep   = trim(chuoi($_GET['sx'] ?? 'moi_nhat'));
 
 // Sắp xếp an toàn bằng match theo danh sách cho phép (chống SQL Injection)
 $orderClause = match ($sapXep) {
@@ -156,8 +156,8 @@ require __DIR__ . '/../../inc/header.php';
     <link rel="stylesheet" href="<?= $goc ?>thanhvien/3120124027_tan/css/canhan-tan.css">
 
     <!-- Nút Quay về -->
-    <nav class="thanh-dieu-huong" aria-label="Điều hướng phụ" style="background: var(--nen-phu, #f4f6f8); padding: 0.75rem 1rem;">
-        <ul style="display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0; flex-wrap: wrap;">
+    <nav class="thanh-dieu-huong dieu-huong-phu-tan" aria-label="Điều hướng phụ">
+        <ul class="danh-sach-dieu-huong-phu">
             <li><a href="<?= $goc ?>index.php" class="menu-chinh__lien-ket">Quay về Trang chủ</a></li>
             <li><a href="<?= $goc ?>ve-chung-toi.php" class="menu-chinh__lien-ket">Quay về Giới thiệu Nhóm</a></li>
         </ul>
@@ -174,21 +174,20 @@ require __DIR__ . '/../../inc/header.php';
             <p>Trường Đại học Sư phạm – ĐH Đà Nẵng</p>
 
             <!-- Bộ đếm lượt xem trang theo ngày và tổng lượt xem -->
-            <div class="cong-cu-doc" style="margin-top: 1.5rem; padding: 1rem;
-                 background: #f0f8ff; border: 1px solid #bee3f8; border-radius: 8px;">
-                <h2 style="font-size: 1rem; margin-bottom: 0.5rem;">Lượt xem hôm nay</h2>
-                <p style="font-size: 2rem; font-weight: bold; color: #2b6cb0; margin: 0;">
+            <div class="cong-cu-doc hop-luot-xem-hom-nay">
+                <h2 class="tieu-de-hop-xem">Lượt xem hôm nay</h2>
+                <p class="so-luot-xem-lon">
                     <?= number_format($luotXemHomNay) ?>
                 </p>
-                <p style="font-size: 0.85rem; color: #4a5568; margin-top: 0.25rem;">
+                <p class="chu-tong-luot-xem">
                     Tổng toàn thời gian: <strong><?= number_format($tongLuotXem) ?></strong> lượt
                 </p>
             </div>
 
             <!-- Bảng thống kê lượt xem 7 ngày gần nhất -->
             <div class="khung-thong-ke-xem">
-                <h2 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: #2d3748;">Lượt xem 7 ngày gần nhất</h2>
-                <div class="bang-cuon-ngang" style="min-width: 0;">
+                <h2 class="tieu-de-7-ngay">Lượt xem 7 ngày gần nhất</h2>
+                <div class="bang-cuon-ngang hop-bang-cuon">
                     <table class="bang-mini">
                         <thead>
                             <tr>
@@ -198,7 +197,7 @@ require __DIR__ . '/../../inc/header.php';
                         </thead>
                         <tbody>
                             <?php if (empty($dsLuotXem7Ngay)): ?>
-                                <tr><td colspan="2" style="color: #718096; font-style: italic;">Chưa có dữ liệu</td></tr>
+                                <tr><td colspan="2" class="o-chua-co-du-lieu">Chưa có dữ liệu</td></tr>
                             <?php else: ?>
                                 <?php foreach ($dsLuotXem7Ngay as $item): ?>
                                     <tr>
@@ -213,7 +212,7 @@ require __DIR__ . '/../../inc/header.php';
             </div>
 
             <!-- Hỗ trợ đọc (giữ từ bài 4, 0 lỗi W3C) -->
-            <div class="cong-cu-doc" style="margin-top: 1.5rem;">
+            <div class="cong-cu-doc hop-ho-tro-doc">
                 <h2>Hỗ trợ đọc</h2>
                 <div class="nhom-nut">
                     <button type="button" id="btn-giam-chu" class="nut-cong-cu" aria-label="Thu nhỏ cỡ chữ">A-</button>
@@ -232,19 +231,22 @@ require __DIR__ . '/../../inc/header.php';
                     <?php if ($ndHienTai): ?>
                         <?= e($ndHienTai['ho_ten']) ?> (<?= e($ndHienTai['email']) ?>)
                         <?php if ($laChuTrang): ?>
-                            <span style="color: #2b6cb0; font-weight: bold;">[Chủ trang Tấn - Có quyền xóa]</span>
+                            <span class="nhan-chu-trang">[Chủ trang Tấn - Có quyền xóa]</span>
                         <?php else: ?>
-                            <span style="color: #c53030;">[Khách - Không có quyền xóa]</span>
+                            <span class="nhan-khach-vang-lai">[Khách - Không có quyền xóa]</span>
                         <?php endif; ?>
                     <?php else: ?>
-                        <span style="color: #718096;">Chưa đăng nhập (Khách vãng lai)</span>
+                        <span class="nhan-chua-dang-nhap">Chưa đăng nhập (Khách vãng lai)</span>
                     <?php endif; ?>
                 </div>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <div class="nhom-nut-tai-khoan-tan">
                     <?php if ($ndHienTai): ?>
-                        <a href="<?= $goc ?>dang-xuat.php" class="nut-cong-cu" style="text-decoration: none; font-size: 0.8rem;">Đăng xuất</a>
+                        <form method="post" action="<?= $goc ?>dang-xuat.php" class="form-dang-xuat-tan">
+                            <?= csrfField() ?>
+                            <button type="submit" class="nut-cong-cu nut-dang-xuat-tan">Đăng xuất</button>
+                        </form>
                     <?php else: ?>
-                        <a href="<?= $goc ?>dang-nhap.php" class="nut-cong-cu" style="text-decoration: none; font-size: 0.8rem; background: #2b6cb0; color: #fff;">Đăng nhập</a>
+                        <a href="<?= $goc ?>dang-nhap.php" class="nut-cong-cu nut-dang-nhap-tan">Đăng nhập</a>
                     <?php endif; ?>
                 </div>
             </aside>
@@ -276,7 +278,7 @@ require __DIR__ . '/../../inc/header.php';
             <!-- ===================================================== -->
             <section aria-labelledby="tieu-de-du-an">
                 <h2 id="tieu-de-du-an">Danh sách Dự án &amp; Học liệu tiêu biểu</h2>
-                <p style="color: #718096; margin-top: -0.5rem; margin-bottom: 1rem;">
+                <p class="mo-ta-phu-tan">
                     Tra cứu và tải về các sản phẩm phần mềm giáo dục do Nguyễn Cảnh Tấn phát triển.
                 </p>
 
@@ -314,7 +316,7 @@ require __DIR__ . '/../../inc/header.php';
                         </div>
 
                         <div>
-                            <button type="submit" class="nut-cong-cu" style="background: #2b6cb0; color: #fff; width: 100%; padding: 0.65rem 1rem;">
+                            <button type="submit" class="nut-cong-cu nut-loc-du-an-tan">
                                 Lọc &amp; Tìm
                             </button>
                         </div>
@@ -323,7 +325,7 @@ require __DIR__ . '/../../inc/header.php';
 
                 <!-- Danh sách kết quả dự án -->
                 <?php if (empty($dsDuAn)): ?>
-                    <p style="color: #718096; font-style: italic; padding: 1.5rem; background: #f7fafc; border: 1px dashed #cbd5e0; border-radius: 8px; text-align: center;">
+                    <p class="hop-khong-co-du-an">
                         Không tìm thấy dự án hoặc học liệu nào phù hợp với điều kiện tra cứu.
                     </p>
                 <?php else: ?>
@@ -340,7 +342,7 @@ require __DIR__ . '/../../inc/header.php';
                                 </div>
                                 <div class="du-an-footer">
                                     <span><strong><?= number_format((int)$da['luot_tai']) ?></strong> lượt tải</span>
-                                    <span style="color: #38a169; font-weight: 600;">Miễn phí</span>
+                                    <span class="nhan-mien-phi-tan">Miễn phí</span>
                                 </div>
                             </article>
                         <?php endforeach; ?>
@@ -351,17 +353,18 @@ require __DIR__ . '/../../inc/header.php';
             <!-- ===================================================== -->
             <!-- CHỨC NĂNG 1 — SỔ LƯU BÚT (PHÂN TRANG & XÓA CHỦ TRANG) -->
             <!-- ===================================================== -->
-            <section aria-labelledby="tieu-de-luu-but" style="margin-top: 2rem;">
+            <section aria-labelledby="tieu-de-luu-but" class="phan-luu-but-tan">
                 <h2 id="tieu-de-luu-but">Sổ lưu bút &amp; Nhận xét của khách</h2>
-                <p style="color: #718096; margin-top: -0.5rem; margin-bottom: 1rem;">
+                <p class="mo-ta-phu-tan">
                     Để lại lời nhắn đóng góp, nhận xét hoặc câu hỏi trao đổi với Tấn nhé!
                 </p>
 
                 <div class="khung-luu-but">
                     <!-- Form gửi lưu bút mới (POST chuẩn W3C có label đầy đủ) -->
                     <form method="post" action="gioithieu.php" novalidate class="form-luu-but">
+                        <?= csrfField() ?>
                         <div class="nhom-nhap">
-                            <label for="ten-khach">Họ tên của bạn <span style="color: #e53e3e;">*</span>:</label>
+                            <label for="ten-khach">Họ tên của bạn <span class="dau-sao-bat-buoc">*</span>:</label>
                             <input type="text" id="ten-khach" name="ten_khach"
                                    required maxlength="50"
                                    value="<?= e($du['ten_khach']) ?>"
@@ -372,7 +375,7 @@ require __DIR__ . '/../../inc/header.php';
                         </div>
 
                         <div class="nhom-nhap">
-                            <label for="loi-nhan">Lời nhắn lưu bút <span style="color: #e53e3e;">*</span>:</label>
+                            <label for="loi-nhan">Lời nhắn lưu bút <span class="dau-sao-bat-buoc">*</span>:</label>
                             <textarea id="loi-nhan" name="loi_nhan" rows="3"
                                       required maxlength="500"
                                       placeholder="Nhập nội dung lời nhắn hoặc lời chúc của bạn (1 - 500 ký tự)..."><?= e($du['loi_nhan']) ?></textarea>
@@ -382,20 +385,19 @@ require __DIR__ . '/../../inc/header.php';
                         </div>
 
                         <div>
-                            <button type="submit" name="gui_luu_but" value="1" class="nut-cong-cu"
-                                    style="background: #2b6cb0; color: #fff; padding: 0.65rem 1.5rem; font-size: 0.95rem;">
+                            <button type="submit" name="gui_luu_but" value="1" class="nut-cong-cu nut-gui-luu-but-tan">
                                 Gửi lời nhắn
                             </button>
                         </div>
                     </form>
 
                     <!-- Danh sách lời nhắn đã nhận (Phân trang 5 dòng/trang) -->
-                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #2d3748;">
+                    <h3 class="tieu-de-ds-luu-but">
                         Danh sách lời nhắn (<?= number_format($tongSoLuuBut) ?> lời nhắn)
                     </h3>
 
                     <?php if (empty($dsLuuBut)): ?>
-                        <p style="color: #718096; font-style: italic;">Chưa có lời nhắn nào trong sổ lưu bút.</p>
+                        <p class="chu-chua-co-luu-but">Chưa có lời nhắn nào trong sổ lưu bút.</p>
                     <?php else: ?>
                         <ul class="ds-luu-but">
                             <?php foreach ($dsLuuBut as $lb): ?>
@@ -409,8 +411,9 @@ require __DIR__ . '/../../inc/header.php';
                                         <!-- Nút XÓA: CHỈ HIỂN THỊ KHI ĐĂNG NHẬP CHỦ TRANG CỦA TẤN -->
                                         <?php if ($laChuTrang): ?>
                                             <form method="post" action="gioithieu.php"
-                                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa lời nhắn của <?= e(addslashes($lb['ten_khach'])) ?>?');"
-                                                  style="display: inline; margin: 0; padding: 0;">
+                                                  data-confirm="Bạn có chắc chắn muốn xóa lời nhắn của <?= e($lb['ten_khach']) ?>?"
+                                                  class="form-xoa-luu-but-tan">
+                                                <?= csrfField() ?>
                                                 <input type="hidden" name="xoa" value="<?= (int)$lb['id'] ?>">
                                                 <button type="submit" class="nut-xoa-lb" aria-label="Xóa lời nhắn của <?= e($lb['ten_khach']) ?>">
                                                     Xóa
@@ -448,7 +451,7 @@ require __DIR__ . '/../../inc/header.php';
             </section>
 
             <!-- Thời khóa biểu (giữ từ bài 4, đảm bảo đạt chuẩn a11y & W3C) -->
-            <section aria-labelledby="tieu-de-tkb" style="margin-top: 2rem;">
+            <section aria-labelledby="tieu-de-tkb" class="phan-tkb-tan">
                 <h2 id="tieu-de-tkb">Thời khóa biểu (Học kỳ hiện tại)</h2>
                 <div class="bang-cuon-ngang">
                     <table>

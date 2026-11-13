@@ -101,4 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sau đó lặp lại mỗi giây
         setInterval(capNhatDongHo, 1000);
     }
+
+    // ==========================================
+    // TƯƠNG TÁC 3: XỬ LÝ data-confirm (THAY THẾ onsubmit="return confirm(...)")
+    // ==========================================
+    document.addEventListener('submit', (e) => {
+        const form = e.target;
+        const msg = form?.getAttribute?.('data-confirm');
+        if (msg && !window.confirm(msg)) {
+            e.preventDefault();
+        }
+    });
 });
