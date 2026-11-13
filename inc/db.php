@@ -24,12 +24,12 @@ function db(): PDO {
     static $pdo = null;
 
     if ($pdo === null) {
-        $host    = 'localhost';
-        $port    = '3306';
-        $dbname  = 'ltweb_nhom02';
+        $host    = $_ENV['DB_HOST'] ?? 'localhost';
+        $port    = $_ENV['DB_PORT'] ?? '3306';
+        $dbname  = $_ENV['DB_DATABASE'] ?? 'ltweb_nhom02';
         $charset = 'utf8mb4';
-        $user    = 'root';
-        $pass    = '';
+        $user    = $_ENV['DB_USERNAME'] ?? 'root';
+        $pass    = $_ENV['DB_PASSWORD'] ?? '';
 
         $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset={$charset}";
 

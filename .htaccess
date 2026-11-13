@@ -1,0 +1,19 @@
+# .htaccess — Thư mục gốc dự án (Apache / XAMPP / Hosting)
+# Không liệt kê nội dung thư mục
+Options -Indexes
+
+# Tệp và thư mục ẩn (.env, .git...) — chừa .well-known
+RedirectMatch 404 /\.(?!well-known/)
+
+# Thư mục nội bộ của dự án
+RedirectMatch 404 /(inc|src|vendor|database|logs|storage|tests)(/|$)
+
+# Chặn tệp SQL, log, sao lưu, cấu hình và tệp khóa Composer
+<FilesMatch "\.(sql|log|bak|ini|lock)$|^composer\.json$">
+    Require all denied
+</FilesMatch>
+
+# Khi triển khai lên hosting có HTTPS, bỏ dấu # ở ba dòng dưới:
+# RewriteEngine On
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

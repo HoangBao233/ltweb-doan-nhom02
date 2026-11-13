@@ -1,0 +1,11 @@
+# uploads/.htaccess — Chỉ chứa ảnh tải lên, cấm chạy mã và cấm liệt kê
+Options -Indexes
+
+# Chặn chạy tệp thực thi
+<FilesMatch "\.(php\d?|phtml|phar|cgi|pl|py|sh)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
