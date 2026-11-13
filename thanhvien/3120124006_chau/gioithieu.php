@@ -2,13 +2,16 @@
 /**
  * Tệp: gioithieu.php - Trang cá nhân của Lê Thị Xuân Châu (MSSV: 3120124006)
  * 
- * --- CHỨC NĂNG CSDL MYSQL (BÀI TẬP NHÓM 6 - PHẦN B) ---
- * Chức năng CSDL 1: Hiển thị danh sách dự án cá nhân từ bảng MySQL tv_du_an qua PDO Prepared Statement (escape e() chống XSS).
- * Chức năng CSDL 2: Quản lý dự án (Thêm và Xóa dự án): Chỉ khi chủ trang (Châu - MSSV 3120124006) đăng nhập đúng tài khoản mới thấy form Thêm và nút Xóa; kiểm tra quyền ở máy chủ (AND mssv = 3120124006), sử dụng mô hình PRG (Post-Redirect-Get).
+ * --- BẢO MẬT & GIA CỐ (BÀI TẬP NHÓM 7 - PHẦN B) ---
+ * - Mã chống CSRF: csrfField() trên tất cả form POST (đổi theme, tải avatar, khôi phục avatar, thêm/xóa dự án).
+ * - Làm sạch chuỗi chuoi(): chống lỗi TypeError khi nhận tham số dạng mảng [].
+ * - Dọn sạch toàn bộ inline <script>, on*= và inline style= sang css/xchau.css & js/canhan.js (tuân thủ CSP).
+ * - Cookie bảo vệ: setcookie('theme', ...) có đủ httponly, samesite=Lax, secure theo HTTPS.
+ * - Chống XSS liên kết: kiểm tra URL dự án chỉ chấp nhận scheme http:// hoặc https://.
  * 
- * --- CHỨC NĂNG BÀI TẬP 5 (BẢO TỒN NGUYÊN VẸN) ---
- * - Chức năng PHP 1: Giao diện Sáng/Tối lưu trạng thái bằng Cookie máy chủ.
- * - Chức năng PHP 2: Tải lên ảnh đại diện an toàn (kiểm tra MIME thật qua finfo, dung lượng <= 2MB, lưu uploads/).
+ * --- CHỨC NĂNG CSDL MYSQL (BÀI TẬP NHÓM 6 - PHẦN B) ---
+ * - Chức năng CSDL 1: Hiển thị danh sách dự án cá nhân từ bảng MySQL tv_du_an qua PDO Prepared Statement (escape e() chống XSS).
+ * - Chức năng CSDL 2: Quản lý dự án (Thêm và Xóa dự án): Chỉ khi chủ trang (Châu - MSSV 3120124006) đăng nhập đúng tài khoản mới thấy form Thêm và nút Xóa; kiểm tra quyền ở máy chủ (AND mssv = 3120124006), sử dụng mô hình PRG (Post-Redirect-Get).
  */
 
 // Nạp file cấu hình dùng chung của nhóm
@@ -21,11 +24,28 @@ if (file_exists(__DIR__ . '/../../inc/db.php')) {
 if (file_exists(__DIR__ . '/../../inc/xac-thuc.php')) {
     require_once __DIR__ . '/../../inc/xac-thuc.php';
 }
+if (file_exists(__DIR__ . '/../../inc/csrf.php')) {
+    require_once __DIR__ . '/../../inc/csrf.php';
+}
+
+// Hàm chuoi() làm sạch tham số chuỗi (tránh TypeError khi gửi dạng mảng)
+if (!function_exists('chuoi')) {
+    function chuoi(mixed $v): string {
+        return is_string($v) ? $v : '';
+    }
+}
 
 // Hàm e() dự phòng nếu inc/config.php chưa định nghĩa
 if (!function_exists('e')) {
     function e(mixed $str): string {
         return htmlspecialchars((string)$str, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    }
+}
+
+// Hàm csrfField() dự phòng
+if (!function_exists('csrfField')) {
+    function csrfField(): string {
+        return '<input type="hidden" name="csrf" value="' . (function_exists('csrfToken') ? csrfToken() : '') . '">';
     }
 }
 
@@ -36,18 +56,19 @@ $meta_mo_ta     = 'Trang thông tin cá nhân của Lê Thị Xuân Châu';
 $trang_hien_tai = '';
 
 // ============================================================================
-// CHỨC NĂNG PHP 1 (BTN5): GIAO DIỆN SÁNG / TỐI LƯU TRẠNG THÁI BẰNG COOKIE
+// CHỨC NĂNG PHP 1: GIAO DIỆN SÁNG / TỐI LƯU TRẠNG THÁI BẰNG COOKIE (CÓ SECURE)
 // ============================================================================
-$themeHienTai = $_COOKIE['theme'] ?? 'light';
+$themeHienTai = chuoi($_COOKIE['theme'] ?? 'light');
 if ($themeHienTai !== 'dark' && $themeHienTai !== 'light') {
     $themeHienTai = 'light';
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'doi-theme') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && chuoi($_POST['action'] ?? '') === 'doi-theme') {
     $themeMoi = ($themeHienTai === 'dark') ? 'light' : 'dark';
     setcookie('theme', $themeMoi, [
         'expires'  => time() + 30 * 24 * 3600,
         'path'     => '/',
+        'secure'   => !empty($_SERVER['HTTPS']),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -56,12 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'doi-t
 }
 
 // ============================================================================
-// CHỨC NĂNG PHP 2 (BTN5): TẢI LÊN ẢNH ĐẠI DIỆN AN TOÀN (LƯU VÀO uploads/)
+// CHỨC NĂNG PHP 2: TẢI LÊN ẢNH ĐẠI DIỆN AN TOÀN (LƯU VÀO uploads/)
 // ============================================================================
 $loiUpload     = '';
 $thuMucUploads = __DIR__ . '/../../uploads/';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'tai-avatar') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && chuoi($_POST['action'] ?? '') === 'tai-avatar') {
     if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] === UPLOAD_ERR_NO_FILE) {
         $loiUpload = 'Vui lòng chọn một tệp ảnh để tải lên.';
     } elseif ($_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
@@ -107,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'tai-a
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'khoi-phuc-avatar') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && chuoi($_POST['action'] ?? '') === 'khoi-phuc-avatar') {
     unset($_SESSION['avatar_chau']);
     $_SESSION['flash_chau'] = 'Đã khôi phục ảnh đại diện mặc định!';
     header('Location: gioithieu.php');
@@ -115,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'khoi-
 }
 
 // ============================================================================
-// CHỨC NĂNG CSDL MYSQL (BÀI TẬP 6 - PHẦN B): BẢNG tv_du_an & PHÂN QUYỀN CHỦ TRANG
+// CHỨC NĂNG CSDL MYSQL: BẢNG tv_du_an & PHÂN QUYỀN CHỦ TRANG
 // ============================================================================
 const MSSV_CHAU = '3120124006';
 $laChuTrang     = false;
@@ -135,14 +156,16 @@ if (function_exists('db')) {
         $currentUser = function_exists('nguoiDung') ? nguoiDung() : null;
         $laChuTrang  = ($currentUser !== null) && !empty($tv['nguoi_dung_id']) && ((int)$currentUser['id'] === (int)$tv['nguoi_dung_id']);
 
-        // 2. Xử lý THÊM dự án mới (POST + PRG)
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'them-du-an') {
+        // 2. Xử lý THÊM dự án mới (POST + PRG + Chống XSS javascript: URL)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && chuoi($_POST['action'] ?? '') === 'them-du-an') {
             if ($laChuTrang) {
-                $tenDuAn  = trim($_POST['ten_du_an'] ?? '');
-                $moTaDuAn = trim($_POST['mo_ta'] ?? '');
-                $lienKet  = trim($_POST['lien_ket'] ?? '');
+                $tenDuAn  = trim(chuoi($_POST['ten_du_an'] ?? ''));
+                $moTaDuAn = trim(chuoi($_POST['mo_ta'] ?? ''));
+                $lienKet  = trim(chuoi($_POST['lien_ket'] ?? ''));
 
-                if ($tenDuAn === '' || mb_strlen($tenDuAn) > 200) {
+                if ($lienKet !== '' && !str_starts_with($lienKet, 'http://') && !str_starts_with($lienKet, 'https://')) {
+                    $_SESSION['flash_loi_du_an'] = 'Liên kết dự án không an toàn! Chỉ chấp nhận liên kết bắt đầu bằng http:// hoặc https://.';
+                } elseif ($tenDuAn === '' || mb_strlen($tenDuAn) > 200) {
                     $_SESSION['flash_loi_du_an'] = 'Vui lòng điền tên dự án (tối đa 200 ký tự).';
                 } elseif ($moTaDuAn === '' || mb_strlen($moTaDuAn) > 2000) {
                     $_SESSION['flash_loi_du_an'] = 'Vui lòng điền mô tả dự án (tối đa 2000 ký tự).';
@@ -159,7 +182,7 @@ if (function_exists('db')) {
         }
 
         // 3. Xử lý XÓA dự án (POST + PRG)
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'xoa-du-an') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && chuoi($_POST['action'] ?? '') === 'xoa-du-an') {
             if ($laChuTrang) {
                 $duAnId = filter_var($_POST['id'] ?? '', FILTER_VALIDATE_INT);
                 if ($duAnId) {
@@ -204,33 +227,30 @@ if (!empty($_SESSION['avatar_chau'])) {
 require_once __DIR__ . '/../../inc/header.php';
 ?>
 
-  <!-- CSS riêng của trang cá nhân Châu -->
+  <!-- CSS riêng của trang cá nhân Châu (Đã tích hợp toàn bộ class chống CSP) -->
   <link rel="stylesheet" href="css/xchau.css">
 
-  <?php if ($themeHienTai === 'dark'): ?>
-  <script>document.body.classList.add('dark-theme');</script>
-  <?php endif; ?>
-
-  <!-- Nút Chuyển đổi Giao diện Sáng / Tối (Cookie) -->
-  <form method="POST" action="gioithieu.php" style="position: fixed; top: 15px; right: 20px; z-index: 1000; margin: 0;">
+  <!-- Nút Chuyển đổi Giao diện Sáng / Tối (Cookie an toàn, form POST có CSRF) -->
+  <form method="POST" action="gioithieu.php" class="form-doi-theme">
+    <?= csrfField() ?>
     <input type="hidden" name="action" value="doi-theme">
-    <button type="submit" class="btn-dark-mode" style="margin: 0; padding: 0.45rem 0.85rem; font-size: 0.85rem; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.25); display: inline-flex; align-items: center; cursor: pointer;" title="Chuyển đổi giao diện Sáng / Tối">
+    <button type="submit" class="btn-dark-mode" title="Chuyển đổi giao diện Sáng / Tối">
       <?= $themeHienTai === 'dark' ? 'Giao diện Sáng' : 'Giao diện Tối' ?>
     </button>
   </form>
 
-  <main class="trang__chinh">
+  <main class="trang__chinh <?= $themeHienTai === 'dark' ? 'dark-theme' : '' ?>">
     <h1 class="can-giua-chu">Hồ sơ thành viên: Lê Thị Xuân Châu</h1>
 
     <!-- Thông báo trạng thái chung -->
     <?php if (!empty($thongBaoThanhCong)): ?>
-      <div style="background-color: #d4edda; color: #155724; padding: 0.75rem 1rem; border-radius: var(--bo-goc); border: 1px solid #c3e6cb; margin-bottom: 1.5rem; text-align: center; font-weight: bold;" role="status">
+      <div class="thong-bao-thanh-cong" role="status">
         <?= e($thongBaoThanhCong) ?>
       </div>
     <?php endif; ?>
 
     <?php if (!empty($loiDuAn)): ?>
-      <div style="background-color: #f8d7da; color: #721c24; padding: 0.75rem 1rem; border-radius: var(--bo-goc); border: 1px solid #f5c6cb; margin-bottom: 1.5rem; text-align: center; font-weight: bold;" role="alert">
+      <div class="thong-bao-loi" role="alert">
         <?= e($loiDuAn) ?>
       </div>
     <?php endif; ?>
@@ -238,25 +258,27 @@ require_once __DIR__ . '/../../inc/header.php';
     <!-- SECTION 1: Giới thiệu bản thân -->
     <section>
       <h2>Giới thiệu bản thân</h2>
-      <div style="grid-column: 1; max-width: 200px;">
-        <img src="<?= e($duongDanAnhHienThi) ?>" alt="Ảnh chân dung của Lê Thị Xuân Châu" width="200" style="margin-bottom: 0.5rem;">
+      <div class="khung-avatar">
+        <img src="<?= e($duongDanAnhHienThi) ?>" alt="Ảnh chân dung của Lê Thị Xuân Châu" width="200" class="anh-avatar">
 
-        <div class="khu-vuc-upload-avatar" style="font-size: 0.85rem; margin-bottom: 1rem;">
+        <div class="khu-vuc-upload-avatar">
           <?php if (!empty($loiUpload)): ?>
-            <div style="color: #dc3545; font-size: 0.8rem; font-weight: bold; margin: 0.2rem 0;" role="alert"><?= e($loiUpload) ?></div>
+            <div class="loi-upload-avatar" role="alert"><?= e($loiUpload) ?></div>
           <?php endif; ?>
 
-          <form method="POST" action="gioithieu.php" enctype="multipart/form-data" style="margin-top: 0.25rem;">
+          <form method="POST" action="gioithieu.php" enctype="multipart/form-data" class="form-upload-avatar">
+            <?= csrfField() ?>
             <input type="hidden" name="action" value="tai-avatar">
-            <label for="chon-avatar" style="display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 0.25rem;">Đổi ảnh (&le; 2MB):</label>
-            <input type="file" id="chon-avatar" name="avatar" accept="image/jpeg,image/png,image/webp" required style="display: block; width: 100%; font-size: 0.75rem; margin-bottom: 0.35rem;">
-            <button type="submit" style="width: 100%; padding: 0.35rem 0.5rem; background-color: var(--mau-chinh, #004085); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">Tải lên ảnh mới</button>
+            <label for="chon-avatar" class="nhan-chon-avatar">Đổi ảnh (&le; 2MB):</label>
+            <input type="file" id="chon-avatar" name="avatar" accept="image/jpeg,image/png,image/webp" required class="input-chon-avatar">
+            <button type="submit" class="nut-upload-avatar">Tải lên ảnh mới</button>
           </form>
 
           <?php if ($coAnhTuyChinh): ?>
-            <form method="POST" action="gioithieu.php" style="margin-top: 0.35rem;">
+            <form method="POST" action="gioithieu.php" class="form-khoi-phuc-avatar">
+              <?= csrfField() ?>
               <input type="hidden" name="action" value="khoi-phuc-avatar">
-              <button type="submit" style="width: 100%; padding: 0.25rem 0.5rem; background-color: #6c757d; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Khôi phục ảnh gốc</button>
+              <button type="submit" class="nut-khoi-phuc-avatar">Khôi phục ảnh gốc</button>
             </form>
           <?php endif; ?>
         </div>
@@ -275,56 +297,61 @@ require_once __DIR__ . '/../../inc/header.php';
       </ul>
     </section>
 
-    <!-- SECTION 3 (MỚI - BTN6 PHẦN B): DỰ ÁN CÁ NHÂN -->
+    <!-- SECTION 3: DỰ ÁN CÁ NHÂN (MySQL tv_du_an, Chống XSS & CSRF) -->
     <section>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-        <h2 style="margin: 0;">Dự án cá nhân</h2>
+      <div class="thanh-tieu-de-du-an">
+        <h2 class="tieu-de-du-an">Dự án cá nhân</h2>
         <div>
           <?php if ($laChuTrang): ?>
-            <span style="font-size: 0.85rem; color: #155724; font-weight: 600; margin-right: 0.5rem;">[Chủ trang: Lê Thị Xuân Châu]</span>
-            <a href="<?= $goc ?>dang-xuat.php" style="font-size: 0.85rem; color: #dc3545; text-decoration: underline;">Đăng xuất</a>
+            <span class="trang-thai-chu-trang">[Chủ trang: Lê Thị Xuân Châu]</span>
+            <a href="<?= $goc ?>dang-xuat.php" class="link-dang-xuat">Đăng xuất</a>
           <?php elseif ($currentUser): ?>
-            <span style="font-size: 0.85rem; color: #64748b; margin-right: 0.5rem;">Đang đăng nhập: <?= e($currentUser['ho_ten']) ?> (Khách)</span>
-            <a href="<?= $goc ?>dang-xuat.php" style="font-size: 0.85rem; color: #dc3545; text-decoration: underline;">Đăng xuất</a>
+            <span class="trang-thai-khach">Đang đăng nhập: <?= e($currentUser['ho_ten']) ?> (Khách)</span>
+            <a href="<?= $goc ?>dang-xuat.php" class="link-dang-xuat">Đăng xuất</a>
           <?php else: ?>
-            <a href="<?= $goc ?>dang-nhap.php" style="font-size: 0.85rem; color: var(--mau-chinh); text-decoration: underline;">Đăng nhập chủ trang</a>
+            <a href="<?= $goc ?>dang-nhap.php" class="link-dang-nhap">Đăng nhập chủ trang</a>
           <?php endif; ?>
         </div>
       </div>
 
       <!-- Hiển thị danh sách dự án cá nhân từ CSDL -->
       <?php if (empty($dsDuAn)): ?>
-        <p style="color: #666; font-style: italic; padding: 1rem 0;">
+        <p class="chua-co-du-an">
           Hiện chưa có dữ liệu dự án nào.
         </p>
       <?php else: ?>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+        <div class="luoi-du-an">
           <?php foreach ($dsDuAn as $da): ?>
-            <div style="background-color: var(--nen); border: 1px solid var(--vien); border-radius: var(--bo-goc); box-shadow: var(--bong-do); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="the-du-an">
               <div>
-                <h3 style="font-size: 1.1rem; color: var(--mau-chinh); margin-top: 0; margin-bottom: 0.5rem;">
+                <h3 class="ten-du-an">
                   <?= e($da['ten_du_an']) ?>
                 </h3>
-                <p style="font-size: 0.875rem; color: #424242; line-height: 1.5; margin-bottom: 1rem;">
+                <p class="mo-ta-du-an">
                   <?= nl2br(e($da['mo_ta'] ?? '')) ?>
                 </p>
               </div>
 
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--vien); padding-top: 0.75rem;">
-                <?php if (!empty($da['lien_ket']) && $da['lien_ket'] !== '#'): ?>
-                  <a href="<?= e($da['lien_ket']) ?>" target="_blank" rel="noopener noreferrer" style="font-size: 0.85rem; font-weight: bold; color: var(--mau-chinh);">
+              <div class="chan-the-du-an">
+                <?php 
+                $lk = trim((string)($da['lien_ket'] ?? ''));
+                $laUrlAnToan = str_starts_with($lk, 'http://') || str_starts_with($lk, 'https://');
+                ?>
+                <?php if ($laUrlAnToan): ?>
+                  <a href="<?= e($lk) ?>" target="_blank" rel="noopener noreferrer" class="link-xem-du-an">
                     Xem liên kết &rarr;
                   </a>
                 <?php else: ?>
-                  <span style="font-size: 0.8rem; color: #888;">Dự án học phần</span>
+                  <span class="nhan-du-an-hoc-phan">Dự án học phần</span>
                 <?php endif; ?>
 
-                <!-- Nút Xóa: Chỉ hiện khi chính Châu đăng nhập -->
+                <!-- Nút Xóa: Chỉ hiện khi chính Châu đăng nhập (bảo vệ CSRF + data-confirm) -->
                 <?php if ($laChuTrang): ?>
-                  <form method="POST" action="gioithieu.php" onsubmit="return confirm('Bạn có chắc muốn xóa dự án: \'<?= addslashes(e($da['ten_du_an'])) ?>\'?');" style="margin: 0;">
+                  <form method="POST" action="gioithieu.php" data-confirm="Bạn có chắc muốn xóa dự án: '<?= e(addslashes($da['ten_du_an'])) ?>'?" class="form-xoa-du-an">
+                    <?= csrfField() ?>
                     <input type="hidden" name="action" value="xoa-du-an">
                     <input type="hidden" name="id" value="<?= (int)$da['id'] ?>">
-                    <button type="submit" style="background-color: #dc3545; color: #fff; border: none; border-radius: 4px; padding: 0.35rem 0.75rem; font-size: 0.8rem; cursor: pointer; font-weight: bold;">
+                    <button type="submit" class="nut-xoa-du-an">
                       Xóa
                     </button>
                   </form>
@@ -335,29 +362,30 @@ require_once __DIR__ . '/../../inc/header.php';
         </div>
       <?php endif; ?>
 
-      <!-- Form Thêm dự án mới: Chỉ hiển thị khi chính Châu đăng nhập -->
+      <!-- Form Thêm dự án mới: Chỉ hiển thị khi chính Châu đăng nhập (CSRF + addEventListener validation) -->
       <?php if ($laChuTrang): ?>
-        <div style="background-color: var(--nen-phu, #f8f9fa); border: 1px solid var(--vien); border-radius: var(--bo-goc); padding: 1.5rem; margin-top: 1.5rem;">
-          <h3 style="margin-top: 0; font-size: 1.05rem; color: var(--mau-chinh);">Thêm dự án mới</h3>
+        <div class="khung-them-du-an">
+          <h3 class="tieu-de-them-du-an">Thêm dự án mới</h3>
           <form method="POST" action="gioithieu.php">
+            <?= csrfField() ?>
             <input type="hidden" name="action" value="them-du-an">
 
-            <div style="margin-bottom: 0.85rem;">
-              <label for="ten_du_an" style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 0.3rem;">Tên dự án: <span style="color: red;">*</span></label>
-              <input type="text" id="ten_du_an" name="ten_du_an" required maxlength="200" placeholder="Ví dụ: Nền tảng chia sẻ học liệu ITeduShare" oninvalid="this.setCustomValidity('Vui lòng điền tên dự án.')" oninput="this.setCustomValidity('')" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem;">
+            <div class="nhom-nhap-lieu">
+              <label for="ten_du_an" class="nhan-nhap-lieu">Tên dự án: <span class="dau-sao-bat-buoc">*</span></label>
+              <input type="text" id="ten_du_an" name="ten_du_an" required maxlength="200" placeholder="Ví dụ: Nền tảng chia sẻ học liệu ITeduShare" class="input-du-an">
             </div>
 
-            <div style="margin-bottom: 0.85rem;">
-              <label for="lien_ket" style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 0.3rem;">Liên kết dự án:</label>
-              <input type="text" id="lien_ket" name="lien_ket" placeholder="https://... hoặc để trống nếu chưa có" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem;">
+            <div class="nhom-nhap-lieu">
+              <label for="lien_ket" class="nhan-nhap-lieu">Liên kết dự án:</label>
+              <input type="text" id="lien_ket" name="lien_ket" placeholder="https://... hoặc để trống nếu chưa có" class="input-du-an">
             </div>
 
-            <div style="margin-bottom: 0.85rem;">
-              <label for="mo_ta" style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 0.3rem;">Mô tả dự án: <span style="color: red;">*</span></label>
-              <textarea id="mo_ta" name="mo_ta" required rows="3" placeholder="Mô tả ngắn gọn về công nghệ sử dụng, tính năng chính..." oninvalid="this.setCustomValidity('Vui lòng điền mô tả dự án.')" oninput="this.setCustomValidity('')" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem;"></textarea>
+            <div class="nhom-nhap-lieu">
+              <label for="mo_ta" class="nhan-nhap-lieu">Mô tả dự án: <span class="dau-sao-bat-buoc">*</span></label>
+              <textarea id="mo_ta" name="mo_ta" required rows="3" placeholder="Mô tả ngắn gọn về công nghệ sử dụng, tính năng chính..." class="textarea-du-an"></textarea>
             </div>
 
-            <button type="submit" style="background-color: var(--mau-chinh, #004085); color: #fff; border: none; border-radius: 4px; padding: 0.5rem 1.25rem; font-size: 0.9rem; font-weight: bold; cursor: pointer;">
+            <button type="submit" class="nut-luu-du-an">
               Lưu dự án
             </button>
           </form>

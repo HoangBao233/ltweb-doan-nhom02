@@ -159,4 +159,45 @@ document.addEventListener('DOMContentLoaded', () => {
             quoteDisplay.style.opacity = '1';
         }, 200); // Đợi 200ms cho chữ chìm hẳn rồi mới hiện chữ mới
     });
+
+    // ==========================================
+    // Tương tác 3: Dọn dẹp CSP & Bảo mật (Chương 7)
+    // ==========================================
+
+    // 1. Đồng bộ class dark-theme lên thẻ body nếu thẻ main mang class dark-theme
+    if (document.querySelector('main.dark-theme')) {
+        document.body.classList.add('dark-theme');
+    }
+
+    // 2. Chuyển inline oninvalid & oninput của form Dự án sang addEventListener
+    const inputTenDuAn = document.getElementById('ten_du_an');
+    if (inputTenDuAn) {
+        inputTenDuAn.addEventListener('invalid', () => {
+            inputTenDuAn.setCustomValidity('Vui lòng điền tên dự án.');
+        });
+        inputTenDuAn.addEventListener('input', () => {
+            inputTenDuAn.setCustomValidity('');
+        });
+    }
+
+    const inputMoTa = document.getElementById('mo_ta');
+    if (inputMoTa) {
+        inputMoTa.addEventListener('invalid', () => {
+            inputMoTa.setCustomValidity('Vui lòng điền mô tả dự án.');
+        });
+        inputMoTa.addEventListener('input', () => {
+            inputMoTa.setCustomValidity('');
+        });
+    }
+
+    // 3. Chuyển onsubmit="return confirm(...)" sang listener data-confirm ngoài
+    document.addEventListener('submit', (e) => {
+        const form = e.target;
+        if (form && form.matches('form')) {
+            const msg = form.getAttribute('data-confirm');
+            if (msg && !window.confirm(msg)) {
+                e.preventDefault();
+            }
+        }
+    });
 });

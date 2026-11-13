@@ -215,3 +215,318 @@ main ul {
   padding-left: 0;
 }
 
+/* ==============================================================
+   Lớp giao diện dọn sạch CSP (Chương 7 - Biện pháp 3 & 4)
+   Chuyển toàn bộ inline style sang class CSS nội bộ
+   ============================================================== */
+
+/* Dark Mode Theme */
+body.dark-theme,
+main.dark-theme {
+  background-color: #121820;
+  color: #e2e8f0;
+}
+
+body.dark-theme .the-du-an,
+main.dark-theme .the-du-an {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark-theme .mo-ta-du-an,
+main.dark-theme .mo-ta-du-an {
+  color: #cbd5e1;
+}
+
+body.dark-theme .khung-them-du-an,
+main.dark-theme .khung-them-du-an {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .input-du-an,
+body.dark-theme .textarea-du-an,
+main.dark-theme .input-du-an,
+main.dark-theme .textarea-du-an {
+  background-color: #0f172a;
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+/* Form & Nút chuyển đổi Theme */
+.form-doi-theme {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  z-index: 1000;
+  margin: 0;
+}
+
+.btn-dark-mode {
+  margin: 0;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--nen-the, #fff);
+  color: var(--chu, #333);
+  border: 1px solid var(--vien, #dee2e6);
+}
+
+/* Thông báo Flash */
+.thong-bao-thanh-cong {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.75rem 1rem;
+  border-radius: var(--bo-goc, 8px);
+  border: 1px solid #c3e6cb;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.thong-bao-loi {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.75rem 1rem;
+  border-radius: var(--bo-goc, 8px);
+  border: 1px solid #f5c6cb;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Khu vực Avatar & Tải ảnh */
+.khung-avatar {
+  grid-column: 1;
+  max-width: 200px;
+}
+
+.anh-avatar {
+  margin-bottom: 0.5rem;
+}
+
+.khu-vuc-upload-avatar {
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.loi-upload-avatar {
+  color: #dc3545;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0.2rem 0;
+}
+
+.form-upload-avatar {
+  margin-top: 0.25rem;
+}
+
+.nhan-chon-avatar {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.input-chon-avatar {
+  display: block;
+  width: 100%;
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.nut-upload-avatar {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  background-color: var(--mau-chinh, #004085);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.form-khoi-phuc-avatar {
+  margin-top: 0.35rem;
+}
+
+.nut-khoi-phuc-avatar {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+/* Khu vực Dự án cá nhân */
+.thanh-tieu-de-du-an {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tieu-de-du-an {
+  margin: 0;
+}
+
+.trang-thai-chu-trang {
+  font-size: 0.85rem;
+  color: #155724;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.trang-thai-khach {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-right: 0.5rem;
+}
+
+.link-dang-xuat {
+  font-size: 0.85rem;
+  color: #dc3545;
+  text-decoration: underline;
+}
+
+.link-dang-nhap {
+  font-size: 0.85rem;
+  color: var(--mau-chinh, #004085);
+  text-decoration: underline;
+}
+
+.chua-co-du-an {
+  color: #666;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+.luoi-du-an {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.the-du-an {
+  background-color: var(--nen, #fff);
+  border: 1px solid var(--vien, #dee2e6);
+  border-radius: var(--bo-goc, 8px);
+  box-shadow: var(--bong-do);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ten-du-an {
+  font-size: 1.1rem;
+  color: var(--mau-chinh, #004085);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.mo-ta-du-an {
+  font-size: 0.875rem;
+  color: #424242;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.chan-the-du-an {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--vien, #dee2e6);
+  padding-top: 0.75rem;
+}
+
+.link-xem-du-an {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--mau-chinh, #004085);
+}
+
+.nhan-du-an-hoc-phan {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.form-xoa-du-an {
+  margin: 0;
+}
+
+.nut-xoa-du-an {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Form Thêm dự án mới */
+.khung-them-du-an {
+  background-color: var(--nen-phu, #f8f9fa);
+  border: 1px solid var(--vien, #dee2e6);
+  border-radius: var(--bo-goc, 8px);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.tieu-de-them-du-an {
+  margin-top: 0;
+  font-size: 1.05rem;
+  color: var(--mau-chinh, #004085);
+}
+
+.nhom-nhap-lieu {
+  margin-bottom: 0.85rem;
+}
+
+.nhan-nhap-lieu {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.dau-sao-bat-buoc {
+  color: #dc3545;
+}
+
+.input-du-an,
+.textarea-du-an {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+}
+
+.nut-luu-du-an {
+  background-color: var(--mau-chinh, #004085);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
