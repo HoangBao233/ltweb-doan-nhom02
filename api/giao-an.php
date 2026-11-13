@@ -35,7 +35,7 @@ if (isset($_GET['id'])) {
 }
 
 // Trường hợp 2: Tìm kiếm theo từ khóa ?q= hoặc lấy danh sách mới nhất
-$q = trim($_GET['q'] ?? '');
+$q = trim(chuoi($_GET['q'] ?? ''));
 
 if ($q !== '') {
     $st = db()->prepare('SELECT id, danh_muc_id, ten, cap_hoc, gia, ton_kho, hinh_anh, video_url, mo_ta, luot_tai FROM giao_an WHERE ten LIKE ? ORDER BY id DESC LIMIT 20');

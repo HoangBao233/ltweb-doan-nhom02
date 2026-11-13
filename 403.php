@@ -18,15 +18,15 @@ $goc    = '';
     <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
 <body>
-    <main class="trang__chinh" style="max-width: 600px; margin: 4rem auto; text-align: center; padding: 2rem 1rem;">
-        <h1 style="font-size: 4rem; color: #e53e3e; margin-bottom: 1rem;">403</h1>
-        <h2 style="margin-bottom: 1rem;">Truy cập bị từ chối (Forbidden)</h2>
-        <p style="color: #4a5568; margin-bottom: 2rem;">
+    <main class="trang__chinh hop-loi-403">
+        <h1 class="ma-loi-403">403</h1>
+        <h2 class="tieu-de-loi-403">Truy cập bị từ chối (Forbidden)</h2>
+        <p class="mo-ta-loi-403">
             Bạn không có quyền truy cập vào tài nguyên hoặc chức năng này. Vui lòng đăng nhập bằng tài khoản có thẩm quyền.
         </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="index.php" class="nut-thao-tac nut-thao-tac--xem" style="text-decoration: none;">Về Trang chủ</a>
-            <a href="dang-nhap.php" class="nut-thao-tac" style="text-decoration: none; background: #4a5568; color: #fff;">Đăng nhập</a>
+        <div class="nhom-nut-403">
+            <a href="index.php" class="nut-thao-tac nut-thao-tac--xem link-khong-gach">Về Trang chủ</a>
+            <a href="dang-nhap.php" class="nut-thao-tac nut-dang-nhap-403">Đăng nhập</a>
         </div>
     </main>
 </body>

@@ -42,7 +42,9 @@ if (!isset($data['id'])) {
     traJson(['loi' => 'Thiếu ID giáo án'], 404);
 }
 
-$id = filter_var($data['id'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+$id = (!is_array($data['id']) && !is_object($data['id']))
+    ? filter_var($data['id'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])
+    : false;
 if ($id === false) {
     traJson(['loi' => 'ID giáo án không hợp lệ'], 404);
 }
@@ -60,7 +62,9 @@ if (!$ga) {
 if (!isset($data['sl'])) {
     $sl = 1;
 } else {
-    $sl = filter_var($data['sl'], FILTER_VALIDATE_INT);
+    $sl = (!is_array($data['sl']) && !is_object($data['sl']))
+        ? filter_var($data['sl'], FILTER_VALIDATE_INT)
+        : false;
     if ($sl === false || $sl <= 0) {
         traJson(['loi' => 'Số lượng phải là số nguyên dương lớn hơn 0'], 422);
     }

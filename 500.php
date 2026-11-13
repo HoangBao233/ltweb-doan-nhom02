@@ -25,38 +25,38 @@ if (!headers_sent()) {
     <link rel="stylesheet" href="css/04-thanh-phan.css">
     <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
-<body style="background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1e293b;">
-    <header style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-        <div style="font-weight: 700; font-size: 1.25rem; color: #004085;">
+<body class="than-trang-500">
+    <header class="dau-trang-500">
+        <div class="logo-trang-500">
             ITeduShare
         </div>
-        <a href="index.php" style="color: #0284c7; text-decoration: none; font-size: 0.95rem; font-weight: 500;">
+        <a href="index.php" class="link-ve-trang-chu-500">
             ← Về Trang chủ
         </a>
     </header>
 
-    <main class="trang__chinh" style="max-width: 600px; margin: 4rem auto; text-align: center; padding: 2.5rem 1.5rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
-        <div style="font-size: 4rem; line-height: 1; color: #e11d48; font-weight: 800; margin-bottom: 0.75rem;">
+    <main class="trang__chinh hop-loi-500">
+        <div class="ma-loi-500">
             500
         </div>
-        <h1 style="font-size: 1.5rem; color: #0f172a; margin: 0 0 1rem; font-weight: 700;">
+        <h1 class="tieu-de-loi-500">
             Hệ thống đang gặp sự cố tạm thời
         </h1>
-        <p style="color: #64748b; line-height: 1.6; margin: 0 0 2rem; font-size: 1rem;">
+        <p class="mo-ta-loi-500">
             Máy chủ hoặc cơ sở dữ liệu hiện không thể xử lý yêu cầu của bạn. 
             Đội ngũ quản trị đã ghi nhận sự cố vào nhật ký hệ thống và đang khắc phục. Vui lòng quay lại sau ít phút.
         </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="index.php" class="nut-thao-tac nut-thao-tac--xem" style="display: inline-block; padding: 0.65rem 1.5rem; background: #0284c7; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.95rem;">
+        <div class="nhom-nut-500">
+            <a href="index.php" class="nut-thao-tac nut-thao-tac--xem nut-ve-trang-chu-500">
                 Quay về Trang chủ
             </a>
-            <button type="button" onclick="window.location.reload();" style="padding: 0.65rem 1.5rem; background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; font-size: 0.95rem; cursor: pointer;">
+            <a href="" class="nut-tai-lai-500">
                 Thử tải lại
-            </button>
+            </a>
         </div>
     </main>
 
-    <footer style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 2rem 1rem;">
+    <footer class="chan-trang-500">
         &copy; <?= date('Y') ?> ITeduShare — Nền tảng chia sẻ giáo án &amp; học liệu Tin học.
     </footer>
 </body>
