@@ -31,15 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     <link rel="stylesheet" href="css/03-bo-cuc.css">
     <link rel="stylesheet" href="css/04-thanh-phan.css">
     <link rel="stylesheet" href="css/05-tien-ich.css">
+    <link rel="stylesheet" href="css/quan-tri.css">
 </head>
-<body style="background: #f8fafc; font-family: inherit;">
-    <main class="trang__chinh" style="max-width: 550px; margin: 4rem auto; text-align: center; padding: 2.5rem 1.5rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-        <h1 style="font-size: 3.5rem; color: #e11d48; margin: 0 0 0.5rem; font-weight: 800;">405</h1>
-        <h2 style="margin: 0 0 1rem; color: #1e293b; font-size: 1.35rem;">Thao tác không được phép</h2>
-        <p style="color: #64748b; margin-bottom: 2rem; line-height: 1.6; font-size: 0.95rem;">
+<body>
+    <main class="trang__chinh khung-loi-405">
+        <h1 class="tieu-de-loi-405">405</h1>
+        <h2 class="phu-de-loi-405">Thao tác không được phép</h2>
+        <p class="mo-ta-loi-405">
             Thao tác xóa chỉ được thực hiện từ nút bấm trong hệ thống, không hỗ trợ mở trực tiếp bằng thanh địa chỉ trình duyệt.
         </p>
-        <a href="quan-tri.php" style="display: inline-block; padding: 0.65rem 1.5rem; background: #0284c7; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.95rem;">
+        <a href="quan-tri.php" class="nut-quay-lai-qt">
             ← Quay lại Trang Quản trị
         </a>
     </main>

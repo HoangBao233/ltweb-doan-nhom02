@@ -9,13 +9,13 @@
 function kiemTraGiaoAn(array $vao, array $idDanhMuc): array
 {
     $du = [
-        'ten'         => trim($vao['ten'] ?? ''),
+        'ten'         => trim(function_exists('chuoi') ? chuoi($vao['ten'] ?? '') : (is_string($vao['ten'] ?? null) ? $vao['ten'] : '')),
         'danh_muc_id' => filter_var($vao['danh_muc_id'] ?? '', FILTER_VALIDATE_INT),
-        'cap_hoc'     => trim($vao['cap_hoc'] ?? 'THCS'),
+        'cap_hoc'     => trim(function_exists('chuoi') ? chuoi($vao['cap_hoc'] ?? 'THCS') : (is_string($vao['cap_hoc'] ?? null) ? $vao['cap_hoc'] : 'THCS')),
         'gia'         => filter_var($vao['gia'] ?? '', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]),
         'ton_kho'     => filter_var($vao['ton_kho'] ?? '0', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 9999]]),
-        'video_url'   => trim($vao['video_url'] ?? ''),
-        'mo_ta'       => trim($vao['mo_ta'] ?? ''),
+        'video_url'   => trim(function_exists('chuoi') ? chuoi($vao['video_url'] ?? '') : (is_string($vao['video_url'] ?? null) ? $vao['video_url'] : '')),
+        'mo_ta'       => trim(function_exists('chuoi') ? chuoi($vao['mo_ta'] ?? '') : (is_string($vao['mo_ta'] ?? null) ? $vao['mo_ta'] : '')),
     ];
 
     $loi = [];

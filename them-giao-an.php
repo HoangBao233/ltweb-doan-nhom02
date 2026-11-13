@@ -4,10 +4,26 @@
  * 
  * Phụ trách: Lê Thị Xuân Châu (MSSV: 3120124006) — Phần A, Chức năng 3
  * Kỹ thuật: yeuCauQuyen('quan_tri'), kiemTraGiaoAn(), upload ảnh bằng finfo, PRG + Flash
+ * Bảo mật BTN7: Thêm mã CSRF csrfField(), làm sạch chuỗi chuoi(), loại bỏ 100% inline styles
  */
 
 require_once __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/kiem-tra.php';
+if (file_exists(__DIR__ . '/inc/csrf.php')) {
+    require_once __DIR__ . '/inc/csrf.php';
+}
+
+if (!function_exists('chuoi')) {
+    function chuoi(mixed $v): string {
+        return is_string($v) ? $v : '';
+    }
+}
+
+if (!function_exists('csrfField')) {
+    function csrfField(): string {
+        return '<input type="hidden" name="csrf" value="' . (function_exists('csrfToken') ? csrfToken() : '') . '">';
+    }
+}
 
 // 1. Phân quyền: Chỉ quản trị viên mới được thêm giáo án
 yeuCauQuyen('quan_tri');
@@ -29,12 +45,20 @@ $f = [
 
 // 3. Xử lý khi gửi dữ liệu POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $f = array_merge($f, $_POST);
+    $f = array_merge($f, [
+        'ten'         => chuoi($_POST['ten'] ?? ''),
+        'danh_muc_id' => $_POST['danh_muc_id'] ?? '',
+        'cap_hoc'     => chuoi($_POST['cap_hoc'] ?? 'THCS'),
+        'gia'         => $_POST['gia'] ?? '0',
+        'ton_kho'     => $_POST['ton_kho'] ?? '50',
+        'video_url'   => chuoi($_POST['video_url'] ?? ''),
+        'mo_ta'       => chuoi($_POST['mo_ta'] ?? ''),
+    ]);
 
     // Kiểm tra tính hợp lệ qua hàm dùng chung
     [$du, $loi] = kiemTraGiaoAn($_POST, $idDanhMuc);
 
-    // Xử lý upload ảnh bìa
+    // Xử lý upload ảnh bìa an toàn (kiểm tra MIME thật qua finfo, dung lượng ≤ 2MB, tên ngẫu nhiên)
     $tenHinhAnh = null;
     if (isset($_FILES['hinh_anh']) && $_FILES['hinh_anh']['error'] !== UPLOAD_ERR_NO_FILE) {
         if ($_FILES['hinh_anh']['error'] !== UPLOAD_ERR_OK) {
@@ -56,11 +80,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $loi['hinh_anh'] = 'Định dạng ảnh không hợp lệ (chỉ chấp nhận JPG, PNG, WEBP).';
             } else {
                 $ext = $choPhepMime[$mime];
-                $tenFileMoi = 'ga_' . uniqid('', true) . '.' . $ext;
+                $tenFileMoi = 'ga_' . bin2hex(random_bytes(8)) . '.' . $ext;
 
                 $uploadDir = UPLOADS_DIR;
                 if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
+                    mkdir($uploadDir, 0755, true);
                 }
 
                 if (move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $uploadDir . $tenFileMoi)) {
@@ -101,45 +125,49 @@ $trang  = 'quan-tri';
 require __DIR__ . '/inc/header.php';
 ?>
 
-<main class="trang__chinh" style="max-width: 800px; margin: 0 auto; padding: 1.5rem 1rem;">
-    <div style="margin-bottom: 1.5rem;">
-        <a href="quan-tri.php" style="color: #0284c7; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+<link rel="stylesheet" href="css/quan-tri.css">
+
+<main class="trang__chinh khung-form-quan-tri">
+    <div class="nhom-nut-form">
+        <a href="quan-tri.php" class="link-quay-lai-qt">
             ← Quay lại Trang Quản trị
         </a>
     </div>
 
-    <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-        <h1 style="margin: 0 0 0.5rem; font-size: 1.5rem; color: var(--mau-chinh, #004085);">Thêm Giáo án Mới</h1>
-        <p style="margin: 0 0 1.5rem; color: #64748b; font-size: 0.95rem;">Điền đầy đủ thông tin bên dưới để đưa tài liệu lên hệ thống.</p>
+    <section class="phan-quan-tri">
+        <h1 class="tieu-de-trang-qt">Thêm Giáo án Mới</h1>
+        <p class="dem-tong-so">Điền đầy đủ thông tin bên dưới để đưa tài liệu lên hệ thống.</p>
 
         <?php if (!empty($loi)): ?>
-            <div style="padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; background: #fff1f2; border: 1px solid #fecdd3; border-left: 4px solid #f43f5e; color: #9f1239; border-radius: 6px;">
+            <div class="flash-loi">
                 <strong>Vui lòng kiểm tra lại các mục báo lỗi bên dưới:</strong>
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="them-giao-an.php" enctype="multipart/form-data" novalidate style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <form method="POST" action="them-giao-an.php" enctype="multipart/form-data" novalidate class="form-them-ga">
+            <?= csrfField() ?>
+
             <!-- Tên giáo án -->
             <div>
-                <label for="ten" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
-                    Tên giáo án / Học liệu <span style="color: #ef4444;">*</span>
+                <label for="ten" class="nhan-form-ga">
+                    Tên giáo án / Học liệu <span class="dau-sao-bat-buoc">*</span>
                 </label>
                 <input type="text" id="ten" name="ten" value="<?= e($f['ten']) ?>" required
                        placeholder="Ví dụ: Kế hoạch bài dạy Tin học 7 - Chủ đề E: Soạn thảo văn bản"
-                       style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid <?= isset($loi['ten']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
+                       class="input-form-ga <?= isset($loi['ten']) ? 'input-form-loi' : '' ?>">
                 <?php if (isset($loi['ten'])): ?>
-                    <p style="margin: 0.3rem 0 0; color: #ef4444; font-size: 0.85rem;"><?= e($loi['ten']) ?></p>
+                    <p class="thong-bao-loi-field"><?= e($loi['ten']) ?></p>
                 <?php endif; ?>
             </div>
 
             <!-- Danh mục & Cấp học (2 cột) -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+            <div class="luoi-hai-cot-form">
                 <div>
-                    <label for="danh_muc_id" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
-                        Danh mục học liệu <span style="color: #ef4444;">*</span>
+                    <label for="danh_muc_id" class="nhan-form-ga">
+                        Danh mục học liệu <span class="dau-sao-bat-buoc">*</span>
                     </label>
                     <select id="danh_muc_id" name="danh_muc_id" required
-                            style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid <?= isset($loi['danh_muc_id']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; background: #fff;">
+                            class="select-form-ga <?= isset($loi['danh_muc_id']) ? 'input-form-loi' : '' ?>">
                         <option value="">-- Chọn danh mục --</option>
                         <?php foreach ($dsDanhMuc as $dm): ?>
                             <option value="<?= (int)$dm['id'] ?>" <?= (string)$f['danh_muc_id'] === (string)$dm['id'] ? 'selected' : '' ?>>
@@ -148,98 +176,96 @@ require __DIR__ . '/inc/header.php';
                         <?php endforeach; ?>
                     </select>
                     <?php if (isset($loi['danh_muc_id'])): ?>
-                        <p style="margin: 0.3rem 0 0; color: #ef4444; font-size: 0.85rem;"><?= e($loi['danh_muc_id']) ?></p>
+                        <p class="thong-bao-loi-field"><?= e($loi['danh_muc_id']) ?></p>
                     <?php endif; ?>
                 </div>
 
                 <div>
-                    <label for="cap_hoc" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
-                        Cấp học <span style="color: #ef4444;">*</span>
+                    <label for="cap_hoc" class="nhan-form-ga">
+                        Cấp học <span class="dau-sao-bat-buoc">*</span>
                     </label>
                     <select id="cap_hoc" name="cap_hoc" required
-                            style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid <?= isset($loi['cap_hoc']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; background: #fff;">
+                            class="select-form-ga <?= isset($loi['cap_hoc']) ? 'input-form-loi' : '' ?>">
                         <option value="">-- Chọn cấp học --</option>
                         <option value="THCS" <?= $f['cap_hoc'] === 'THCS' ? 'selected' : '' ?>>Trung học cơ sở (THCS)</option>
                         <option value="THPT" <?= $f['cap_hoc'] === 'THPT' ? 'selected' : '' ?>>Trung học phổ thông (THPT)</option>
                         <option value="Tiểu học" <?= $f['cap_hoc'] === 'Tiểu học' ? 'selected' : '' ?>>Tiểu học</option>
                     </select>
                     <?php if (isset($loi['cap_hoc'])): ?>
-                        <p style="margin: 0.3rem 0 0; color: #ef4444; font-size: 0.85rem;"><?= e($loi['cap_hoc']) ?></p>
+                        <p class="thong-bao-loi-field"><?= e($loi['cap_hoc']) ?></p>
                     <?php endif; ?>
                 </div>
             </div>
 
             <!-- Giá & Tồn kho (2 cột) -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+            <div class="luoi-hai-cot-form">
                 <div>
-                    <label for="gia" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
-                        Đơn giá (VNĐ) <span style="color: #ef4444;">*</span>
+                    <label for="gia" class="nhan-form-ga">
+                        Đơn giá (VNĐ) <span class="dau-sao-bat-buoc">*</span>
                     </label>
                     <input type="number" id="gia" name="gia" value="<?= e($f['gia']) ?>" min="0" step="1000" required
                            placeholder="0 (nếu chia sẻ miễn phí)"
-                           style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid <?= isset($loi['gia']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
-                    <small style="color: #64748b; font-size: 0.8rem;">Nhập 0 để chia sẻ miễn phí</small>
+                           class="input-form-ga <?= isset($loi['gia']) ? 'input-form-loi' : '' ?>">
+                    <small class="chu-thich-nho">Nhập 0 để chia sẻ miễn phí</small>
                     <?php if (isset($loi['gia'])): ?>
-                        <p style="margin: 0.3rem 0 0; color: #ef4444; font-size: 0.85rem;"><?= e($loi['gia']) ?></p>
+                        <p class="thong-bao-loi-field"><?= e($loi['gia']) ?></p>
                     <?php endif; ?>
                 </div>
 
                 <div>
-                    <label for="ton_kho" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
-                        Số lượt cung cấp (Tồn kho) <span style="color: #ef4444;">*</span>
+                    <label for="ton_kho" class="nhan-form-ga">
+                        Số lượt cung cấp (Tồn kho) <span class="dau-sao-bat-buoc">*</span>
                     </label>
                     <input type="number" id="ton_kho" name="ton_kho" value="<?= e($f['ton_kho']) ?>" min="0" max="9999" required
-                           style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid <?= isset($loi['ton_kho']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
+                           class="input-form-ga <?= isset($loi['ton_kho']) ? 'input-form-loi' : '' ?>">
                     <?php if (isset($loi['ton_kho'])): ?>
-                        <p style="margin: 0.3rem 0 0; color: #ef4444; font-size: 0.85rem;"><?= e($loi['ton_kho']) ?></p>
+                        <p class="thong-bao-loi-field"><?= e($loi['ton_kho']) ?></p>
                     <?php endif; ?>
                 </div>
             </div>
 
             <!-- Ảnh bìa -->
             <div>
-                <label for="hinh_anh" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
+                <label for="hinh_anh" class="nhan-form-ga">
                     Ảnh minh họa giáo án
                 </label>
                 <input type="file" id="hinh_anh" name="hinh_anh" accept="image/jpeg,image/png,image/webp"
-                       style="width: 100%; padding: 0.5rem; border: 1px dashed <?= isset($loi['hinh_anh']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.9rem; box-sizing: border-box; background: #f8fafc;">
-                <small style="color: #64748b; font-size: 0.8rem;">Định dạng: JPG, PNG, WEBP (Tối đa 2MB).</small>
+                       class="input-tep-tin <?= isset($loi['hinh_anh']) ? 'input-tep-tin-loi' : '' ?>">
+                <small class="chu-thich-nho">Định dạng: JPG, PNG, WEBP (Tối đa 2MB).</small>
                 <?php if (isset($loi['hinh_anh'])): ?>
-                    <p style="margin: 0.3rem 0 0; color: #ef4444; font-size: 0.85rem;"><?= e($loi['hinh_anh']) ?></p>
+                    <p class="thong-bao-loi-field"><?= e($loi['hinh_anh']) ?></p>
                 <?php endif; ?>
             </div>
 
             <!-- Video URL -->
             <div>
-                <label for="video_url" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
+                <label for="video_url" class="nhan-form-ga">
                     Đường dẫn Video giảng mẫu (Youtube / Drive)
                 </label>
                 <input type="url" id="video_url" name="video_url" value="<?= e($f['video_url']) ?>"
                        placeholder="https://www.youtube.com/watch?v=..."
-                       style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
+                       class="input-form-ga">
             </div>
 
             <!-- Mô tả -->
             <div>
-                <label for="mo_ta" style="display: block; font-weight: 600; margin-bottom: 0.35rem; color: #1e293b;">
+                <label for="mo_ta" class="nhan-form-ga">
                     Mô tả nội dung &amp; Mục tiêu bài học
                 </label>
                 <textarea id="mo_ta" name="mo_ta" rows="5"
                           placeholder="Tóm tắt nội dung chính, tiến trình bài giảng, phẩm chất và năng lực hình thành..."
-                          style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid <?= isset($loi['mo_ta']) ? '#ef4444' : '#cbd5e1' ?>; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; resize: vertical;"><?= e($f['mo_ta']) ?></textarea>
+                          class="textarea-form-ga <?= isset($loi['mo_ta']) ? 'input-form-loi' : '' ?>"><?= e($f['mo_ta']) ?></textarea>
                 <?php if (isset($loi['mo_ta'])): ?>
-                    <p style="margin: 0.3rem 0 0; color: #ef4444; font-size: 0.85rem;"><?= e($loi['mo_ta']) ?></p>
+                    <p class="thong-bao-loi-field"><?= e($loi['mo_ta']) ?></p>
                 <?php endif; ?>
             </div>
 
             <!-- Nút gửi -->
-            <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
-                <button type="submit" 
-                        style="cursor: pointer; background: #0284c7; color: #fff; padding: 0.75rem 1.75rem; border: none; border-radius: 6px; font-weight: 600; font-size: 1rem;">
+            <div class="nhom-nut-form">
+                <button type="submit" class="nut-luu-form">
                     Lưu Giáo án
                 </button>
-                <a href="quan-tri.php" 
-                   style="display: inline-flex; align-items: center; padding: 0.75rem 1.25rem; border: 1px solid #cbd5e1; background: #fff; color: #475569; border-radius: 6px; text-decoration: none; font-weight: 500;">
+                <a href="quan-tri.php" class="nut-huy-form">
                     Hủy bỏ
                 </a>
             </div>
@@ -250,4 +276,3 @@ require __DIR__ . '/inc/header.php';
 <?php require __DIR__ . '/inc/footer.php'; ?>
 </body>
 </html>
-
